@@ -7,10 +7,12 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "shots": "node scripts/shots.mjs"
+    "shots": "node scripts/shots.mjs",
+    "deploy": "vite build && netlify deploy --prod --dir=dist"
   },
   "devDependencies": {
     "@tailwindcss/vite": "^4.1.11",
+    "netlify-cli": "^27.1.2",
     "playwright": "^1.62.1",
     "tailwindcss": "^4.1.11",
     "vite": "^7.0.0"

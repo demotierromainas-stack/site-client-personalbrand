@@ -1,0 +1,41 @@
+# Configuration Netlify.
+#
+# Utile de deux façons :
+#  - en déploiement manuel (`npm run deploy`), Netlify y lit le dossier à publier ;
+#  - le jour où le dépôt sera relié à GitHub, Netlify saura reconstruire le site
+#    tout seul à chaque commit, sans configuration à refaire dans l'interface.
+
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "24"
+
+# Vite ajoute une empreinte au nom des fichiers générés (index-P5phKaP5.css) :
+# un changement de contenu change le nom. Ils peuvent donc être mis en cache
+# indéfiniment sans risque de servir une version périmée.
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/img/*"
+  [headers.values]
+    Cache-Control = "public, max-age=604800"
+
+# La page elle-même ne doit jamais être mise en cache durablement : c'est elle
+# qui référence les noms de fichiers, et le client doit voir chaque mise à jour.
+[[headers]]
+  for = "/"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+
+# La preview n'a pas vocation à être indexée par Google avant la mise en ligne.
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Robots-Tag = "noindex, nofollow"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
