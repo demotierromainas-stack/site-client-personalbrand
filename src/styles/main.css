@@ -1,0 +1,394 @@
+@import 'tailwindcss';
+@import './tokens.css';
+
+/* ============================================================
+   BASE
+   ============================================================ */
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-behavior: auto; /* Lenis prend le relais ; voir fallback plus bas */
+  }
+
+  body {
+    background-color: var(--color-ink-950);
+    color: var(--color-bone-100);
+    font-family: var(--font-sans);
+    font-synthesis-weight: none;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  ::selection {
+    background: var(--color-copper-500);
+    color: var(--color-ink-950);
+  }
+
+  /* Focus visible sur tous les interactifs — jamais supprimé. */
+  :focus-visible {
+    outline: 2px solid var(--color-copper-400);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+}
+
+/* ============================================================
+   COMPOSANTS
+   ============================================================ */
+
+@layer components {
+  /* Label tracké en capitales — le motif typographique récurrent de la maquette. */
+  .eyebrow {
+    font-size: 0.6875rem;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+
+  /* Fondu du portrait dans le fond, sur les quatre bords.
+     Remplace un détourage : l'image est un rectangle, et sans ce masque ses
+     arêtes se voient nettement en plein milieu du hero. Deux dégradés croisés
+     (vertical et horizontal) combinés en intersection — chacun seul ne
+     traiterait que deux bords sur quatre. */
+  .portrait-mask {
+    --fade-v: linear-gradient(
+      to bottom,
+      transparent 0%,
+      black 14%,
+      black 58%,
+      transparent 97%
+    );
+    --fade-h: linear-gradient(
+      to right,
+      transparent 0%,
+      black 22%,
+      black 82%,
+      transparent 100%
+    );
+
+    mask-image: var(--fade-v), var(--fade-h);
+    mask-composite: intersect;
+    -webkit-mask-image: var(--fade-v), var(--fade-h);
+    -webkit-mask-composite: source-in;
+  }
+
+  /* Titre de section : même traitement typographique que .eyebrow (capitales
+     très trackées) mais à une taille de titre. Classe distincte plutôt que
+     surcharge de .eyebrow, pour éviter une bataille de spécificité. */
+  .section-title {
+    font-size: clamp(1rem, 2.2vw, 1.375rem);
+    font-weight: 400;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  /* Surface en verre : cards entreprises, bloc stats, bandeau CTA. */
+  .glass {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    /* Coins arrondis : c'est ainsi dans la maquette, et l'angle droit durcit
+       nettement l'ensemble sur un fond aussi sombre. */
+    border-radius: 14px;
+    /* Flou faible et fond très peu opaque : le décor global doit rester
+       lisible au travers. Un flou fort le réduirait à une bouillie grise. */
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    /* Liseré clair sur l'arête haute : simule la lumière qui accroche le bord
+       supérieur d'une plaque de verre. */
+    box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.05);
+    transition:
+      border-color var(--duration-hover) var(--ease-out-soft),
+      transform var(--duration-hover) var(--ease-out-soft),
+      box-shadow var(--duration-hover) var(--ease-out-soft);
+  }
+
+  .glass-hover:hover {
+    border-color: var(--glass-border-hover);
+    transform: translateY(-4px);
+    box-shadow:
+      inset 0 1px 0 rgb(255 255 255 / 0.08),
+      0 20px 50px -20px rgb(184 115 51 / 0.35);
+  }
+
+  /* Lien de navigation : soulignement cuivre qui se déploie depuis la gauche. */
+  .nav-link {
+    position: relative;
+    color: var(--color-bone-300);
+    transition: color var(--duration-hover) var(--ease-out-soft);
+  }
+
+  .nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: -6px;
+    left: 0;
+    height: 1px;
+    width: 100%;
+    background: var(--color-copper-400);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform var(--duration-hover) var(--ease-out-expo);
+  }
+
+  .nav-link:hover {
+    color: var(--color-bone-100);
+  }
+
+  .nav-link:hover::after {
+    transform: scaleX(1);
+  }
+
+  /* Header une fois sorti du hero. */
+  #site-header.is-scrolled {
+    /* 0.72 laissait le texte du hero transparaître de façon lisible derrière le
+       logo. 0.85 garde l'effet de verre sans que le fond parasite la nav. */
+    background-color: rgb(11 15 24 / 0.85);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom-color: rgb(255 255 255 / 0.06);
+  }
+
+  /* Chaque entreprise porte une teinte de marque très diluée, diffusée depuis
+     le coin où se trouve son logo. Sans elle les trois cards sont identiques et
+     la section devient plate. */
+  .card-leaf {
+    background:
+      radial-gradient(circle at 12% 0%, rgb(74 222 128 / 0.09), transparent 58%),
+      var(--glass-bg);
+  }
+
+  .card-copper {
+    background:
+      radial-gradient(circle at 12% 0%, rgb(184 115 51 / 0.11), transparent 58%),
+      var(--glass-bg);
+  }
+
+  .card-azure {
+    background:
+      radial-gradient(circle at 12% 0%, rgb(125 211 252 / 0.09), transparent 58%),
+      var(--glass-bg);
+  }
+
+  /* Au hover, la bordure et la lueur prennent la couleur de la marque
+     plutôt que le cuivre par défaut. */
+  .card-leaf.glass-hover:hover {
+    border-color: rgb(74 222 128 / 0.4);
+    box-shadow:
+      inset 0 1px 0 rgb(255 255 255 / 0.08),
+      0 20px 50px -20px rgb(74 222 128 / 0.3);
+  }
+
+  .card-azure.glass-hover:hover {
+    border-color: rgb(125 211 252 / 0.4);
+    box-shadow:
+      inset 0 1px 0 rgb(255 255 255 / 0.08),
+      0 20px 50px -20px rgb(125 211 252 / 0.3);
+  }
+
+  /* La flèche de fin de card avance légèrement au survol. */
+  .glass-hover:hover [aria-hidden='true']:last-child {
+    color: var(--color-copper-400);
+  }
+
+  /* Liens du footer et icônes sociales. */
+  .footer-link {
+    color: var(--color-bone-500);
+    transition: color var(--duration-hover) var(--ease-out-soft);
+  }
+
+  .footer-link:hover {
+    color: var(--color-copper-400);
+  }
+
+  .social-link {
+    display: flex;
+    height: 2.25rem;
+    width: 2.25rem;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgb(255 255 255 / 0.1);
+    color: var(--color-bone-300);
+    transition:
+      color var(--duration-hover) var(--ease-out-soft),
+      border-color var(--duration-hover) var(--ease-out-soft);
+  }
+
+  .social-link:hover {
+    border-color: var(--color-copper-400);
+    color: var(--color-copper-400);
+  }
+
+  /* Trait de séparation dégradé, comme sous le nom dans le hero. */
+  .rule-copper {
+    height: 1px;
+    background: linear-gradient(
+      to right,
+      var(--color-copper-500),
+      transparent
+    );
+  }
+}
+
+/* ============================================================
+   GRAIN — indispensable sur fond sombre.
+   Sans lui, les dégradés du fond montrent du banding en bandes visibles.
+   ============================================================ */
+
+.grain {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  pointer-events: none;
+  opacity: 0.035;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* ============================================================
+   DÉCOR DE FOND GLOBAL
+   Visible à travers toute la page, y compris au travers des cards en verre.
+   ============================================================ */
+
+#site-bg {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+  background: var(--color-ink-950);
+}
+
+/* Débordement volontaire en haut et en bas : la couche dérive au scroll,
+   il faut de la marge pour qu'aucun bord ne rentre dans le cadre. */
+#site-bg-scroll {
+  position: absolute;
+  inset: -18% 0;
+  will-change: transform;
+}
+
+#site-bg-pointer {
+  position: absolute;
+  inset: 0;
+  will-change: transform;
+}
+
+.bg-lines {
+  position: absolute;
+  inset: 0;
+  height: 100%;
+  width: 100%;
+}
+
+/* Dérive très lente et de faible amplitude : le décor doit sembler vivant
+   sans qu'on puisse identifier ce qui bouge. */
+.bg-arcs {
+  animation: bg-drift 46s var(--ease-out-soft) infinite alternate;
+}
+
+.bg-sweeps {
+  animation: bg-drift 34s var(--ease-out-soft) infinite alternate-reverse;
+}
+
+@keyframes bg-drift {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-18px, -26px, 0);
+  }
+}
+
+.bg-glow {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(120px);
+}
+
+.bg-glow--copper {
+  top: -6%;
+  right: 2%;
+  height: 70%;
+  width: 62%;
+  background: radial-gradient(
+    circle at 50% 50%,
+    rgb(184 115 51 / 0.4),
+    rgb(184 115 51 / 0.1) 45%,
+    transparent 70%
+  );
+}
+
+.bg-glow--navy {
+  bottom: 4%;
+  left: -12%;
+  height: 62%;
+  width: 55%;
+  background: radial-gradient(circle at 50% 50%, rgb(38 62 102 / 0.45), transparent 70%);
+}
+
+/* Flare cuivre sur le bord gauche : très étiré horizontalement, comme la
+   traînée lumineuse de la maquette. */
+.bg-flare {
+  position: absolute;
+  top: 46%;
+  left: -14%;
+  height: 20%;
+  width: 46%;
+  filter: blur(46px);
+  background: radial-gradient(
+    ellipse 100% 26% at 40% 50%,
+    rgb(224 169 109 / 0.42),
+    rgb(184 115 51 / 0.12) 45%,
+    transparent 72%
+  );
+}
+
+/* ============================================================
+   ÉTATS INITIAUX DES ANIMATIONS
+   Gardés derrière .js-enabled : si le JS échoue ou ne charge pas,
+   le contenu reste visible au lieu de disparaître définitivement.
+   ============================================================ */
+
+.js-enabled [data-reveal] {
+  opacity: 0;
+  transform: translateY(var(--reveal-offset));
+}
+
+.js-enabled [data-reveal-fade] {
+  opacity: 0;
+}
+
+.js-enabled [data-reveal-scale] {
+  opacity: 0;
+  transform: scale(0.97);
+}
+
+/* ============================================================
+   ACCESSIBILITÉ — mouvement réduit
+   Le site doit rester entièrement lisible et navigable sans aucune animation.
+   ============================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  .js-enabled [data-reveal],
+  .js-enabled [data-reveal-fade],
+  .js-enabled [data-reveal-scale] {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  .glass-hover:hover {
+    transform: none;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
