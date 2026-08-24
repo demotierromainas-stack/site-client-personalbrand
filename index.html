@@ -2,16 +2,15 @@
 <html lang="fr">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Jean-Maxime Hanny — Entrepreneur, investisseur, développeur de projets</title>
     <meta
       name="description"
       content="Bâtir aujourd'hui les entreprises et les solutions de demain. Jean-Maxime Hanny accompagne entrepreneurs et projets en stratégie, investissement, technologie et développement durable."
     />
-    <meta name="theme-color" content="#07090f" />
+    <link rel="canonical" href="https://jeanmaximehanny.com/" />
 
     <meta property="og:type" content="website" />
-    <meta property="og:locale" content="fr_FR" />
+    <meta property="og:url" content="https://jeanmaximehanny.com/" />
     <meta property="og:title" content="Jean-Maxime Hanny — Entrepreneur, investisseur, développeur de projets" />
     <meta
       property="og:description"
@@ -19,22 +18,9 @@
     />
     <meta property="og:image" content="/img/portrait.webp" />
 
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Playfair+Display:wght@400;500&display=swap"
-      rel="stylesheet"
-    />
     <link rel="preload" as="image" href="/img/portrait.webp" />
 
-    <script>
-      // Marque le JS comme actif AVANT le premier rendu : les états initiaux
-      // d'animation (opacity 0) sont conditionnés à cette classe, pour que la
-      // page reste lisible si le JS ne charge pas.
-      document.documentElement.classList.add('js-enabled');
-    </script>
-
-    <link rel="stylesheet" href="/src/styles/main.css" />
+    <!--@include head.html-->
   </head>
 
   <body>
@@ -44,162 +30,9 @@
       >Aller au contenu</a
     >
 
-    <!-- ==========================================================
-         DÉCOR DE FOND — commun à toute la page.
+    <!--@include decor.html-->
 
-         Dans la maquette, l'environnement ne s'arrête pas au hero : les arcs,
-         les faisceaux et les lueurs continuent derrière les sections, et les
-         cards en verre laissent voir ce décor à travers elles. C'est ce qui
-         donne la profondeur ; des sections posées sur un aplat noir la perdent.
-
-         Couche `fixed` : le décor reste en place pendant que le contenu défile,
-         ce qui crée la sensation de parallaxe sans surcoût. Le conteneur
-         intérieur dérive lentement au scroll pour que la composition évolue au
-         lieu de se répéter à l'identique d'une section à l'autre.
-         ========================================================== -->
-    <div id="site-bg" aria-hidden="true">
-      <!-- Deux wrappers imbriqués : la dérive au scroll et le suivi du curseur
-           écrivent toutes deux sur `transform`. Les séparer évite qu'elles
-           s'annulent l'une l'autre. -->
-      <div id="site-bg-scroll">
-        <div id="site-bg-pointer">
-        <div class="bg-glow bg-glow--copper"></div>
-        <div class="bg-glow bg-glow--navy"></div>
-        <div class="bg-flare"></div>
-
-        <svg class="bg-lines" viewBox="0 0 1440 1400" preserveAspectRatio="xMidYMid slice" fill="none">
-          <defs>
-            <!-- Les arcs ne s'allument que sur une portion de leur tracé :
-                 c'est ce qui fait lire une structure éclairée par une source,
-                 plutôt qu'un cercle dessiné. -->
-            <linearGradient id="arc-light" x1="0" y1="1" x2="1" y2="0">
-              <stop offset="0%" stop-color="#8a909c" stop-opacity="0" />
-              <stop offset="38%" stop-color="#b8bdc7" stop-opacity="0.34" />
-              <stop offset="62%" stop-color="#e0a96d" stop-opacity="0.4" />
-              <stop offset="100%" stop-color="#b87333" stop-opacity="0" />
-            </linearGradient>
-            <linearGradient id="arc-faint" x1="0" y1="1" x2="1" y2="0">
-              <stop offset="0%" stop-color="#545b68" stop-opacity="0" />
-              <stop offset="50%" stop-color="#8a909c" stop-opacity="0.2" />
-              <stop offset="100%" stop-color="#545b68" stop-opacity="0" />
-            </linearGradient>
-            <linearGradient id="sweep" x1="0" y1="0" x2="1" y2="0">
-              <stop offset="0%" stop-color="#b87333" stop-opacity="0" />
-              <stop offset="42%" stop-color="#e0a96d" stop-opacity="0.32" />
-              <stop offset="100%" stop-color="#b87333" stop-opacity="0" />
-            </linearGradient>
-            <linearGradient id="sweep-cool" x1="0" y1="0" x2="1" y2="0">
-              <stop offset="0%" stop-color="#7dd3fc" stop-opacity="0" />
-              <stop offset="55%" stop-color="#b8bdc7" stop-opacity="0.18" />
-              <stop offset="100%" stop-color="#7dd3fc" stop-opacity="0" />
-            </linearGradient>
-          </defs>
-
-          <!-- Grands disques vus en perspective, sortant par la droite -->
-          <g class="bg-arcs">
-            <ellipse
-              cx="1580" cy="760" rx="700" ry="450"
-              transform="rotate(-14 1580 760)"
-              stroke="url(#arc-light)" stroke-width="1.4"
-            />
-            <ellipse
-              cx="1650" cy="820" rx="880" ry="580"
-              transform="rotate(-14 1650 820)"
-              stroke="url(#arc-faint)" stroke-width="1"
-            />
-            <ellipse
-              cx="1520" cy="1180" rx="620" ry="330"
-              transform="rotate(-8 1520 1180)"
-              stroke="url(#arc-faint)" stroke-width="1"
-            />
-          </g>
-
-          <!-- Courbes qui balaient la largeur et convergent vers les disques -->
-          <g class="bg-sweeps">
-            <path d="M-160 1010 C 340 940, 820 800, 1600 300" stroke="url(#sweep)" stroke-width="1.3" />
-            <path d="M-160 1120 C 380 1050, 900 900, 1600 420" stroke="url(#sweep-cool)" stroke-width="1" />
-            <path d="M-160 640 C 420 620, 980 540, 1600 180" stroke="url(#sweep-cool)" stroke-width="1" />
-            <path d="M-160 1320 C 300 1240, 880 1080, 1600 640" stroke="url(#sweep)" stroke-width="1" />
-          </g>
-        </svg>
-        </div>
-      </div>
-    </div>
-
-    <!-- Grain global : casse le banding des dégradés sur fond sombre. -->
-    <div class="grain" aria-hidden="true"></div>
-
-    <!-- ==========================================================
-         HEADER
-         ========================================================== -->
-    <header
-      id="site-header"
-      class="fixed top-0 right-0 left-0 z-50 border-b border-transparent transition-[background-color,backdrop-filter,border-color] duration-500"
-    >
-      <div class="mx-auto flex max-w-[1240px] items-center gap-10 px-6 py-5 lg:px-10">
-        <a href="#hero" class="flex shrink-0 items-center gap-4">
-          <span class="font-display text-3xl leading-none text-copper-400">JMH</span>
-          <span class="eyebrow hidden text-bone-300 sm:block">Jean-Maxime Hanny</span>
-        </a>
-
-        <nav class="ml-auto hidden lg:block" aria-label="Navigation principale">
-          <ul class="flex items-center gap-9">
-            <li><a class="eyebrow nav-link" href="#hero">À propos</a></li>
-            <li><a class="eyebrow nav-link" href="#entreprises">Activités</a></li>
-            <li><a class="eyebrow nav-link" href="#entreprises">Projets</a></li>
-            <li><a class="eyebrow nav-link" href="#articles">Articles</a></li>
-            <li><a class="eyebrow nav-link" href="#contact">Contact</a></li>
-          </ul>
-        </nav>
-
-        <!-- TODO client : remplacer l'URL Calendly. 4 occurrences au total —
-             ici, menu mobile, bandeau CTA final, colonne Contact du footer. -->
-        <a
-          href="https://calendly.com/REMPLACER-PAR-LIEN-CLIENT"
-          target="_blank"
-          rel="noopener"
-          class="eyebrow glass glass-hover ml-auto hidden items-center gap-3 px-6 py-3.5 text-bone-100 lg:ml-0 lg:flex"
-        >
-          Prendre rendez-vous
-          <span aria-hidden="true">&rarr;</span>
-        </a>
-
-        <button
-          type="button"
-          id="menu-toggle"
-          class="ml-auto lg:hidden"
-          aria-expanded="false"
-          aria-controls="mobile-nav"
-        >
-          <span class="sr-only">Ouvrir le menu</span>
-          <span class="block h-px w-7 bg-bone-100"></span>
-          <span class="mt-2 block h-px w-7 bg-bone-100"></span>
-        </button>
-      </div>
-
-      <nav
-        id="mobile-nav"
-        class="hidden border-t border-white/5 bg-ink-900/95 backdrop-blur-lg lg:hidden"
-        aria-label="Navigation mobile"
-      >
-        <ul class="flex flex-col px-6 py-4">
-          <li><a class="eyebrow nav-link block py-3.5" href="#hero">À propos</a></li>
-          <li><a class="eyebrow nav-link block py-3.5" href="#entreprises">Activités &amp; Projets</a></li>
-          <li><a class="eyebrow nav-link block py-3.5" href="#articles">Articles</a></li>
-          <li><a class="eyebrow nav-link block py-3.5" href="#contact">Contact</a></li>
-          <li class="pt-3">
-            <a
-              href="https://calendly.com/REMPLACER-PAR-LIEN-CLIENT"
-              target="_blank"
-              rel="noopener"
-              class="eyebrow glass flex items-center gap-3 px-6 py-3.5 text-bone-100"
-            >
-              Prendre rendez-vous <span aria-hidden="true">&rarr;</span>
-            </a>
-          </li>
-        </ul>
-      </nav>
-    </header>
+    <!--@include header.html-->
 
     <main>
       <!-- ==========================================================
@@ -427,36 +260,29 @@
 
           <div class="grid gap-6 md:grid-cols-3">
             <!-- Procuve -->
-            <article class="glass glass-hover card-leaf flex flex-col p-8" data-reveal>
-              <svg viewBox="0 0 72 72" fill="none" aria-hidden="true" class="h-14 w-14 shrink-0">
-                <defs>
-                  <linearGradient id="lg-procuve" x1="0.2" y1="0" x2="0.9" y2="1">
-                    <stop offset="0%" stop-color="#86efac" />
-                    <stop offset="55%" stop-color="#22c55e" />
-                    <stop offset="100%" stop-color="#15803d" />
-                  </linearGradient>
-                </defs>
-                <path d="M60 8C26 12 10 32 12 62c30-2 50-22 48-54Z" fill="url(#lg-procuve)" />
-                <path
-                  d="M60 8C44 26 28 44 12 62"
-                  stroke="#052e16"
-                  stroke-opacity="0.5"
-                  stroke-width="2.5"
-                  stroke-linecap="round"
+            <a href="/procuve/" class="glass glass-hover card-cobalt flex flex-col p-8" data-reveal>
+              <h3 class="flex h-28 items-center">
+                <img
+                  src="/img/logo-procuve.webp"
+                  alt="Procuve"
+                  class="h-14 w-auto"
+                  width="822"
+                  height="185"
                 />
-              </svg>
-
-              <h3 class="mt-6 text-2xl font-light tracking-[0.12em] uppercase text-leaf-400">Procuve</h3>
-              <p class="eyebrow mt-3 text-leaf-400/80">Amélioration énergétique et climat</p>
+              </h3>
+              <p class="eyebrow mt-3 text-cobalt-400/80">Amélioration énergétique et climat</p>
               <p class="mt-6 text-sm leading-relaxed font-light text-bone-300">
                 Développement de solutions innovantes pour améliorer l'efficacité énergétique et
                 réduire l'empreinte carbone.
               </p>
-              <span class="mt-auto pt-8 text-right text-bone-500 transition-colors duration-400" aria-hidden="true">&rarr;</span>
-            </article>
+              <span class="eyebrow card-cta mt-auto flex items-center justify-between gap-4 pt-8">
+                En savoir plus
+                <span aria-hidden="true">&rarr;</span>
+              </span>
+            </a>
 
             <!-- BusinessBusiness -->
-            <article class="glass glass-hover card-copper flex flex-col p-8" data-reveal>
+            <a href="/businessbusiness/" class="glass glass-hover card-copper flex flex-col p-8" data-reveal>
               <span
                 class="font-display text-[3.25rem] leading-none tracking-tight"
                 style="
@@ -475,11 +301,14 @@
                 Média digital indépendant dédié à la finance, à l'investissement et à
                 l'entrepreneuriat.
               </p>
-              <span class="mt-auto pt-8 text-right text-bone-500 transition-colors duration-400" aria-hidden="true">&rarr;</span>
-            </article>
+              <span class="eyebrow card-cta mt-auto flex items-center justify-between gap-4 pt-8">
+                En savoir plus
+                <span aria-hidden="true">&rarr;</span>
+              </span>
+            </a>
 
             <!-- IA pour tous -->
-            <article class="glass glass-hover card-azure flex flex-col p-8" data-reveal>
+            <a href="/ia-pour-tous/" class="glass glass-hover card-azure flex flex-col p-8" data-reveal>
               <svg viewBox="0 0 72 72" fill="none" aria-hidden="true" class="h-14 w-14 shrink-0">
                 <defs>
                   <linearGradient id="lg-ia" x1="0" y1="0" x2="1" y2="1">
@@ -505,8 +334,11 @@
                 Rendre l'intelligence artificielle accessible à tous. Former, accompagner et
                 inspirer peu importe le milieu social.
               </p>
-              <span class="mt-auto pt-8 text-right text-bone-500 transition-colors duration-400" aria-hidden="true">&rarr;</span>
-            </article>
+              <span class="eyebrow card-cta mt-auto flex items-center justify-between gap-4 pt-8">
+                En savoir plus
+                <span aria-hidden="true">&rarr;</span>
+              </span>
+            </a>
           </div>
         </div>
       </section>
@@ -523,7 +355,7 @@
           </header>
 
           <div class="grid gap-6 md:grid-cols-3">
-            <article class="glass glass-hover group overflow-hidden" data-reveal>
+            <a href="/articles/entreprendre-en-2026/" class="glass glass-hover group flex flex-col overflow-hidden" data-reveal>
               <div class="overflow-hidden">
                 <img
                   src="/img/article-1.webp"
@@ -535,7 +367,7 @@
                   class="h-36 w-full object-cover transition-transform duration-700 ease-[cubic-bezier(0.22,0.61,0.36,1)] group-hover:scale-[1.06]"
                 />
               </div>
-              <div class="p-7">
+              <div class="flex flex-1 flex-col p-7">
                 <div class="flex items-baseline justify-between gap-4">
                   <span class="eyebrow text-copper-400">Stratégie</span>
                   <time class="eyebrow text-bone-700" datetime="2026-05-12">12 mai 2026</time>
@@ -543,11 +375,14 @@
                 <h3 class="mt-4 font-display text-xl leading-snug text-bone-100">
                   Entreprendre en 2026 : s'adapter, innover, durer
                 </h3>
-                <span class="mt-5 block text-copper-400" aria-hidden="true">&rarr;</span>
+                <span class="eyebrow card-cta mt-auto flex items-center justify-between gap-4 pt-6">
+                  Lire l'article
+                  <span aria-hidden="true">&rarr;</span>
+                </span>
               </div>
-            </article>
+            </a>
 
-            <article class="glass glass-hover group overflow-hidden" data-reveal>
+            <a href="/articles/investir-avec-vision/" class="glass glass-hover group flex flex-col overflow-hidden" data-reveal>
               <div class="overflow-hidden">
                 <img
                   src="/img/article-2.webp"
@@ -559,7 +394,7 @@
                   class="h-36 w-full object-cover transition-transform duration-700 ease-[cubic-bezier(0.22,0.61,0.36,1)] group-hover:scale-[1.06]"
                 />
               </div>
-              <div class="p-7">
+              <div class="flex flex-1 flex-col p-7">
                 <div class="flex items-baseline justify-between gap-4">
                   <span class="eyebrow text-copper-400">Finance</span>
                   <time class="eyebrow text-bone-700" datetime="2026-04-28">28 avr. 2026</time>
@@ -567,11 +402,14 @@
                 <h3 class="mt-4 font-display text-xl leading-snug text-bone-100">
                   Investir avec vision : principes et discipline
                 </h3>
-                <span class="mt-5 block text-copper-400" aria-hidden="true">&rarr;</span>
+                <span class="eyebrow card-cta mt-auto flex items-center justify-between gap-4 pt-6">
+                  Lire l'article
+                  <span aria-hidden="true">&rarr;</span>
+                </span>
               </div>
-            </article>
+            </a>
 
-            <article class="glass glass-hover group overflow-hidden" data-reveal>
+            <a href="/articles/ia-au-service-de-la-societe/" class="glass glass-hover group flex flex-col overflow-hidden" data-reveal>
               <div class="overflow-hidden">
                 <img
                   src="/img/article-3.webp"
@@ -583,7 +421,7 @@
                   class="h-36 w-full object-cover transition-transform duration-700 ease-[cubic-bezier(0.22,0.61,0.36,1)] group-hover:scale-[1.06]"
                 />
               </div>
-              <div class="p-7">
+              <div class="flex flex-1 flex-col p-7">
                 <div class="flex items-baseline justify-between gap-4">
                   <span class="eyebrow text-copper-400">Technologie</span>
                   <time class="eyebrow text-bone-700" datetime="2026-04-15">15 avr. 2026</time>
@@ -591,176 +429,20 @@
                 <h3 class="mt-4 font-display text-xl leading-snug text-bone-100">
                   L'IA au service de la société
                 </h3>
-                <span class="mt-5 block text-copper-400" aria-hidden="true">&rarr;</span>
+                <span class="eyebrow card-cta mt-auto flex items-center justify-between gap-4 pt-6">
+                  Lire l'article
+                  <span aria-hidden="true">&rarr;</span>
+                </span>
               </div>
-            </article>
-          </div>
-        </div>
-      </section>
-
-      <!-- ==========================================================
-           BANDEAU CTA
-           ========================================================== -->
-      <section id="contact" class="relative pb-20 lg:pb-28">
-        <div class="mx-auto max-w-[1240px] px-6 lg:px-10">
-          <div
-            class="glass flex flex-col items-start gap-8 p-9 lg:flex-row lg:items-center lg:gap-12 lg:p-11"
-            data-reveal-scale
-          >
-            <!-- Gemme facettée : l'objet décoratif du bandeau dans la maquette -->
-            <svg viewBox="0 0 80 80" fill="none" aria-hidden="true" class="h-16 w-16 shrink-0">
-              <defs>
-                <linearGradient id="gem-a" x1="0" y1="0" x2="1" y2="1">
-                  <stop offset="0%" stop-color="#e0a96d" stop-opacity="0.9" />
-                  <stop offset="100%" stop-color="#8f5824" stop-opacity="0.5" />
-                </linearGradient>
-                <linearGradient id="gem-b" x1="0" y1="1" x2="1" y2="0">
-                  <stop offset="0%" stop-color="#1b2333" />
-                  <stop offset="100%" stop-color="#545b68" />
-                </linearGradient>
-              </defs>
-              <path d="M40 6 70 23v34L40 74 10 57V23Z" fill="url(#gem-b)" />
-              <path d="M40 6 70 23 40 40 10 23Z" fill="url(#gem-a)" />
-              <path d="M40 40v34L10 57V23Z" fill="#07090f" fill-opacity="0.45" />
-              <path
-                d="M40 6 70 23v34L40 74 10 57V23Z"
-                stroke="#d4914f"
-                stroke-opacity="0.5"
-                stroke-width="1.2"
-              />
-            </svg>
-
-            <div class="flex-1">
-              <h2 class="font-display text-[clamp(1.375rem,2.6vw,1.875rem)] text-bone-100">
-                Vous avez un projet ou souhaitez collaborer ?
-              </h2>
-              <p class="mt-3 text-sm leading-relaxed font-light text-bone-500">
-                Échangeons sur vos ambitions et construisons ensemble l'avenir.
-              </p>
-            </div>
-
-            <a
-              href="https://calendly.com/REMPLACER-PAR-LIEN-CLIENT"
-              target="_blank"
-              rel="noopener"
-              class="eyebrow glass glass-hover flex shrink-0 items-center gap-3 px-8 py-4 text-bone-100"
-            >
-              Prendre rendez-vous
-              <span aria-hidden="true">&rarr;</span>
             </a>
           </div>
         </div>
       </section>
+
+      <!--@include cta.html-->
     </main>
 
-    <!-- ==========================================================
-         FOOTER — statique, sans animation.
-         Le calme en fin de page fait partie du rythme du site.
-         ========================================================== -->
-    <footer class="border-t border-white/[0.06] py-16">
-      <div class="mx-auto max-w-[1240px] px-6 lg:px-10">
-        <div class="grid gap-12 md:grid-cols-2 lg:grid-cols-4">
-          <div>
-            <div class="flex items-center gap-4">
-              <span class="font-display text-3xl leading-none text-copper-400">JMH</span>
-              <span class="eyebrow text-bone-300">Jean-Maxime Hanny</span>
-            </div>
-            <p class="mt-4 text-sm font-light text-bone-500">
-              Entrepreneur • Investisseur • Développeur de projets
-            </p>
-
-            <!-- TODO client : URLs des réseaux sociaux à renseigner. -->
-            <ul class="mt-7 flex gap-3">
-              <li>
-                <a href="#" class="social-link" aria-label="LinkedIn">
-                  <svg viewBox="0 0 24 24" fill="currentColor" class="h-4 w-4" aria-hidden="true">
-                    <path
-                      d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5ZM3 9h4v12H3zM9 9h3.8v1.7h.05c.53-.95 1.83-1.95 3.77-1.95C20.3 8.75 21 11 21 14.1V21h-4v-6.1c0-1.45-.03-3.3-2.05-3.3-2.05 0-2.36 1.57-2.36 3.2V21H9z"
-                    />
-                  </svg>
-                </a>
-              </li>
-              <li>
-                <a href="#" class="social-link" aria-label="Instagram">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" class="h-4 w-4" aria-hidden="true">
-                    <rect x="3" y="3" width="18" height="18" rx="5" />
-                    <circle cx="12" cy="12" r="4" />
-                    <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none" />
-                  </svg>
-                </a>
-              </li>
-              <li>
-                <a href="#" class="social-link" aria-label="YouTube">
-                  <svg viewBox="0 0 24 24" fill="currentColor" class="h-4 w-4" aria-hidden="true">
-                    <path
-                      d="M21.6 7.2a2.5 2.5 0 0 0-1.75-1.77C18.28 5 12 5 12 5s-6.28 0-7.85.43A2.5 2.5 0 0 0 2.4 7.2 26 26 0 0 0 2 12a26 26 0 0 0 .4 4.8 2.5 2.5 0 0 0 1.75 1.77C5.72 19 12 19 12 19s6.28 0 7.85-.43a2.5 2.5 0 0 0 1.75-1.77A26 26 0 0 0 22 12a26 26 0 0 0-.4-4.8ZM10 15.2V8.8l5.2 3.2Z"
-                    />
-                  </svg>
-                </a>
-              </li>
-            </ul>
-          </div>
-
-          <nav aria-labelledby="footer-nav-title">
-            <h2 id="footer-nav-title" class="eyebrow text-copper-400">Navigation</h2>
-            <ul class="mt-6 space-y-3 text-sm font-light">
-              <li><a href="#hero" class="footer-link">À propos</a></li>
-              <li><a href="#entreprises" class="footer-link">Activités &amp; Projets</a></li>
-              <li><a href="#articles" class="footer-link">Articles &amp; Actualités</a></li>
-              <li><a href="#contact" class="footer-link">Contact</a></li>
-            </ul>
-          </nav>
-
-          <div>
-            <h2 class="eyebrow text-copper-400">Expertises</h2>
-            <ul class="mt-6 space-y-3 text-sm font-light text-bone-500">
-              <li>Stratégie</li>
-              <li>Investissement</li>
-              <li>Technologie</li>
-              <li>Développement durable</li>
-            </ul>
-          </div>
-
-          <div>
-            <h2 class="eyebrow text-copper-400">Contact</h2>
-            <ul class="mt-6 space-y-4 text-sm font-light">
-              <li>
-                <a
-                  href="https://calendly.com/REMPLACER-PAR-LIEN-CLIENT"
-                  target="_blank"
-                  rel="noopener"
-                  class="footer-link inline-flex items-center gap-3"
-                >
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" class="h-4 w-4 shrink-0" aria-hidden="true">
-                    <rect x="3" y="5" width="18" height="16" rx="2" />
-                    <path d="M3 10h18M8 3v4M16 3v4" />
-                  </svg>
-                  Prendre rendez-vous
-                </a>
-              </li>
-              <li class="inline-flex items-center gap-3 text-bone-500">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" class="h-4 w-4 shrink-0" aria-hidden="true">
-                  <path d="M12 21s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11Z" />
-                  <circle cx="12" cy="10" r="2.6" />
-                </svg>
-                France &amp; International
-              </li>
-            </ul>
-          </div>
-        </div>
-
-        <div
-          class="mt-14 flex flex-col gap-4 border-t border-white/[0.06] pt-8 text-xs font-light text-bone-700 sm:flex-row sm:items-center sm:justify-between"
-        >
-          <p>© 2026 Jean-Maxime Hanny. Tous droits réservés.</p>
-          <!-- TODO : ces deux pages doivent exister avant la mise en ligne. -->
-          <ul class="flex gap-8">
-            <li><a href="/mentions-legales.html" class="footer-link">Mentions légales</a></li>
-            <li><a href="/politique-confidentialite.html" class="footer-link">Politique de confidentialité</a></li>
-          </ul>
-        </div>
-      </div>
-    </footer>
+    <!--@include footer.html-->
 
     <script type="module" src="/src/js/main.js"></script>
   </body>

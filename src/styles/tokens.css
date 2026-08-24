@@ -21,8 +21,17 @@
   --color-bone-500: #8a909c;
   --color-bone-700: #545b68;
 
-  /* ---- Accents secondaires des cards entreprises (repris de la maquette) ---- */
-  --color-leaf-400: #4ade80;
+  /* ---- Accents secondaires des cards entreprises ----
+     Procuve était en vert dans la maquette, avant que le logo officiel soit
+     fourni : il est bleu. La gamme ci-dessous est prélevée dans le fichier du
+     logo — 600 est le bleu du fond de la cuve, 400 son reflet clair.
+     C'est 400 qui sert au texte : le bleu profond du logo ne fait que 2,1:1 de
+     contraste sur le fond du site, il y serait illisible. */
+  --color-cobalt-600: #154685;
+  --color-cobalt-500: #2f76bd;
+  --color-cobalt-400: #69abde;
+  --color-cobalt-300: #9bc9ec;
+
   --color-azure-400: #7dd3fc;
 
   /* ---- Typographie ---- */

@@ -18,31 +18,35 @@ export function initSections() {
     });
   });
 
-  /* ---- Grilles de cards ----
-     Un seul ScrollTrigger par grille : si chaque card avait le sien, elles se
-     déclencheraient à des moments différents et la cascade disparaîtrait. */
-  document.querySelectorAll('#entreprises .grid, #articles .grid').forEach((grid) => {
-    revealOnScroll(grid.querySelectorAll('[data-reveal]'), {
-      trigger: grid,
-      stagger: 0.12,
-      y: 34,
+  /* ---- Groupes en cascade ----
+     Un seul ScrollTrigger par groupe : si chaque card avait le sien, elles se
+     déclencheraient à des moments différents et la cascade disparaîtrait.
+     `[data-stagger]` désigne ces groupes sur les pages activité ; les deux
+     grilles de l'accueil sont nommées explicitement, elles préexistent à
+     cette convention. */
+  document
+    .querySelectorAll('#entreprises .grid, #articles .grid, [data-stagger]')
+    .forEach((group) => {
+      revealOnScroll(group.querySelectorAll('[data-reveal]'), {
+        trigger: group,
+        stagger: 0.12,
+        y: 34,
+      });
     });
-  });
 
-  /* ---- Bandeau CTA : fondu avec un très léger zoom ---- */
-  const cta = document.querySelector('[data-reveal-scale]');
-  if (!cta) return;
+  /* ---- Bandeaux CTA : fondu avec un très léger zoom ---- */
+  document.querySelectorAll('[data-reveal-scale]').forEach((cta) => {
+    if (prefersReducedMotion()) {
+      gsap.set(cta, { opacity: 1, scale: 1 });
+      return;
+    }
 
-  if (prefersReducedMotion()) {
-    gsap.set(cta, { opacity: 1, scale: 1 });
-    return;
-  }
-
-  gsap.to(cta, {
-    opacity: 1,
-    scale: 1,
-    duration: 1.1,
-    ease: 'power3.out',
-    scrollTrigger: { trigger: cta, start: 'top 88%', once: true },
+    gsap.to(cta, {
+      opacity: 1,
+      scale: 1,
+      duration: 1.1,
+      ease: 'power3.out',
+      scrollTrigger: { trigger: cta, start: 'top 88%', once: true },
+    });
   });
 }

@@ -25,10 +25,32 @@
   [headers.values]
     Cache-Control = "public, max-age=604800"
 
-# La page elle-même ne doit jamais être mise en cache durablement : c'est elle
-# qui référence les noms de fichiers, et le client doit voir chaque mise à jour.
+# Les pages elles-mêmes ne doivent jamais être mises en cache durablement :
+# ce sont elles qui référencent les noms de fichiers, et le client doit voir
+# chaque mise à jour. Une règle par page : Netlify ne fait pas correspondre
+# « /* » aux URL de répertoire servies par un index.html.
 [[headers]]
   for = "/"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+
+[[headers]]
+  for = "/procuve/"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+
+[[headers]]
+  for = "/businessbusiness/"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+
+[[headers]]
+  for = "/ia-pour-tous/"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+
+[[headers]]
+  for = "/articles/*"
   [headers.values]
     Cache-Control = "public, max-age=0, must-revalidate"
 

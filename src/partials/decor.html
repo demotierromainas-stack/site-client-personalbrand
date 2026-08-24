@@ -1,0 +1,85 @@
+    <!-- ==========================================================
+         DÉCOR DE FOND — partagé par les quatre pages du site.
+
+         Dans la maquette, l'environnement ne s'arrête pas au hero : les arcs,
+         les faisceaux et les lueurs continuent derrière les sections, et les
+         cards en verre laissent voir ce décor à travers elles. C'est ce qui
+         donne la profondeur ; des sections posées sur un aplat noir la perdent.
+
+         Couche `fixed` : le décor reste en place pendant que le contenu défile,
+         ce qui crée la sensation de parallaxe sans surcoût. Le conteneur
+         intérieur dérive lentement au scroll pour que la composition évolue au
+         lieu de se répéter à l'identique d'une section à l'autre.
+         ========================================================== -->
+    <div id="site-bg" aria-hidden="true">
+      <!-- Deux wrappers imbriqués : la dérive au scroll et le suivi du curseur
+           écrivent toutes deux sur `transform`. Les séparer évite qu'elles
+           s'annulent l'une l'autre. -->
+      <div id="site-bg-scroll">
+        <div id="site-bg-pointer">
+        <div class="bg-glow bg-glow--copper"></div>
+        <div class="bg-glow bg-glow--navy"></div>
+        <div class="bg-flare"></div>
+
+        <svg class="bg-lines" viewBox="0 0 1440 1400" preserveAspectRatio="xMidYMid slice" fill="none">
+          <defs>
+            <!-- Les arcs ne s'allument que sur une portion de leur tracé :
+                 c'est ce qui fait lire une structure éclairée par une source,
+                 plutôt qu'un cercle dessiné. -->
+            <linearGradient id="arc-light" x1="0" y1="1" x2="1" y2="0">
+              <stop offset="0%" stop-color="#8a909c" stop-opacity="0" />
+              <stop offset="38%" stop-color="#b8bdc7" stop-opacity="0.34" />
+              <stop offset="62%" stop-color="#e0a96d" stop-opacity="0.4" />
+              <stop offset="100%" stop-color="#b87333" stop-opacity="0" />
+            </linearGradient>
+            <linearGradient id="arc-faint" x1="0" y1="1" x2="1" y2="0">
+              <stop offset="0%" stop-color="#545b68" stop-opacity="0" />
+              <stop offset="50%" stop-color="#8a909c" stop-opacity="0.2" />
+              <stop offset="100%" stop-color="#545b68" stop-opacity="0" />
+            </linearGradient>
+            <linearGradient id="sweep" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%" stop-color="#b87333" stop-opacity="0" />
+              <stop offset="42%" stop-color="#e0a96d" stop-opacity="0.32" />
+              <stop offset="100%" stop-color="#b87333" stop-opacity="0" />
+            </linearGradient>
+            <linearGradient id="sweep-cool" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%" stop-color="#7dd3fc" stop-opacity="0" />
+              <stop offset="55%" stop-color="#b8bdc7" stop-opacity="0.18" />
+              <stop offset="100%" stop-color="#7dd3fc" stop-opacity="0" />
+            </linearGradient>
+          </defs>
+
+          <!-- Grands disques vus en perspective, sortant par la droite -->
+          <g class="bg-arcs">
+            <ellipse
+              cx="1580" cy="760" rx="700" ry="450"
+              transform="rotate(-14 1580 760)"
+              stroke="url(#arc-light)" stroke-width="1.4"
+            />
+            <ellipse
+              cx="1650" cy="820" rx="880" ry="580"
+              transform="rotate(-14 1650 820)"
+              stroke="url(#arc-faint)" stroke-width="1"
+            />
+            <ellipse
+              cx="1520" cy="1180" rx="620" ry="330"
+              transform="rotate(-8 1520 1180)"
+              stroke="url(#arc-faint)" stroke-width="1"
+            />
+          </g>
+
+          <!-- Courbes qui balaient la largeur et convergent vers les disques -->
+          <g class="bg-sweeps">
+            <path d="M-160 1010 C 340 940, 820 800, 1600 300" stroke="url(#sweep)" stroke-width="1.3" />
+            <path d="M-160 1120 C 380 1050, 900 900, 1600 420" stroke="url(#sweep-cool)" stroke-width="1" />
+            <path d="M-160 640 C 420 620, 980 540, 1600 180" stroke="url(#sweep-cool)" stroke-width="1" />
+            <path d="M-160 1320 C 300 1240, 880 1080, 1600 640" stroke="url(#sweep)" stroke-width="1" />
+          </g>
+        </svg>
+        </div>
+      </div>
+    </div>
+
+    <!-- Grain global : casse le banding des dégradés sur fond sombre. -->
+    <div class="grain" aria-hidden="true"></div>
+

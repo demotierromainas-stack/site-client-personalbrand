@@ -1,0 +1,435 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>PROCUVE — Démantèlement de cuves à fioul et transition énergétique</title>
+    <meta
+      name="description"
+      content="PROCUVE démantèle les cuves à fioul enterrées et aériennes et accompagne le passage à des solutions de chauffage durables. Neutralisation, extraction, évacuation tracée en centre agréé."
+    />
+    <link rel="canonical" href="https://jeanmaximehanny.com/procuve/" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://jeanmaximehanny.com/procuve/" />
+    <meta property="og:title" content="PROCUVE — Démantèlement de cuves à fioul et transition énergétique" />
+    <meta
+      property="og:description"
+      content="Sortir du fioul, proprement. De la neutralisation de la cuve à la nouvelle solution de chauffage."
+    />
+    <meta property="og:image" content="/img/scene-activite.webp" />
+
+    <link rel="preload" as="image" href="/img/scene-activite.webp" />
+
+    <!--@include head.html-->
+  </head>
+
+  <!-- `data-brand` porte la couleur de l'activité pour toute la page : c'est la
+       seule chose qui distingue structurellement les trois pages activité. -->
+  <body data-brand="procuve">
+    <a
+      href="#hero"
+      class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:bg-ink-800 focus:px-4 focus:py-2 focus:text-bone-100"
+      >Aller au contenu</a
+    >
+
+    <!--@include decor.html-->
+
+    <!--@include header.html-->
+
+    <main>
+      <!-- ==========================================================
+           HERO DE PAGE
+
+           Reprend la composition de la maquette : scène d'ambiance ancrée en
+           haut à droite, texte à gauche sur le fond sombre. Même mécanique de
+           parallaxe que le hero de l'accueil (hero.js), en plus sobre — une
+           page intérieure ne doit pas rivaliser avec la page d'accueil.
+           ========================================================== -->
+      <section id="hero" class="relative overflow-hidden pt-32 pb-16 lg:pt-40 lg:pb-24">
+        <!-- Scène partagée par les trois pages activité.
+             TODO client : le fichier actuel est le visuel de la maquette,
+             généré par IA et fourni en 612x328 seulement (606x324 après recadrage des bords) — il est donc flou
+             sur écran Retina, où le bandeau est affiché à plus du double.
+             À remplacer par une vraie photo, 2400 px de large minimum. -->
+        <div
+          class="pointer-events-none absolute top-0 right-[-30%] aspect-[606/324] w-[160%] lg:right-0 lg:w-[56%]"
+          data-layer="portrait"
+          aria-hidden="true"
+        >
+          <div class="h-full w-full" data-layer-inner="portrait">
+            <img
+              src="/img/scene-activite.webp"
+              alt=""
+              class="scene-mask h-full w-full object-cover object-[58%_30%] opacity-55 lg:opacity-100"
+              width="606"
+              height="324"
+            />
+          </div>
+        </div>
+
+        <div class="page-hero-veil" aria-hidden="true"></div>
+
+        <div class="relative mx-auto max-w-[1240px] px-6 lg:px-10" data-layer="content">
+          <div class="max-w-2xl">
+            <!-- Fil d'Ariane : c'est lui qui dit au visiteur — et aux moteurs —
+                 que cette page est une branche de l'accueil, pas un site à part. -->
+            <nav aria-label="Fil d'Ariane" data-reveal>
+              <ol class="eyebrow flex flex-wrap items-center gap-3 text-bone-700">
+                <li><a href="/" class="footer-link">Accueil</a></li>
+                <li aria-hidden="true">/</li>
+                <li><a href="/#entreprises" class="footer-link">Activités</a></li>
+                <li aria-hidden="true">/</li>
+                <li class="text-brand" aria-current="page">Procuve</li>
+              </ol>
+            </nav>
+
+            <h1
+              class="font-display mt-8 text-[clamp(2.5rem,5.6vw,4.25rem)] leading-[1.05] text-bone-100"
+              data-reveal
+            >
+              Sortir du fioul,<br />
+              <span class="text-brand">proprement.</span>
+            </h1>
+
+            <div class="rule-brand mt-8 w-44" data-reveal></div>
+
+            <p class="mt-8 max-w-xl text-base leading-relaxed font-light text-bone-300" data-reveal>
+              PROCUVE démantèle les cuves à fioul, enterrées comme aériennes, et accompagne le
+              passage à des solutions de chauffage durables. De la neutralisation de la cuve à la
+              mise en service d'une pompe à chaleur, une seule filière, tracée du chantier jusqu'au
+              centre de traitement.
+            </p>
+
+            <div class="mt-10 flex flex-wrap items-center gap-4" data-reveal>
+              <a href="#deroule" class="eyebrow glass glass-hover flex items-center gap-3 px-7 py-4 text-bone-100">
+                Comment ça se passe
+                <span aria-hidden="true">&darr;</span>
+              </a>
+              <a
+                href="https://calendly.com/REMPLACER-PAR-LIEN-CLIENT"
+                target="_blank"
+                rel="noopener"
+                class="eyebrow nav-link"
+              >
+                Parler d'un projet
+              </a>
+            </div>
+
+            <!-- Bloc chiffres en verre, comme sur l'accueil. -->
+            <dl class="glass mt-14 grid max-w-xl grid-cols-3 gap-6 p-7" data-reveal-fade>
+              <!-- TODO client : confirmer ou corriger ces trois chiffres.
+                   Le « 4× » vient de la maquette (impact carbone d'une pompe à
+                   chaleur comparé au fioul) ; les deux autres sont provisoires. -->
+              <div>
+                <dt class="sr-only">Réduction de l'impact carbone</dt>
+                <dd>
+                  <span class="font-display text-3xl text-brand" data-count-to="4" data-count-suffix="×"></span>
+                  <p class="eyebrow mt-2 leading-relaxed text-bone-500">Moins de CO<sub>2</sub></p>
+                </dd>
+              </div>
+              <div>
+                <dt class="sr-only">Traçabilité des déchets</dt>
+                <dd>
+                  <span class="font-display text-3xl text-brand" data-count-to="100" data-count-suffix="%"></span>
+                  <p class="eyebrow mt-2 leading-relaxed text-bone-500">Cuves tracées</p>
+                </dd>
+              </div>
+              <div>
+                <dt class="sr-only">Étapes prises en charge</dt>
+                <dd>
+                  <span class="font-display text-3xl text-brand" data-count-to="5" data-count-suffix=""></span>
+                  <p class="eyebrow mt-2 leading-relaxed text-bone-500">Étapes gérées</p>
+                </dd>
+              </div>
+            </dl>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================================
+           MISSION
+           ========================================================== -->
+      <section id="mission" class="relative py-20 lg:py-28">
+        <div class="mx-auto max-w-[1240px] px-6 lg:px-10">
+          <header class="mb-14">
+            <p class="eyebrow text-bone-500" data-reveal>Notre mission</p>
+            <h2 class="section-title mt-3 text-bone-100" data-reveal>
+              Accélérer la <span class="text-brand">transition énergétique</span>
+            </h2>
+          </header>
+
+          <div class="grid gap-10 lg:grid-cols-2 lg:gap-16" data-stagger>
+            <p class="text-base leading-relaxed font-light text-bone-300" data-reveal>
+              Le fioul est une énergie fossile fortement émettrice de CO<sub>2</sub> et de
+              particules fines. Une pompe à chaleur, elle, prélève les calories déjà présentes dans
+              l'air ou dans le sol : à confort égal, l'impact carbone est jusqu'à quatre fois
+              inférieur. Chaque cuve retirée est une installation de moins qui brûle du fioul, et un
+              risque de pollution des sols en moins.
+            </p>
+            <p class="text-base leading-relaxed font-light text-bone-300" data-reveal>
+              Une cuve hors service ne se laisse pas simplement en place. C'est un déchet dangereux,
+              soumis à des obligations de neutralisation, de transport et de traçabilité. PROCUVE
+              prend en charge l'intégralité de ce processus, avec des techniciens formés et du
+              matériel adapté, puis passe le relais à des partenaires certifiés pour la nouvelle
+              solution de chauffage. Un seul interlocuteur, du diagnostic à la mise en service.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================================
+           CE QUE NOUS FAISONS
+           ========================================================== -->
+      <section id="services" class="relative py-20 lg:py-28">
+        <div class="mx-auto max-w-[1240px] px-6 lg:px-10">
+          <header class="mb-14">
+            <p class="eyebrow text-bone-500" data-reveal>Ce que nous faisons</p>
+            <h2 class="section-title mt-3 text-bone-100" data-reveal>
+              Trois métiers, <span class="text-brand">une seule filière</span>
+            </h2>
+          </header>
+
+          <div class="grid gap-6 md:grid-cols-3" data-stagger>
+            <article class="glass card-brand flex flex-col p-8" data-reveal>
+              <span class="font-display text-2xl text-brand" aria-hidden="true">01</span>
+              <h3 class="mt-6 text-xl font-light tracking-[0.1em] uppercase text-bone-100">
+                Démantèlement de cuves
+              </h3>
+              <p class="mt-5 text-sm leading-relaxed font-light text-bone-300">
+                Cuves enterrées ou aériennes, quelle que soit leur capacité. Neutralisation,
+                dégazage, vidange, découpe et extraction, dans le respect des normes de sécurité et
+                d'environnement.
+              </p>
+            </article>
+
+            <article class="glass card-brand flex flex-col p-8" data-reveal>
+              <span class="font-display text-2xl text-brand" aria-hidden="true">02</span>
+              <h3 class="mt-6 text-xl font-light tracking-[0.1em] uppercase text-bone-100">
+                Traitement et traçabilité
+              </h3>
+              <p class="mt-5 text-sm leading-relaxed font-light text-bone-300">
+                Les cuves retirées sont des déchets dangereux. Nous les transportons vers des
+                centres agréés pour un traitement et une valorisation conformes, et remettons
+                l'ensemble des documents réglementaires.
+              </p>
+            </article>
+
+            <article class="glass card-brand flex flex-col p-8" data-reveal>
+              <span class="font-display text-2xl text-brand" aria-hidden="true">03</span>
+              <h3 class="mt-6 text-xl font-light tracking-[0.1em] uppercase text-bone-100">
+                Passage à la pompe à chaleur
+              </h3>
+              <p class="mt-5 text-sm leading-relaxed font-light text-bone-300">
+                Un réseau de partenaires certifiés prend le relais pour installer la nouvelle
+                solution de chauffage, dimensionnée pour le logement. L'accompagnement va de A à Z.
+              </p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================================
+           DÉROULÉ D'UNE INTERVENTION
+
+           Le rail vertical à pastilles reprend la trame de la maquette. Elle y
+           servait un format questions/réponses ; ici elle porte une suite
+           d'étapes, ce qui est le même objet visuel : des moments reliés par
+           un fil.
+           ========================================================== -->
+      <section id="deroule" class="relative py-20 lg:py-28">
+        <div class="mx-auto max-w-[1240px] px-6 lg:px-10">
+          <header class="mb-14">
+            <p class="eyebrow text-bone-500" data-reveal>Le déroulé</p>
+            <h2 class="section-title mt-3 text-bone-100" data-reveal>
+              Un protocole <span class="text-brand">strict</span>, du diagnostic à l'évacuation
+            </h2>
+          </header>
+
+          <ol class="step-rail max-w-3xl" data-stagger>
+            <li class="grid grid-cols-[2.875rem_1fr] gap-6 pb-11 lg:gap-9" data-reveal>
+              <span class="step-num" aria-hidden="true">01</span>
+              <div class="pt-2">
+                <h3 class="font-display text-xl text-bone-100 lg:text-2xl">Diagnostic sur site</h3>
+                <p class="mt-3 text-sm leading-relaxed font-light text-bone-300">
+                  État de la cuve, accès, contraintes du terrain. La visite détermine le protocole
+                  applicable, le matériel nécessaire et le devis.
+                </p>
+              </div>
+            </li>
+
+            <li class="grid grid-cols-[2.875rem_1fr] gap-6 pb-11 lg:gap-9" data-reveal>
+              <span class="step-num" aria-hidden="true">02</span>
+              <div class="pt-2">
+                <h3 class="font-display text-xl text-bone-100 lg:text-2xl">Neutralisation et dégazage</h3>
+                <p class="mt-3 text-sm leading-relaxed font-light text-bone-300">
+                  La cuve est mise en sécurité avant toute intervention mécanique. Le dégazage
+                  élimine les vapeurs inflammables : c'est l'étape qui rend la suite possible.
+                </p>
+              </div>
+            </li>
+
+            <li class="grid grid-cols-[2.875rem_1fr] gap-6 pb-11 lg:gap-9" data-reveal>
+              <span class="step-num" aria-hidden="true">03</span>
+              <div class="pt-2">
+                <h3 class="font-display text-xl text-bone-100 lg:text-2xl">Vidange et nettoyage</h3>
+                <p class="mt-3 text-sm leading-relaxed font-light text-bone-300">
+                  Les résidus de fioul sont pompés, puis les parois nettoyées jusqu'à ce qu'il ne
+                  reste plus de matière susceptible de polluer.
+                </p>
+              </div>
+            </li>
+
+            <li class="grid grid-cols-[2.875rem_1fr] gap-6 pb-11 lg:gap-9" data-reveal>
+              <span class="step-num" aria-hidden="true">04</span>
+              <div class="pt-2">
+                <h3 class="font-display text-xl text-bone-100 lg:text-2xl">Découpe et extraction</h3>
+                <p class="mt-3 text-sm leading-relaxed font-light text-bone-300">
+                  La cuve est découpée puis sortie de son emplacement, en préservant le terrain et
+                  les ouvrages environnants. Le site est rendu propre.
+                </p>
+              </div>
+            </li>
+
+            <li class="grid grid-cols-[2.875rem_1fr] gap-6 lg:gap-9" data-reveal>
+              <span class="step-num" aria-hidden="true">05</span>
+              <div class="pt-2">
+                <h3 class="font-display text-xl text-bone-100 lg:text-2xl">Évacuation et traçabilité</h3>
+                <p class="mt-3 text-sm leading-relaxed font-light text-bone-300">
+                  Transport vers un centre agréé et bordereau de suivi des déchets dangereux (BSDD)
+                  remis au client. La cuve est traçable du chantier jusqu'à son traitement : rien
+                  n'est laissé au hasard.
+                </p>
+              </div>
+            </li>
+          </ol>
+        </div>
+      </section>
+
+      <!-- ==========================================================
+           SITE DE LA MARQUE
+           ========================================================== -->
+      <section id="visiter" class="relative py-20 lg:py-28">
+        <div class="mx-auto max-w-[1240px] px-6 lg:px-10">
+          <div
+            class="glass card-brand flex flex-col items-start gap-9 p-9 lg:flex-row lg:items-center lg:gap-14 lg:p-12"
+            data-reveal-scale
+          >
+            <!-- Logo officiel fourni par le client, dans sa déclinaison pour
+                 fond sombre (le « PRO » est en lettres blanches cerclées).
+                 Posé directement sur la card : le mettre sur une plaque claire
+                 rendrait justement ce « PRO » invisible. -->
+            <img
+              src="/img/logo-procuve.webp"
+              alt="Logo PROCUVE"
+              class="brand-logo shrink-0"
+              width="822"
+              height="185"
+            />
+
+            <div class="flex-1">
+              <h2 class="font-display text-[clamp(1.375rem,2.6vw,1.875rem)] text-bone-100">
+                Le site de PROCUVE
+              </h2>
+              <p class="mt-3 max-w-xl text-sm leading-relaxed font-light text-bone-500">
+                Zones d'intervention, tarifs, prise de contact et demandes de devis se trouvent sur
+                le site dédié de l'entreprise.
+              </p>
+            </div>
+
+            <!-- TODO client : confirmer l'adresse du site PROCUVE. -->
+            <a
+              href="https://procuve.com"
+              target="_blank"
+              rel="noopener"
+              class="eyebrow link-external shrink-0"
+            >
+              Visiter procuve.com
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" class="h-4 w-4" aria-hidden="true">
+                <path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5" />
+              </svg>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================================
+           MAILLAGE INTERNE
+           Chaque page activité renvoie vers les deux autres. C'est ce qui fait
+           que les trois pages forment un site et non trois culs-de-sac.
+           ========================================================== -->
+      <section id="autres" class="relative py-20 lg:py-28">
+        <div class="mx-auto max-w-[1240px] px-6 lg:px-10">
+          <header class="mb-14">
+            <p class="eyebrow text-bone-500" data-reveal>Les autres activités</p>
+            <h2 class="section-title mt-3 text-bone-100" data-reveal>
+              Poursuivre la <span class="text-copper-400">visite</span>
+            </h2>
+          </header>
+
+          <div class="grid gap-6 md:grid-cols-2" data-stagger>
+            <a href="/businessbusiness/" class="glass glass-hover card-copper flex flex-col p-8" data-reveal>
+              <span
+                class="font-display text-[3.25rem] leading-none tracking-tight"
+                style="
+                  background: linear-gradient(140deg, #e0a96d 0%, #b87333 55%, #8f5824 100%);
+                  -webkit-background-clip: text;
+                  background-clip: text;
+                  color: transparent;
+                "
+                aria-hidden="true"
+                >BB</span
+              >
+              <h3 class="mt-6 text-2xl font-light tracking-[0.12em] uppercase text-bone-100">BusinessBusiness</h3>
+              <p class="eyebrow mt-3 text-copper-400/90">Média finance &amp; investissement</p>
+              <p class="mt-6 text-sm leading-relaxed font-light text-bone-300">
+                Média digital indépendant dédié à la finance, à l'investissement et à
+                l'entrepreneuriat.
+              </p>
+              <span class="eyebrow card-cta mt-auto flex items-center justify-between gap-4 pt-8">
+                En savoir plus
+                <span aria-hidden="true">&rarr;</span>
+              </span>
+            </a>
+
+            <a href="/ia-pour-tous/" class="glass glass-hover card-azure flex flex-col p-8" data-reveal>
+              <svg viewBox="0 0 72 72" fill="none" aria-hidden="true" class="h-14 w-14 shrink-0">
+                <defs>
+                  <linearGradient id="lg-ia-cross" x1="0" y1="0" x2="1" y2="1">
+                    <stop offset="0%" stop-color="#f1f5f9" />
+                    <stop offset="55%" stop-color="#94a3b8" />
+                    <stop offset="100%" stop-color="#7dd3fc" />
+                  </linearGradient>
+                </defs>
+                <circle cx="13" cy="15" r="5.5" fill="url(#lg-ia-cross)" />
+                <rect x="8.5" y="26" width="9" height="34" rx="4.5" fill="url(#lg-ia-cross)" />
+                <path
+                  d="M30 60 L45 16 L60 60"
+                  stroke="url(#lg-ia-cross)"
+                  stroke-width="9"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+              <h3 class="mt-6 text-2xl font-light tracking-[0.12em] uppercase text-bone-100">IA pour tous</h3>
+              <p class="eyebrow mt-3 text-azure-400/90">Formation &amp; promotion de l'IA</p>
+              <p class="mt-6 text-sm leading-relaxed font-light text-bone-300">
+                Rendre l'intelligence artificielle accessible à tous. Former, accompagner et
+                inspirer peu importe le milieu social.
+              </p>
+              <span class="eyebrow card-cta mt-auto flex items-center justify-between gap-4 pt-8">
+                En savoir plus
+                <span aria-hidden="true">&rarr;</span>
+              </span>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <!--@include cta.html-->
+    </main>
+
+    <!--@include footer.html-->
+
+    <script type="module" src="/src/js/main.js"></script>
+  </body>
+</html>

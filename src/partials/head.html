@@ -1,0 +1,24 @@
+    <!-- Partie commune du <head>. Ce qui est propre à chaque page — titre,
+         description, Open Graph, préchargement de l'image du hero — reste dans
+         la page elle-même, juste avant cette inclusion. -->
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#07090f" />
+
+    <meta property="og:locale" content="fr_FR" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Playfair+Display:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+
+    <script>
+      // Marque le JS comme actif AVANT le premier rendu : les états initiaux
+      // d'animation (opacity 0) sont conditionnés à cette classe, pour que la
+      // page reste lisible si le JS ne charge pas.
+      document.documentElement.classList.add('js-enabled');
+    </script>
+
+    <link rel="stylesheet" href="/src/styles/main.css" />

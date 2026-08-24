@@ -149,12 +149,23 @@
     border-bottom-color: rgb(255 255 255 / 0.06);
   }
 
+  /* Sur un article, du texte défile en continu derrière le header. Les 15 %
+     de transparence qui donnent son effet de verre au reste du site y font
+     passer des lignes de corps de texte sous la navigation, en permanence.
+     Le header y devient donc opaque : c'est la lecture qui prime. */
+  body[data-page='article'] #site-header.is-scrolled {
+    background-color: rgb(11 15 24 / 0.97);
+  }
+
   /* Chaque entreprise porte une teinte de marque très diluée, diffusée depuis
      le coin où se trouve son logo. Sans elle les trois cards sont identiques et
      la section devient plate. */
-  .card-leaf {
+  /* Teinte plus appuyée que pour les deux autres marques : un bleu posé sur un
+     fond navy se voit beaucoup moins qu'un vert ou un cuivre, à opacité égale
+     la card paraîtrait simplement non teintée. */
+  .card-cobalt {
     background:
-      radial-gradient(circle at 12% 0%, rgb(74 222 128 / 0.09), transparent 58%),
+      radial-gradient(circle at 12% 0%, rgb(105 171 222 / 0.14), transparent 58%),
       var(--glass-bg);
   }
 
@@ -172,11 +183,11 @@
 
   /* Au hover, la bordure et la lueur prennent la couleur de la marque
      plutôt que le cuivre par défaut. */
-  .card-leaf.glass-hover:hover {
-    border-color: rgb(74 222 128 / 0.4);
+  .card-cobalt.glass-hover:hover {
+    border-color: rgb(105 171 222 / 0.45);
     box-shadow:
       inset 0 1px 0 rgb(255 255 255 / 0.08),
-      0 20px 50px -20px rgb(74 222 128 / 0.3);
+      0 20px 50px -20px rgb(105 171 222 / 0.35);
   }
 
   .card-azure.glass-hover:hover {
@@ -189,6 +200,25 @@
   /* La flèche de fin de card avance légèrement au survol. */
   .glass-hover:hover [aria-hidden='true']:last-child {
     color: var(--color-copper-400);
+  }
+
+  /* Ligne « En savoir plus » en pied de card : les cards des entreprises sont
+     devenues des liens vers leur page, il fallait le dire. */
+  .card-cta {
+    color: var(--color-bone-500);
+    transition: color var(--duration-hover) var(--ease-out-soft);
+  }
+
+  .card-cta > [aria-hidden='true'] {
+    transition: transform var(--duration-hover) var(--ease-out-expo);
+  }
+
+  .glass-hover:hover .card-cta {
+    color: var(--color-bone-300);
+  }
+
+  .glass-hover:hover .card-cta > [aria-hidden='true'] {
+    transform: translateX(4px);
   }
 
   /* Liens du footer et icônes sociales. */
@@ -227,6 +257,442 @@
       var(--color-copper-500),
       transparent
     );
+  }
+
+  /* ============================================================
+     SOUS-MENU « ACTIVITÉS »
+     Les trois activités ont leur propre page : le sous-menu est ce qui les
+     rend atteignables depuis n'importe où, et pas seulement depuis la grille
+     de l'accueil.
+     ============================================================ */
+
+  .nav-submenu {
+    /* Fond bien plus opaque que le verre du reste du site : le menu se déploie
+       au-dessus du portrait du hero, très clair par endroits, et le verre à
+       3 % n'y tenait pas la lisibilité. */
+    background-color: rgb(11 15 24 / 0.95);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    /* `visibility` en plus de `opacity` : sans elle le menu resterait
+       cliquable et focusable alors qu'il est invisible. */
+    visibility: hidden;
+    opacity: 0;
+    transform: translate(-50%, -8px);
+    transition:
+      opacity var(--duration-hover) var(--ease-out-soft),
+      transform var(--duration-hover) var(--ease-out-expo),
+      visibility var(--duration-hover);
+  }
+
+  /* Le menu est décollé du bouton de 1 rem : sans ce pont invisible, le
+     survol se romprait dans l'espace vide et le menu se refermerait avant
+     qu'on l'atteigne. */
+  .nav-submenu::before {
+    content: '';
+    position: absolute;
+    top: -1rem;
+    right: 0;
+    left: 0;
+    height: 1rem;
+  }
+
+  .nav-group:hover .nav-submenu,
+  .nav-group:focus-within .nav-submenu {
+    visibility: visible;
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+
+  /* Échappement clavier. Le menu s'ouvre au `:focus-within`, donc appuyer sur
+     Échap ne suffirait pas à le refermer tant que le focus reste sur le
+     bouton — et déplacer le focus ailleurs pour y arriver serait pire. Cet
+     attribut, posé par header.js, reprend la main ; il est placé après la
+     règle d'ouverture pour l'emporter à spécificité égale. */
+  .nav-submenu[data-collapsed='true'] {
+    visibility: hidden;
+    opacity: 0;
+    transform: translate(-50%, -8px);
+  }
+
+  .nav-chevron {
+    transition: transform var(--duration-hover) var(--ease-out-soft);
+  }
+
+  .nav-group:hover .nav-chevron,
+  .nav-group:focus-within .nav-chevron {
+    transform: rotate(180deg);
+  }
+
+  .submenu-link {
+    display: block;
+    padding: 0.625rem 0.875rem;
+    border-radius: 8px;
+    font-size: 0.8125rem;
+    font-weight: 300;
+    color: var(--color-bone-300);
+    transition:
+      background-color var(--duration-hover) var(--ease-out-soft),
+      color var(--duration-hover) var(--ease-out-soft);
+  }
+
+  .submenu-link:hover {
+    background: rgb(255 255 255 / 0.05);
+    color: var(--color-bone-100);
+  }
+
+  /* Page courante — posé par header.js à partir de l'URL. */
+  .submenu-link[aria-current='page'] {
+    color: var(--color-copper-400);
+  }
+
+  .nav-link[aria-current='page'],
+  .nav-link[data-current='true'] {
+    color: var(--color-bone-100);
+  }
+
+  .nav-link[aria-current='page']::after,
+  .nav-link[data-current='true']::after {
+    transform: scaleX(1);
+  }
+
+  /* ============================================================
+     PAGES ACTIVITÉ
+     ============================================================ */
+
+  /* Couleur de marque. Chaque activité porte déjà sa teinte sur les cards de
+     l'accueil ; les pages la reprennent. Elle est posée une seule fois sur le
+     <body>, et tout ce qui suit s'y réfère via --brand : les trois pages sont
+     structurellement identiques et ne diffèrent que par cette variable.
+     --brand-rgb existe en plus de --brand parce que les lueurs et bordures ont
+     besoin des composantes séparées pour moduler l'alpha. */
+  [data-brand='procuve'] {
+    --brand: var(--color-cobalt-400);
+    --brand-rgb: 105 171 222;
+  }
+
+  [data-brand='businessbusiness'] {
+    --brand: var(--color-copper-400);
+    --brand-rgb: 212 145 79;
+  }
+
+  [data-brand='ia'] {
+    --brand: var(--color-azure-400);
+    --brand-rgb: 125 211 252;
+  }
+
+  .text-brand {
+    color: var(--brand, var(--color-copper-400));
+  }
+
+  .rule-brand {
+    height: 1px;
+    background: linear-gradient(to right, var(--brand, var(--color-copper-400)), transparent);
+  }
+
+  .card-brand {
+    background:
+      radial-gradient(circle at 12% 0%, rgb(var(--brand-rgb, 212 145 79) / 0.09), transparent 58%),
+      var(--glass-bg);
+  }
+
+  .card-brand.glass-hover:hover {
+    border-color: rgb(var(--brand-rgb, 212 145 79) / 0.4);
+    box-shadow:
+      inset 0 1px 0 rgb(255 255 255 / 0.08),
+      0 20px 50px -20px rgb(var(--brand-rgb, 212 145 79) / 0.3);
+  }
+
+  /* Fondu de la photo d'ambiance du hero de page.
+     Différent de .portrait-mask : là-bas l'image est un portrait vertical
+     détouré au centre, ici c'est une scène large ancrée en haut à droite qui
+     doit se dissoudre vers la gauche (où se trouve le texte) et vers le bas
+     (où commence le contenu). */
+  .scene-mask {
+    --fade-h: linear-gradient(to right, transparent 0%, black 40%, black 100%);
+    --fade-v: linear-gradient(to bottom, black 0%, black 58%, transparent 100%);
+
+    mask-image: var(--fade-h), var(--fade-v);
+    mask-composite: intersect;
+    -webkit-mask-image: var(--fade-h), var(--fade-v);
+    -webkit-mask-composite: source-in;
+  }
+
+  /* Voile de lisibilité du hero des pages activité.
+     Écrit ici plutôt qu'en classes utilitaires pour deux raisons : les trois
+     pages le partagent à l'identique, et il superpose deux dégradés, ce que la
+     syntaxe utilitaire ne sait pas exprimer. */
+  .page-hero-veil {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    /* Mobile : la scène est un bandeau en haut, débordant à droite. Le
+       diagonal assombrit la gauche, où commence le texte ; le vertical éteint
+       le bandeau dès qu'il croise le titre, et laisse tout le bas au fond nu.
+       Le bandeau fait environ un cinquième de la hauteur du hero, d'où les
+       arrêts serrés du second dégradé. */
+    background:
+      linear-gradient(
+        104deg,
+        #07090f 0%,
+        rgb(7 9 15 / 0.88) 34%,
+        rgb(7 9 15 / 0.5) 68%,
+        rgb(7 9 15 / 0.25) 100%
+      ),
+      linear-gradient(
+        to bottom,
+        rgb(7 9 15 / 0.45) 0%,
+        rgb(7 9 15 / 0.22) 10%,
+        rgb(7 9 15 / 0.8) 20%,
+        #07090f 28%
+      );
+  }
+
+  /* Desktop : la scène est confinée à la moitié droite, le texte n'est plus
+     jamais dessus. Un seul dégradé horizontal suffit, et la photo peut rester
+     à pleine intensité. */
+  @media (min-width: 1024px) {
+    .page-hero-veil {
+      background: linear-gradient(
+        to right,
+        #07090f 0%,
+        rgb(7 9 15 / 0.88) 34%,
+        rgb(7 9 15 / 0.35) 62%,
+        rgb(7 9 15 / 0.1) 84%
+      );
+    }
+  }
+
+  /* Rail d'étapes — la trame verticale à pastilles de la maquette.
+     Elle y servait un format questions/réponses ; ici elle porte le
+     déroulé d'une intervention, qui est la même idée visuelle : une suite
+     de moments reliés par un fil. */
+  .step-rail {
+    position: relative;
+  }
+
+  .step-rail::before {
+    content: '';
+    position: absolute;
+    /* Aligné sur le centre des pastilles : moitié de leurs 2.875rem. */
+    left: 1.4375rem;
+    top: 1.5rem;
+    bottom: 1.5rem;
+    width: 1px;
+    background: linear-gradient(
+      to bottom,
+      transparent,
+      rgb(255 255 255 / 0.13) 6%,
+      rgb(255 255 255 / 0.13) 94%,
+      transparent
+    );
+  }
+
+  .step-num {
+    display: grid;
+    place-items: center;
+    height: 2.875rem;
+    width: 2.875rem;
+    border-radius: 9999px;
+    border: 1px solid rgb(var(--brand-rgb, 212 145 79) / 0.35);
+    /* Fond opaque : le trait du rail passe derrière et doit être interrompu,
+       pas visible au travers de la pastille. */
+    background: var(--color-ink-950);
+    color: var(--brand, var(--color-copper-400));
+    font-family: var(--font-display);
+    font-size: 0.9375rem;
+    letter-spacing: 0.04em;
+  }
+
+  /* Logo de marque dans le bandeau « le site de… ».
+     Le fichier fourni pour Procuve est la déclinaison fond sombre : lettres
+     blanches, fond détouré. Il se pose donc directement sur la card, sans
+     plaque claire derrière — une plaque effacerait le « PRO ».
+     Dimensionné en hauteur, jamais en largeur : les trois logos n'auront pas
+     les mêmes proportions, c'est la hauteur qui doit rester constante. */
+  .brand-logo {
+    display: block;
+    height: auto;
+    max-height: 3.25rem;
+    width: auto;
+    max-width: 100%;
+  }
+
+  @media (min-width: 1024px) {
+    .brand-logo {
+      max-height: 4rem;
+    }
+  }
+
+  /* ============================================================
+     TEXTE LONG DES ARTICLES
+
+     Le reste du site est fait de blocs courts : titres, accroches, cards.
+     Un article, lui, se lit sur plusieurs minutes, et les réglages qui
+     fonctionnent pour une accroche de trois lignes ne tiennent pas sur
+     mille mots. D'où une échelle typographique à part, plus grande et plus
+     aérée, et un rythme vertical qui sépare les idées plutôt que les
+     paragraphes.
+     ============================================================ */
+
+  .prose {
+    /* 17 px plutôt que 16 : sur fond sombre, un texte clair paraît plus fin
+       qu'il ne l'est, et le gain de lisibilité est net sur la longueur. */
+    font-size: 1.0625rem;
+    font-weight: 300;
+    line-height: 1.8;
+    color: var(--color-bone-300);
+  }
+
+  .prose > * + * {
+    margin-top: 1.6em;
+  }
+
+  /* Les titres respirent beaucoup plus au-dessus qu'en dessous : c'est ce
+     déséquilibre qui les rattache au texte qui les suit plutôt qu'à celui
+     qui les précède. */
+  .prose h2 {
+    margin-top: 3.2rem;
+    font-family: var(--font-display);
+    font-size: clamp(1.5rem, 3vw, 1.875rem);
+    font-weight: 400;
+    line-height: 1.25;
+    color: var(--color-bone-100);
+  }
+
+  .prose h2 + * {
+    margin-top: 1.1rem;
+  }
+
+  .prose h3 {
+    margin-top: 2.4rem;
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+    font-weight: 400;
+    color: var(--color-bone-100);
+  }
+
+  .prose h3 + * {
+    margin-top: 0.9rem;
+  }
+
+  /* Le gras ne doit pas être plus gras — il doit être plus clair. Une graisse
+     supérieure sur fond sombre crée un halo ; un blanc plus franc suffit à
+     détacher le mot. */
+  .prose strong {
+    font-weight: 400;
+    color: var(--color-bone-100);
+  }
+
+  .prose em {
+    font-style: italic;
+    color: var(--color-bone-100);
+  }
+
+  .prose a {
+    color: var(--color-copper-400);
+    text-decoration: underline;
+    text-underline-offset: 4px;
+    text-decoration-color: rgb(212 145 79 / 0.4);
+    transition: text-decoration-color var(--duration-hover) var(--ease-out-soft);
+  }
+
+  .prose a:hover {
+    text-decoration-color: var(--color-copper-400);
+  }
+
+  .prose ul,
+  .prose ol {
+    padding-left: 1.5rem;
+  }
+
+  .prose li + li {
+    margin-top: 0.7rem;
+  }
+
+  .prose ul > li {
+    position: relative;
+    list-style: none;
+  }
+
+  .prose ul > li::before {
+    content: '';
+    position: absolute;
+    top: 0.75em;
+    left: -1.25rem;
+    height: 5px;
+    width: 5px;
+    border-radius: 9999px;
+    background: var(--color-copper-500);
+  }
+
+  .prose ol {
+    list-style: decimal;
+  }
+
+  .prose ol > li::marker {
+    color: var(--color-copper-400);
+    font-family: var(--font-display);
+  }
+
+  /* Citation : pas de guillemets décoratifs, pas de fond. Un filet cuivre et
+     du serif suffisent à changer de voix, et restent dans le vocabulaire du
+     site plutôt que d'y ajouter un objet. */
+  .prose blockquote {
+    margin-top: 2.6rem;
+    margin-bottom: 2.6rem;
+    border-left: 1px solid var(--color-copper-500);
+    padding-left: 1.75rem;
+    font-family: var(--font-display);
+    font-size: clamp(1.125rem, 2.2vw, 1.375rem);
+    font-style: normal;
+    line-height: 1.55;
+    color: var(--color-bone-100);
+  }
+
+  .prose hr {
+    margin-top: 3rem;
+    margin-bottom: 3rem;
+    border: 0;
+    height: 1px;
+    background: linear-gradient(to right, var(--color-copper-500), transparent);
+  }
+
+  /* Mention légale ou avertissement en fin d'article. */
+  .prose .prose-note {
+    margin-top: 3rem;
+    border-top: 1px solid rgb(255 255 255 / 0.07);
+    padding-top: 1.5rem;
+    font-size: 0.8125rem;
+    line-height: 1.7;
+    color: var(--color-bone-700);
+  }
+
+  /* Chapô : le paragraphe d'entrée, plus grand que le corps, qui fait le pont
+     entre le titre et le texte. */
+  .article-lead {
+    font-size: clamp(1.125rem, 2.2vw, 1.3125rem);
+    font-weight: 300;
+    line-height: 1.65;
+    color: var(--color-bone-100);
+  }
+
+  /* Lien sortant vers le site de la marque. */
+  .link-external {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    border: 1px solid rgb(var(--brand-rgb, 212 145 79) / 0.4);
+    border-radius: 10px;
+    padding: 0.875rem 1.5rem;
+    color: var(--color-bone-100);
+    transition:
+      border-color var(--duration-hover) var(--ease-out-soft),
+      background-color var(--duration-hover) var(--ease-out-soft);
+  }
+
+  .link-external:hover {
+    border-color: rgb(var(--brand-rgb, 212 145 79) / 0.75);
+    background: rgb(var(--brand-rgb, 212 145 79) / 0.08);
   }
 }
 

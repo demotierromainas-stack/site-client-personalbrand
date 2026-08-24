@@ -1,0 +1,409 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>IA pour tous — Formation et accompagnement à l'intelligence artificielle</title>
+    <meta
+      name="description"
+      content="IA pour tous rend l'intelligence artificielle accessible à tous : ateliers d'initiation, formation en entreprise et programmes solidaires, quel que soit le milieu social ou le niveau de départ."
+    />
+    <link rel="canonical" href="https://jeanmaximehanny.com/ia-pour-tous/" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://jeanmaximehanny.com/ia-pour-tous/" />
+    <meta property="og:title" content="IA pour tous — Formation et accompagnement à l'intelligence artificielle" />
+    <meta
+      property="og:description"
+      content="L'intelligence artificielle n'appartient à personne. Former, accompagner et inspirer, quel que soit le point de départ."
+    />
+    <meta property="og:image" content="/img/scene-activite.webp" />
+
+    <link rel="preload" as="image" href="/img/scene-activite.webp" />
+
+    <!--@include head.html-->
+  </head>
+
+  <body data-brand="ia">
+    <a
+      href="#hero"
+      class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:bg-ink-800 focus:px-4 focus:py-2 focus:text-bone-100"
+      >Aller au contenu</a
+    >
+
+    <!--@include decor.html-->
+
+    <!--@include header.html-->
+
+    <main>
+      <!-- ==========================================================
+           HERO DE PAGE — même composition que /procuve/ et /businessbusiness/.
+           ========================================================== -->
+      <section id="hero" class="relative overflow-hidden pt-32 pb-16 lg:pt-40 lg:pb-24">
+        <!-- Scène partagée par les trois pages activité.
+             TODO client : le fichier actuel est le visuel de la maquette,
+             généré par IA et fourni en 612x328 seulement (606x324 après recadrage des bords) — il est donc flou
+             sur écran Retina, où le bandeau est affiché à plus du double.
+             À remplacer par une vraie photo, 2400 px de large minimum. -->
+        <div
+          class="pointer-events-none absolute top-0 right-[-30%] aspect-[606/324] w-[160%] lg:right-0 lg:w-[56%]"
+          data-layer="portrait"
+          aria-hidden="true"
+        >
+          <div class="h-full w-full" data-layer-inner="portrait">
+            <img
+              src="/img/scene-activite.webp"
+              alt=""
+              class="scene-mask h-full w-full object-cover object-[58%_30%] opacity-55 lg:opacity-100"
+              width="606"
+              height="324"
+            />
+          </div>
+        </div>
+
+        <div class="page-hero-veil" aria-hidden="true"></div>
+
+        <div class="relative mx-auto max-w-[1240px] px-6 lg:px-10" data-layer="content">
+          <div class="max-w-2xl">
+            <nav aria-label="Fil d'Ariane" data-reveal>
+              <ol class="eyebrow flex flex-wrap items-center gap-3 text-bone-700">
+                <li><a href="/" class="footer-link">Accueil</a></li>
+                <li aria-hidden="true">/</li>
+                <li><a href="/#entreprises" class="footer-link">Activités</a></li>
+                <li aria-hidden="true">/</li>
+                <li class="text-brand" aria-current="page">IA pour tous</li>
+              </ol>
+            </nav>
+
+            <!-- TODO client : accroche à valider. -->
+            <h1
+              class="font-display mt-8 text-[clamp(2.5rem,5.6vw,4.25rem)] leading-[1.05] text-bone-100"
+              data-reveal
+            >
+              L'intelligence artificielle<br />
+              <span class="text-brand">n'appartient à personne.</span>
+            </h1>
+
+            <div class="rule-brand mt-8 w-44" data-reveal></div>
+
+            <p class="mt-8 max-w-xl text-base leading-relaxed font-light text-bone-300" data-reveal>
+              IA pour tous forme, accompagne et inspire — quel que soit le métier, le niveau de
+              départ ou le milieu social. L'outil le plus structurant de la décennie ne doit pas
+              rester réservé à ceux qui savaient déjà s'en servir.
+            </p>
+
+            <div class="mt-10 flex flex-wrap items-center gap-4" data-reveal>
+              <a href="#parcours" class="eyebrow glass glass-hover flex items-center gap-3 px-7 py-4 text-bone-100">
+                Le parcours
+                <span aria-hidden="true">&darr;</span>
+              </a>
+              <a
+                href="https://calendly.com/REMPLACER-PAR-LIEN-CLIENT"
+                target="_blank"
+                rel="noopener"
+                class="eyebrow nav-link"
+              >
+                Organiser une session
+              </a>
+            </div>
+
+            <!-- TODO client : les trois chiffres ci-dessous sont provisoires.
+                 Fournir les vrais (personnes formées, ateliers animés,
+                 structures partenaires) ou indiquer lesquels retirer. -->
+            <dl class="glass mt-14 grid max-w-xl grid-cols-3 gap-6 p-7" data-reveal-fade>
+              <div>
+                <dt class="sr-only">Personnes formées</dt>
+                <dd>
+                  <span class="font-display text-3xl text-brand" data-count-to="500" data-count-suffix="+"></span>
+                  <p class="eyebrow mt-2 leading-relaxed text-bone-500">Personnes formées</p>
+                </dd>
+              </div>
+              <div>
+                <dt class="sr-only">Ateliers animés</dt>
+                <dd>
+                  <span class="font-display text-3xl text-brand" data-count-to="40" data-count-suffix="+"></span>
+                  <p class="eyebrow mt-2 leading-relaxed text-bone-500">Ateliers animés</p>
+                </dd>
+              </div>
+              <div>
+                <dt class="sr-only">Prérequis techniques</dt>
+                <dd>
+                  <span class="font-display text-3xl text-brand" data-count-to="0" data-count-suffix=""></span>
+                  <p class="eyebrow mt-2 leading-relaxed text-bone-500">Prérequis</p>
+                </dd>
+              </div>
+            </dl>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================================
+           MISSION
+           ========================================================== -->
+      <section id="mission" class="relative py-20 lg:py-28">
+        <div class="mx-auto max-w-[1240px] px-6 lg:px-10">
+          <header class="mb-14">
+            <p class="eyebrow text-bone-500" data-reveal>Notre mission</p>
+            <h2 class="section-title mt-3 text-bone-100" data-reveal>
+              Empêcher une <span class="text-brand">fracture de plus</span>
+            </h2>
+          </header>
+
+          <div class="grid gap-10 lg:grid-cols-2 lg:gap-16" data-stagger>
+            <!-- TODO client : ces deux paragraphes sont provisoires. -->
+            <p class="text-base leading-relaxed font-light text-bone-300" data-reveal>
+              Chaque saut technologique a creusé un écart entre ceux qui y avaient accès et les
+              autres. L'intelligence artificielle avance plus vite que tous les précédents, et
+              l'écart se creuse en mois plutôt qu'en années. Le sujet n'est pas technique : il est
+              social.
+            </p>
+            <p class="text-base leading-relaxed font-light text-bone-300" data-reveal>
+              IA pour tous part du principe qu'il n'y a pas de public non concerné. Un artisan, une
+              association, une équipe de dix personnes, un lycéen : tous ont un usage utile à
+              trouver, et aucun n'a besoin de savoir programmer pour cela. Nous partons de leurs
+              tâches réelles, pas des outils.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================================
+           CE QUE NOUS PROPOSONS
+           ========================================================== -->
+      <section id="programmes" class="relative py-20 lg:py-28">
+        <div class="mx-auto max-w-[1240px] px-6 lg:px-10">
+          <header class="mb-14">
+            <p class="eyebrow text-bone-500" data-reveal>Ce que nous proposons</p>
+            <h2 class="section-title mt-3 text-bone-100" data-reveal>
+              Trois formats, <span class="text-brand">aucun prérequis</span>
+            </h2>
+          </header>
+
+          <!-- TODO client : confirmer les formats réellement proposés. -->
+          <div class="grid gap-6 md:grid-cols-3" data-stagger>
+            <article class="glass card-brand flex flex-col p-8" data-reveal>
+              <span class="font-display text-2xl text-brand" aria-hidden="true">01</span>
+              <h3 class="mt-6 text-xl font-light tracking-[0.1em] uppercase text-bone-100">
+                Ateliers d'initiation
+              </h3>
+              <p class="mt-5 text-sm leading-relaxed font-light text-bone-300">
+                Une demi-journée pour passer de « j'en entends parler » à « je m'en sers ». On
+                manipule dès la première heure, sur des cas apportés par les participants.
+              </p>
+            </article>
+
+            <article class="glass card-brand flex flex-col p-8" data-reveal>
+              <span class="font-display text-2xl text-brand" aria-hidden="true">02</span>
+              <h3 class="mt-6 text-xl font-light tracking-[0.1em] uppercase text-bone-100">
+                Formation en entreprise
+              </h3>
+              <p class="mt-5 text-sm leading-relaxed font-light text-bone-300">
+                Un parcours construit sur les tâches réelles de l'équipe, avec les limites et les
+                risques posés clairement : confidentialité des données, erreurs de l'outil,
+                relecture humaine.
+              </p>
+            </article>
+
+            <article class="glass card-brand flex flex-col p-8" data-reveal>
+              <span class="font-display text-2xl text-brand" aria-hidden="true">03</span>
+              <h3 class="mt-6 text-xl font-light tracking-[0.1em] uppercase text-bone-100">
+                Programmes solidaires
+              </h3>
+              <p class="mt-5 text-sm leading-relaxed font-light text-bone-300">
+                Sessions gratuites avec des associations, des maisons de quartier et des
+                établissements scolaires. C'est là que la mission se joue vraiment.
+              </p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================================
+           PARCOURS
+           Même rail que sur les deux autres pages activité.
+           ========================================================== -->
+      <section id="parcours" class="relative py-20 lg:py-28">
+        <div class="mx-auto max-w-[1240px] px-6 lg:px-10">
+          <header class="mb-14">
+            <p class="eyebrow text-bone-500" data-reveal>Le parcours</p>
+            <h2 class="section-title mt-3 text-bone-100" data-reveal>
+              De la découverte à la <span class="text-brand">transmission</span>
+            </h2>
+          </header>
+
+          <!-- TODO client : valider ou réécrire ces quatre étapes. -->
+          <ol class="step-rail max-w-3xl" data-stagger>
+            <li class="grid grid-cols-[2.875rem_1fr] gap-6 pb-11 lg:gap-9" data-reveal>
+              <span class="step-num" aria-hidden="true">01</span>
+              <div class="pt-2">
+                <h3 class="font-display text-xl text-bone-100 lg:text-2xl">Découvrir</h3>
+                <p class="mt-3 text-sm leading-relaxed font-light text-bone-300">
+                  Ce qu'est réellement un modèle de langage, ce qu'il sait faire et ce qu'il invente.
+                  Comprendre le fonctionnement évite d'en attendre trop, et d'en attendre trop peu.
+                </p>
+              </div>
+            </li>
+
+            <li class="grid grid-cols-[2.875rem_1fr] gap-6 pb-11 lg:gap-9" data-reveal>
+              <span class="step-num" aria-hidden="true">02</span>
+              <div class="pt-2">
+                <h3 class="font-display text-xl text-bone-100 lg:text-2xl">Pratiquer</h3>
+                <p class="mt-3 text-sm leading-relaxed font-light text-bone-300">
+                  Les participants travaillent sur leurs propres documents et leurs propres
+                  situations. Un exercice abstrait ne se transpose jamais au retour au bureau.
+                </p>
+              </div>
+            </li>
+
+            <li class="grid grid-cols-[2.875rem_1fr] gap-6 pb-11 lg:gap-9" data-reveal>
+              <span class="step-num" aria-hidden="true">03</span>
+              <div class="pt-2">
+                <h3 class="font-display text-xl text-bone-100 lg:text-2xl">Appliquer</h3>
+                <p class="mt-3 text-sm leading-relaxed font-light text-bone-300">
+                  Chacun repart avec deux ou trois usages installés dans son quotidien, et les
+                  garde-fous qui vont avec : ce qu'on ne confie pas à l'outil, et ce qu'on relit
+                  systématiquement.
+                </p>
+              </div>
+            </li>
+
+            <li class="grid grid-cols-[2.875rem_1fr] gap-6 lg:gap-9" data-reveal>
+              <span class="step-num" aria-hidden="true">04</span>
+              <div class="pt-2">
+                <h3 class="font-display text-xl text-bone-100 lg:text-2xl">Transmettre</h3>
+                <p class="mt-3 text-sm leading-relaxed font-light text-bone-300">
+                  Former quelques personnes dans une structure, c'est former la structure : ce sont
+                  elles qui entraînent les suivantes. La transmission est l'objectif, pas un
+                  effet secondaire.
+                </p>
+              </div>
+            </li>
+          </ol>
+        </div>
+      </section>
+
+      <!-- ==========================================================
+           SITE DE LA MARQUE
+           ========================================================== -->
+      <section id="visiter" class="relative py-20 lg:py-28">
+        <div class="mx-auto max-w-[1240px] px-6 lg:px-10">
+          <div
+            class="glass card-brand flex flex-col items-start gap-9 p-9 lg:flex-row lg:items-center lg:gap-14 lg:p-12"
+            data-reveal-scale
+          >
+            <!-- TODO client : logo « IA pour tous » à fournir (SVG, ou PNG
+                 détouré 1000 px minimum). En attendant, la marque dessinée
+                 pour les cards de l'accueil. -->
+            <svg viewBox="0 0 72 72" fill="none" aria-hidden="true" class="h-20 w-20 shrink-0">
+              <defs>
+                <linearGradient id="lg-ia-brand" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0%" stop-color="#f1f5f9" />
+                  <stop offset="55%" stop-color="#94a3b8" />
+                  <stop offset="100%" stop-color="#7dd3fc" />
+                </linearGradient>
+              </defs>
+              <circle cx="13" cy="15" r="5.5" fill="url(#lg-ia-brand)" />
+              <rect x="8.5" y="26" width="9" height="34" rx="4.5" fill="url(#lg-ia-brand)" />
+              <path
+                d="M30 60 L45 16 L60 60"
+                stroke="url(#lg-ia-brand)"
+                stroke-width="9"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+
+            <div class="flex-1">
+              <h2 class="font-display text-[clamp(1.375rem,2.6vw,1.875rem)] text-bone-100">
+                Le site d'IA pour tous
+              </h2>
+              <p class="mt-3 max-w-xl text-sm leading-relaxed font-light text-bone-500">
+                Calendrier des ateliers, ressources libres d'accès et demandes d'intervention se
+                trouvent sur le site du programme.
+              </p>
+            </div>
+
+            <!-- TODO client : confirmer l'adresse du site. -->
+            <a
+              href="https://iapourtous.fr"
+              target="_blank"
+              rel="noopener"
+              class="eyebrow link-external shrink-0"
+            >
+              Visiter le site
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" class="h-4 w-4" aria-hidden="true">
+                <path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5" />
+              </svg>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================================
+           MAILLAGE INTERNE
+           ========================================================== -->
+      <section id="autres" class="relative py-20 lg:py-28">
+        <div class="mx-auto max-w-[1240px] px-6 lg:px-10">
+          <header class="mb-14">
+            <p class="eyebrow text-bone-500" data-reveal>Les autres activités</p>
+            <h2 class="section-title mt-3 text-bone-100" data-reveal>
+              Poursuivre la <span class="text-copper-400">visite</span>
+            </h2>
+          </header>
+
+          <div class="grid gap-6 md:grid-cols-2" data-stagger>
+            <a href="/procuve/" class="glass glass-hover card-cobalt flex flex-col p-8" data-reveal>
+              <h3 class="flex h-28 items-center">
+                <img
+                  src="/img/logo-procuve.webp"
+                  alt="Procuve"
+                  class="h-14 w-auto"
+                  width="822"
+                  height="185"
+                />
+              </h3>
+              <p class="eyebrow mt-3 text-cobalt-400/80">Amélioration énergétique et climat</p>
+              <p class="mt-6 text-sm leading-relaxed font-light text-bone-300">
+                Démantèlement de cuves à fioul et accompagnement vers des solutions de chauffage
+                durables.
+              </p>
+              <span class="eyebrow card-cta mt-auto flex items-center justify-between gap-4 pt-8">
+                En savoir plus
+                <span aria-hidden="true">&rarr;</span>
+              </span>
+            </a>
+
+            <a href="/businessbusiness/" class="glass glass-hover card-copper flex flex-col p-8" data-reveal>
+              <span
+                class="font-display text-[3.25rem] leading-none tracking-tight"
+                style="
+                  background: linear-gradient(140deg, #e0a96d 0%, #b87333 55%, #8f5824 100%);
+                  -webkit-background-clip: text;
+                  background-clip: text;
+                  color: transparent;
+                "
+                aria-hidden="true"
+                >BB</span
+              >
+              <h3 class="mt-6 text-2xl font-light tracking-[0.12em] uppercase text-bone-100">BusinessBusiness</h3>
+              <p class="eyebrow mt-3 text-copper-400/90">Média finance &amp; investissement</p>
+              <p class="mt-6 text-sm leading-relaxed font-light text-bone-300">
+                Média digital indépendant dédié à la finance, à l'investissement et à
+                l'entrepreneuriat.
+              </p>
+              <span class="eyebrow card-cta mt-auto flex items-center justify-between gap-4 pt-8">
+                En savoir plus
+                <span aria-hidden="true">&rarr;</span>
+              </span>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <!--@include cta.html-->
+    </main>
+
+    <!--@include footer.html-->
+
+    <script type="module" src="/src/js/main.js"></script>
+  </body>
+</html>

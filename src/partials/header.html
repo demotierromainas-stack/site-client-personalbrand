@@ -1,0 +1,120 @@
+    <!-- ==========================================================
+         HEADER — partagé par les quatre pages.
+
+         Les liens d'ancre sont écrits en absolu (`/#entreprises`) et non en
+         relatif (`#entreprises`) : depuis une page activité, une ancre seule
+         chercherait une section qui n'existe pas sur cette page.
+
+         L'état actif de la navigation n'est pas écrit en dur ici — il est posé
+         par header.js à partir de l'URL, sinon ce partial devrait exister en
+         quatre variantes.
+         ========================================================== -->
+    <header
+      id="site-header"
+      class="fixed top-0 right-0 left-0 z-50 border-b border-transparent transition-[background-color,backdrop-filter,border-color] duration-500"
+    >
+      <div class="mx-auto flex max-w-[1240px] items-center gap-10 px-6 py-5 lg:px-10">
+        <a href="/" class="flex shrink-0 items-center gap-4">
+          <span class="font-display text-3xl leading-none text-copper-400">JMH</span>
+          <span class="eyebrow hidden text-bone-300 sm:block">Jean-Maxime Hanny</span>
+        </a>
+
+        <nav class="ml-auto hidden lg:block" aria-label="Navigation principale">
+          <ul class="flex items-center gap-9">
+            <li><a class="eyebrow nav-link" href="/#hero">À propos</a></li>
+
+            <!-- Sous-menu : les trois activités ont désormais leur propre page.
+                 Les lister ici est ce qui fait qu'on les atteint depuis
+                 n'importe quelle page du site, et pas seulement depuis la
+                 grille de l'accueil. -->
+            <li class="nav-group relative">
+              <button
+                type="button"
+                class="eyebrow nav-link flex items-center gap-2"
+                id="activites-toggle"
+                aria-expanded="false"
+                aria-controls="activites-menu"
+              >
+                Activités
+                <svg viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.3" class="nav-chevron h-[5px] w-[9px]" aria-hidden="true">
+                  <path d="M1 1l4 4 4-4" />
+                </svg>
+              </button>
+
+              <ul
+                id="activites-menu"
+                class="nav-submenu glass absolute top-full left-1/2 z-10 mt-4 w-60 p-2"
+              >
+                <li><a class="submenu-link" href="/procuve/">Procuve</a></li>
+                <li><a class="submenu-link" href="/businessbusiness/">BusinessBusiness</a></li>
+                <li><a class="submenu-link" href="/ia-pour-tous/">IA pour tous</a></li>
+                <li class="mt-1 border-t border-white/[0.07] pt-1">
+                  <a class="submenu-link text-bone-500" href="/#entreprises">Vue d'ensemble</a>
+                </li>
+              </ul>
+            </li>
+
+            <li><a class="eyebrow nav-link" href="/#articles">Articles</a></li>
+            <li><a class="eyebrow nav-link" href="/#contact">Contact</a></li>
+          </ul>
+        </nav>
+
+        <!-- TODO client : remplacer l'URL Calendly. Deux occurrences dans ce
+             partial (ici et dans le menu mobile), deux autres dans footer.html. -->
+        <a
+          href="https://calendly.com/REMPLACER-PAR-LIEN-CLIENT"
+          target="_blank"
+          rel="noopener"
+          class="eyebrow glass glass-hover ml-auto hidden items-center gap-3 px-6 py-3.5 text-bone-100 lg:ml-0 lg:flex"
+        >
+          Prendre rendez-vous
+          <span aria-hidden="true">&rarr;</span>
+        </a>
+
+        <button
+          type="button"
+          id="menu-toggle"
+          class="ml-auto lg:hidden"
+          aria-expanded="false"
+          aria-controls="mobile-nav"
+        >
+          <span class="sr-only">Ouvrir le menu</span>
+          <span class="block h-px w-7 bg-bone-100"></span>
+          <span class="mt-2 block h-px w-7 bg-bone-100"></span>
+        </button>
+      </div>
+
+      <nav
+        id="mobile-nav"
+        class="hidden border-t border-white/5 bg-ink-900/95 backdrop-blur-lg lg:hidden"
+        aria-label="Navigation mobile"
+      >
+        <ul class="flex flex-col px-6 py-4">
+          <li><a class="eyebrow nav-link block py-3.5" href="/#hero">À propos</a></li>
+          <li><a class="eyebrow nav-link block py-3.5" href="/#entreprises">Activités</a></li>
+
+          <!-- Pas de repli dépliable sur mobile : trois lignes de plus coûtent
+               moins qu'un accordéon que l'utilisateur doit penser à ouvrir. -->
+          <li>
+            <ul class="mb-1 space-y-px border-l border-white/10 pl-4">
+              <li><a class="submenu-link block" href="/procuve/">Procuve</a></li>
+              <li><a class="submenu-link block" href="/businessbusiness/">BusinessBusiness</a></li>
+              <li><a class="submenu-link block" href="/ia-pour-tous/">IA pour tous</a></li>
+            </ul>
+          </li>
+
+          <li><a class="eyebrow nav-link block py-3.5" href="/#articles">Articles</a></li>
+          <li><a class="eyebrow nav-link block py-3.5" href="/#contact">Contact</a></li>
+          <li class="pt-3">
+            <a
+              href="https://calendly.com/REMPLACER-PAR-LIEN-CLIENT"
+              target="_blank"
+              rel="noopener"
+              class="eyebrow glass flex items-center gap-3 px-6 py-3.5 text-bone-100"
+            >
+              Prendre rendez-vous <span aria-hidden="true">&rarr;</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </header>

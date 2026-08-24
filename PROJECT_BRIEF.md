@@ -54,6 +54,40 @@ vient du mouvement (parallax, fade/slide, glow réactif), pas de modélisation 3
   de page, tester Lenis sur iOS (peut être capricieux)
 - Fallback : si le fond animé WebGL s'avère trop lourd, garder la version CSS/SVG
 
+## Architecture des pages (état actuel)
+
+Le site fait sept pages, servies en URL propres :
+
+| URL | Fichier source |
+|---|---|
+| `/` | `index.html` |
+| `/procuve/` | `procuve/index.html` |
+| `/businessbusiness/` | `businessbusiness/index.html` |
+| `/ia-pour-tous/` | `ia-pour-tous/index.html` |
+| `/articles/entreprendre-en-2026/` | `articles/entreprendre-en-2026/index.html` |
+| `/articles/investir-avec-vision/` | `articles/investir-avec-vision/index.html` |
+| `/articles/ia-au-service-de-la-societe/` | `articles/ia-au-service-de-la-societe/index.html` |
+
+Le décor de fond, le `<head>` commun, le header, le bandeau CTA et le footer sont des
+**partials** dans `src/partials/`, inclus par `<!--@include nom.html-->`. Un plugin Vite de
+vingt lignes (`vite.config.js`) les résout au build — pas de moteur de templates ni de
+dépendance supplémentaire pour ça. Toute modification d'un de ces blocs se fait dans le partial,
+jamais dans les pages.
+
+Les trois pages activité sont structurellement identiques : elles ne diffèrent que par
+`<body data-brand="…">`, qui porte la couleur de la marque (`--brand`) pour toute la page.
+
+Les trois pages article partagent la même ossature : en-tête (fil d'Ariane, catégorie, date,
+temps de lecture, chapô, image), corps en colonne étroite, signature, deux articles suivants.
+Le corps est mis en page par la classe `.prose` (`src/styles/main.css`) — une échelle
+typographique à part, plus grande et plus aérée que le reste du site, parce qu'un article se lit
+sur plusieurs minutes. Il n'est volontairement **pas** animé au scroll : les révélations rythment
+bien une section courte, elles font attendre sur un texte qu'on lit.
+
+Le maillage interne passe par trois chemins : les cards de l'accueil, le sous-menu « Activités »
+du header (présent sur toutes les pages, comme dans le footer), et une section « Les autres
+activités » en bas de chaque page activité.
+
 ## Prochaines étapes techniques
 1. Détourer la photo du client (fond transparent)
 2. Scaffolder le projet HTML/Tailwind (structure des 6 sections ci-dessus)
@@ -62,3 +96,8 @@ vient du mouvement (parallax, fade/slide, glow réactif), pas de modélisation 3
    direction avec le client avant de continuer
 5. Construire les sections suivantes avec leurs animations respectives
 6. Passe perf + responsive + accessibilité
+7. Pages activité (faites) — reste à intégrer les vrais logos, la photo en
+   fauteuil et les textes définitifs
+8. Articles (faits) — trois articles rédigés, textes et images provisoires
+9. Pages mentions légales et politique de confidentialité — bloquantes pour la
+   mise en ligne
