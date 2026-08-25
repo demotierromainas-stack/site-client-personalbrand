@@ -67,14 +67,28 @@ jobs:
       # clé vaut mieux qu'un mot de passe dans des secrets : elle se révoque en
       # supprimant une ligne, et rien de réutilisable ailleurs ne circule.
       - name: Préparer la clé de déploiement
-        run: |
-          mkdir -p ~/.ssh && chmod 700 ~/.ssh
-          printf '%s\n' "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/deploy_key
-          chmod 600 ~/.ssh/deploy_key
-          ssh-keyscan -p "${SSH_PORT:-22}" -H "$SSH_HOST" >> ~/.ssh/known_hosts 2>/dev/null
         env:
+          # La clé passe par l'environnement et non par une interpolation dans
+          # le script : insérée directement, une valeur multiligne est abîmée
+          # et OpenSSH la rejette avec « error in libcrypto ».
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
           SSH_HOST: ${{ secrets.SSH_HOST }}
           SSH_PORT: ${{ secrets.SSH_PORT }}
+        run: |
+          mkdir -p ~/.ssh && chmod 700 ~/.ssh
+          install -m 600 /dev/null ~/.ssh/deploy_key
+          printf '%s\n' "$SSH_PRIVATE_KEY" >> ~/.ssh/deploy_key
+
+          # Valider la clé ici plutôt que de découvrir le problème sous la
+          # forme d'un « permission denied » qui ferait chercher du côté du
+          # serveur.
+          if ! ssh-keygen -y -f ~/.ssh/deploy_key > /dev/null 2>&1; then
+            echo "::error::Le secret SSH_PRIVATE_KEY n'est pas une clé privée exploitable. Recopier le fichier entier, de -----BEGIN à -----END inclus."
+            exit 1
+          fi
+          echo "empreinte de la clé : $(ssh-keygen -lf ~/.ssh/deploy_key | awk '{print $2}')"
+
+          ssh-keyscan -p "${SSH_PORT:-22}" -H "$SSH_HOST" >> ~/.ssh/known_hosts 2>/dev/null
 
       # Garde-fou avant un rsync --delete. Sans lui, une cible mal renseignée
       # (« ~ », « / ») effacerait tout l'hébergement, Directus et son .env
