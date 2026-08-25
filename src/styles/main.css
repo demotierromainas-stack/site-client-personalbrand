@@ -259,99 +259,11 @@
     );
   }
 
-  /* ============================================================
-     SOUS-MENU « ACTIVITÉS »
-     Les trois activités ont leur propre page : le sous-menu est ce qui les
-     rend atteignables depuis n'importe où, et pas seulement depuis la grille
-     de l'accueil.
-     ============================================================ */
-
-  .nav-submenu {
-    /* Fond bien plus opaque que le verre du reste du site : le menu se déploie
-       au-dessus du portrait du hero, très clair par endroits, et le verre à
-       3 % n'y tenait pas la lisibilité. */
-    background-color: rgb(11 15 24 / 0.95);
-    backdrop-filter: blur(18px);
-    -webkit-backdrop-filter: blur(18px);
-    /* `visibility` en plus de `opacity` : sans elle le menu resterait
-       cliquable et focusable alors qu'il est invisible. */
-    visibility: hidden;
-    opacity: 0;
-    transform: translate(-50%, -8px);
-    transition:
-      opacity var(--duration-hover) var(--ease-out-soft),
-      transform var(--duration-hover) var(--ease-out-expo),
-      visibility var(--duration-hover);
-  }
-
-  /* Le menu est décollé du bouton de 1 rem : sans ce pont invisible, le
-     survol se romprait dans l'espace vide et le menu se refermerait avant
-     qu'on l'atteigne. */
-  .nav-submenu::before {
-    content: '';
-    position: absolute;
-    top: -1rem;
-    right: 0;
-    left: 0;
-    height: 1rem;
-  }
-
-  .nav-group:hover .nav-submenu,
-  .nav-group:focus-within .nav-submenu {
-    visibility: visible;
-    opacity: 1;
-    transform: translate(-50%, 0);
-  }
-
-  /* Échappement clavier. Le menu s'ouvre au `:focus-within`, donc appuyer sur
-     Échap ne suffirait pas à le refermer tant que le focus reste sur le
-     bouton — et déplacer le focus ailleurs pour y arriver serait pire. Cet
-     attribut, posé par header.js, reprend la main ; il est placé après la
-     règle d'ouverture pour l'emporter à spécificité égale. */
-  .nav-submenu[data-collapsed='true'] {
-    visibility: hidden;
-    opacity: 0;
-    transform: translate(-50%, -8px);
-  }
-
-  .nav-chevron {
-    transition: transform var(--duration-hover) var(--ease-out-soft);
-  }
-
-  .nav-group:hover .nav-chevron,
-  .nav-group:focus-within .nav-chevron {
-    transform: rotate(180deg);
-  }
-
-  .submenu-link {
-    display: block;
-    padding: 0.625rem 0.875rem;
-    border-radius: 8px;
-    font-size: 0.8125rem;
-    font-weight: 300;
-    color: var(--color-bone-300);
-    transition:
-      background-color var(--duration-hover) var(--ease-out-soft),
-      color var(--duration-hover) var(--ease-out-soft);
-  }
-
-  .submenu-link:hover {
-    background: rgb(255 255 255 / 0.05);
+  .nav-link[aria-current='page'] {
     color: var(--color-bone-100);
   }
 
-  /* Page courante — posé par header.js à partir de l'URL. */
-  .submenu-link[aria-current='page'] {
-    color: var(--color-copper-400);
-  }
-
-  .nav-link[aria-current='page'],
-  .nav-link[data-current='true'] {
-    color: var(--color-bone-100);
-  }
-
-  .nav-link[aria-current='page']::after,
-  .nav-link[data-current='true']::after {
+  .nav-link[aria-current='page']::after {
     transform: scaleX(1);
   }
 

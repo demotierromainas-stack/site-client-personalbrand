@@ -18,7 +18,6 @@ export function initHeader() {
   });
 
   markCurrentPage();
-  initActivitiesMenu();
   initMobileMenu();
 }
 
@@ -29,9 +28,10 @@ export function initHeader() {
  * partials partagés par les quatre pages, les écrire en dur imposerait quatre
  * variantes de chacun.
  *
- * Seules les pages activité sont marquées. L'accueil n'est atteint que par des
- * liens d'ancre, tous de chemin « / » : les marquer reviendrait à désigner
- * quatre entrées de menu comme courantes en même temps.
+ * Seules les pages activité sont marquées — dans le footer, seul endroit qui
+ * les liste encore. L'accueil n'est atteint que par des liens d'ancre, tous de
+ * chemin « / » : les marquer reviendrait à désigner toutes les entrées de menu
+ * comme courantes en même temps.
  */
 function markCurrentPage() {
   const here = normalizePath(window.location.pathname);
@@ -45,58 +45,11 @@ function markCurrentPage() {
       }
     });
 
-  // Le bouton « Activités » ouvre le sous-menu où se trouve la page courante.
-  // `aria-current` ne s'applique pas à un bouton qui ne navigue pas : on passe
-  // par un attribut de présentation, que le CSS souligne comme un lien actif.
-  const toggle = document.querySelector('#activites-toggle');
-  if (toggle && document.querySelector('.nav-submenu a[aria-current="page"]')) {
-    toggle.dataset.current = 'true';
-  }
 }
 
 /** « /procuve/index.html », « /procuve » et « /procuve/ » désignent la même page. */
 function normalizePath(pathname) {
   return pathname.replace(/index\.html$/, '').replace(/([^/])$/, '$1/');
-}
-
-/**
- * Sous-menu « Activités » du header desktop.
- *
- * L'ouverture elle-même est en CSS (`:hover` et `:focus-within`) : elle
- * fonctionne donc avant le chargement du JS, et à la souris comme au clavier.
- * Le JS ne sert qu'à ce que le CSS seul ne peut pas faire — tenir
- * `aria-expanded` à jour, et permettre la fermeture par Échap.
- */
-function initActivitiesMenu() {
-  const group = document.querySelector('.nav-group');
-  const toggle = document.querySelector('#activites-toggle');
-  const menu = document.querySelector('#activites-menu');
-  if (!group || !toggle || !menu) return;
-
-  const setOpen = (open) => {
-    toggle.setAttribute('aria-expanded', String(open));
-    // Toute ouverture annule une fermeture forcée précédente, sinon le menu
-    // resterait replié jusqu'à ce que le pointeur quitte le groupe.
-    if (open) delete menu.dataset.collapsed;
-  };
-
-  group.addEventListener('pointerenter', () => setOpen(true));
-  group.addEventListener('pointerleave', () => setOpen(false));
-  group.addEventListener('focusin', () => setOpen(true));
-  group.addEventListener('focusout', (event) => {
-    if (!group.contains(event.relatedTarget)) setOpen(false);
-  });
-
-  document.addEventListener('keydown', (event) => {
-    if (event.key !== 'Escape') return;
-    if (!group.contains(document.activeElement)) return;
-
-    // Le focus revient sur le bouton — il ne part pas dans le vide — et
-    // l'attribut force le repli malgré le `:focus-within` toujours vrai.
-    menu.dataset.collapsed = 'true';
-    toggle.setAttribute('aria-expanded', 'false');
-    toggle.focus();
-  });
 }
 
 /** Menu mobile plein écran, sous le header. */

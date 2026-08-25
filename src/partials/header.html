@@ -1,13 +1,16 @@
     <!-- ==========================================================
          HEADER — partagé par les quatre pages.
 
-         Les liens d'ancre sont écrits en absolu (`/#entreprises`) et non en
-         relatif (`#entreprises`) : depuis une page activité, une ancre seule
+         Les liens d'ancre sont écrits en absolu (`/#articles`) et non en
+         relatif (`#articles`) : depuis une page activité, une ancre seule
          chercherait une section qui n'existe pas sur cette page.
 
          L'état actif de la navigation n'est pas écrit en dur ici — il est posé
          par header.js à partir de l'URL, sinon ce partial devrait exister en
          quatre variantes.
+
+         Les trois pages activité ne sont plus listées ici : on y arrive depuis
+         la grille de l'accueil et depuis le footer.
          ========================================================== -->
     <header
       id="site-header"
@@ -22,38 +25,6 @@
         <nav class="ml-auto hidden lg:block" aria-label="Navigation principale">
           <ul class="flex items-center gap-9">
             <li><a class="eyebrow nav-link" href="/#hero">À propos</a></li>
-
-            <!-- Sous-menu : les trois activités ont désormais leur propre page.
-                 Les lister ici est ce qui fait qu'on les atteint depuis
-                 n'importe quelle page du site, et pas seulement depuis la
-                 grille de l'accueil. -->
-            <li class="nav-group relative">
-              <button
-                type="button"
-                class="eyebrow nav-link flex items-center gap-2"
-                id="activites-toggle"
-                aria-expanded="false"
-                aria-controls="activites-menu"
-              >
-                Activités
-                <svg viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.3" class="nav-chevron h-[5px] w-[9px]" aria-hidden="true">
-                  <path d="M1 1l4 4 4-4" />
-                </svg>
-              </button>
-
-              <ul
-                id="activites-menu"
-                class="nav-submenu glass absolute top-full left-1/2 z-10 mt-4 w-60 p-2"
-              >
-                <li><a class="submenu-link" href="/procuve/">Procuve</a></li>
-                <li><a class="submenu-link" href="/businessbusiness/">BusinessBusiness</a></li>
-                <li><a class="submenu-link" href="/ia-pour-tous/">IA pour tous</a></li>
-                <li class="mt-1 border-t border-white/[0.07] pt-1">
-                  <a class="submenu-link text-bone-500" href="/#entreprises">Vue d'ensemble</a>
-                </li>
-              </ul>
-            </li>
-
             <li><a class="eyebrow nav-link" href="/#articles">Articles</a></li>
             <li><a class="eyebrow nav-link" href="/#contact">Contact</a></li>
           </ul>
@@ -91,18 +62,6 @@
       >
         <ul class="flex flex-col px-6 py-4">
           <li><a class="eyebrow nav-link block py-3.5" href="/#hero">À propos</a></li>
-          <li><a class="eyebrow nav-link block py-3.5" href="/#entreprises">Activités</a></li>
-
-          <!-- Pas de repli dépliable sur mobile : trois lignes de plus coûtent
-               moins qu'un accordéon que l'utilisateur doit penser à ouvrir. -->
-          <li>
-            <ul class="mb-1 space-y-px border-l border-white/10 pl-4">
-              <li><a class="submenu-link block" href="/procuve/">Procuve</a></li>
-              <li><a class="submenu-link block" href="/businessbusiness/">BusinessBusiness</a></li>
-              <li><a class="submenu-link block" href="/ia-pour-tous/">IA pour tous</a></li>
-            </ul>
-          </li>
-
           <li><a class="eyebrow nav-link block py-3.5" href="/#articles">Articles</a></li>
           <li><a class="eyebrow nav-link block py-3.5" href="/#contact">Contact</a></li>
           <li class="pt-3">
