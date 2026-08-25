@@ -1,0 +1,87 @@
+# Directus — l'interface de rédaction du client.
+#
+# Cette pile ne sert PAS le site : le site est statique et reste hébergé
+# ailleurs. Directus n'est sollicité qu'au moment du build, pour lire les
+# articles. S'il est éteint, le site en ligne continue de fonctionner
+# normalement ; seule la publication d'un nouvel article devient impossible.
+#
+# Démarrage :
+#   cp .env.example .env   puis remplir les valeurs
+#   docker compose up -d
+#
+# Les versions sont épinglées volontairement. Sur un service qui détient le
+# contenu du client, une montée de version doit être un acte décidé, pas un
+# effet de bord d'un redémarrage.
+
+services:
+  database:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    volumes:
+      - ./data/database:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: directus
+      POSTGRES_PASSWORD: ${DB_PASSWORD:?renseigner DB_PASSWORD dans .env}
+      POSTGRES_DB: directus
+    healthcheck:
+      test: ['CMD', 'pg_isready', '--host=localhost', '--username=directus']
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+    # La base n'est jamais exposée hors du réseau Docker : rien ne doit
+    # l'atteindre autrement que par Directus.
+
+  directus:
+    image: directus/directus:12.3.0
+    restart: unless-stopped
+    ports:
+      # Écoute uniquement sur la boucle locale : c'est le reverse proxy du VPS
+      # (nginx, Caddy, Traefik) qui expose le service en HTTPS. Sans le
+      # préfixe 127.0.0.1, Docker ouvrirait le port sur l'internet public en
+      # contournant le pare-feu de l'hôte.
+      - '127.0.0.1:8055:8055'
+    volumes:
+      - ./uploads:/directus/uploads
+      - ./extensions:/directus/extensions
+    depends_on:
+      database:
+        condition: service_healthy
+    healthcheck:
+      test: ['CMD-SHELL', 'wget --spider -q http://localhost:8055/server/ping || exit 1']
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+    environment:
+      SECRET: ${DIRECTUS_SECRET:?renseigner DIRECTUS_SECRET dans .env}
+      PUBLIC_URL: ${DIRECTUS_PUBLIC_URL:?renseigner DIRECTUS_PUBLIC_URL dans .env}
+
+      DB_CLIENT: pg
+      DB_HOST: database
+      DB_PORT: '5432'
+      DB_DATABASE: directus
+      DB_USER: directus
+      DB_PASSWORD: ${DB_PASSWORD}
+
+      # Compte administrateur créé au tout premier démarrage uniquement. Une
+      # fois la base initialisée, ces variables ne sont plus relues : changer le
+      # mot de passe ici ne changera rien, il faut le faire dans l'interface.
+      ADMIN_EMAIL: ${DIRECTUS_ADMIN_EMAIL:?renseigner DIRECTUS_ADMIN_EMAIL dans .env}
+      ADMIN_PASSWORD: ${DIRECTUS_ADMIN_PASSWORD:?renseigner DIRECTUS_ADMIN_PASSWORD dans .env}
+
+      # Cache en mémoire : pas de Redis. Le trafic ici, ce sont quelques
+      # requêtes par semaine — une dépendance de plus à administrer coûterait
+      # plus cher qu'elle ne rapporte.
+      CACHE_ENABLED: 'true'
+      CACHE_STORE: memory
+      CACHE_AUTO_PURGE: 'true'
+
+      # Le site est construit côté serveur (GitHub Actions), jamais depuis le
+      # navigateur d'un visiteur : aucune origine web n'a besoin d'appeler
+      # cette API.
+      CORS_ENABLED: 'false'
+
+      # Les images sont téléchargées au build et servies par le site lui-même.
+      # Directus n'a donc à produire que les miniatures de son interface.
+      ASSETS_TRANSFORM_MAX_CONCURRENT: '2'

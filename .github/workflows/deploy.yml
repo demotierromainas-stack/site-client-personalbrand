@@ -1,0 +1,77 @@
+# Construction du site et envoi chez Infomaniak.
+#
+# Trois déclencheurs, pour trois situations différentes :
+#  - push sur main    : le code a changé (une section, un style, un correctif) ;
+#  - repository_dispatch : le CONTENU a changé — c'est Directus qui appelle,
+#    quand le client publie un article. Le code n'a pas bougé, mais le site
+#    doit être reconstruit puisque les pages sont produites au build ;
+#  - workflow_dispatch : relance manuelle depuis l'onglet Actions, utile pour
+#    rejouer un déploiement sans rien modifier.
+
+name: Déploiement
+
+on:
+  push:
+    branches: [main]
+  repository_dispatch:
+    types: [directus-publish]
+  workflow_dispatch:
+
+# Deux publications rapprochées ne doivent pas se déployer en parallèle : la
+# seconde annule la première plutôt que de risquer d'arriver après elle et de
+# remettre en ligne un état plus ancien.
+concurrency:
+  group: deploiement
+  cancel-in-progress: true
+
+jobs:
+  construire-et-deployer:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+
+      - run: npm ci
+
+      - name: Construire le site
+        env:
+          DIRECTUS_URL: ${{ secrets.DIRECTUS_URL }}
+          DIRECTUS_TOKEN: ${{ secrets.DIRECTUS_TOKEN }}
+          # Signale au build qu'il tourne en intégration continue. Le repli sur
+          # le cache local y est refusé : mieux vaut un déploiement en échec
+          # qu'un site publié avec un contenu périmé, sans que personne ne le
+          # remarque.
+          CI: 'true'
+        run: npm run build
+
+      # Contrôle avant envoi : si Directus a renvoyé une liste vide — jeton
+      # révoqué, collection renommée, tous les articles repassés en brouillon —
+      # le build réussit quand même et produirait un site sans aucun article.
+      # On préfère s'arrêter ici plutôt que d'effacer les articles en ligne.
+      - name: Vérifier que le site contient bien des articles
+        run: |
+          nb=$(find dist/articles -name index.html 2>/dev/null | wc -l)
+          echo "$nb page(s) article produite(s)"
+          if [ "$nb" -eq 0 ]; then
+            echo "::error::Aucune page article produite. Déploiement interrompu."
+            exit 1
+          fi
+
+      - name: Envoyer chez Infomaniak
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          protocol: ftps
+          local-dir: ./dist/
+          server-dir: ${{ secrets.FTP_TARGET_DIR }}
+          # L'action tient un état sur le serveur et n'envoie que les fichiers
+          # modifiés : un déploiement courant transfère quelques kilo-octets,
+          # pas tout le site.
+          dangerous-clean-slate: false

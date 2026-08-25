@@ -1,0 +1,13 @@
+{
+  "name": "cms-jeanmaximehanny",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Directus — interface de rédaction des articles de jeanmaximehanny.fr",
+  "scripts": {
+    "start": "directus start",
+    "bootstrap": "directus bootstrap"
+  },
+  "dependencies": {
+    "directus": "12.3.0"
+  }
+}

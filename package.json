@@ -8,10 +8,15 @@
     "build": "vite build",
     "preview": "vite preview",
     "shots": "node scripts/shots.mjs",
-    "deploy": "vite build && netlify deploy --prod --dir=dist"
+    "deploy": "vite build && netlify deploy --prod --dir=dist",
+    "cms:setup": "node scripts/directus-setup.mjs",
+    "cms:seed": "node scripts/directus-seed.mjs",
+    "articles": "node scripts/generate-articles.mjs",
+    "cms:roles": "node scripts/directus-roles.mjs"
   },
   "devDependencies": {
     "@tailwindcss/vite": "^4.1.11",
+    "marked": "^18.0.11",
     "netlify-cli": "^27.1.2",
     "playwright": "^1.62.1",
     "tailwindcss": "^4.1.11",

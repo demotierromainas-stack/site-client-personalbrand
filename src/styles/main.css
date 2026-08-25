@@ -1,6 +1,16 @@
 @import 'tailwindcss';
 @import './tokens.css';
 
+/* Les pages article sont produites au build et exclues du dépôt : Tailwind,
+   qui ignore ce que .gitignore exclut, ne les voit pas. Leurs classes lui
+   viennent donc du gabarit `scripts/articles.mjs`, qu'il faut laisser scanner.
+
+   En revanche `directus-setup.mjs` ne décrit que la configuration du CMS. Les
+   chaînes qu'il contient — les boutons de l'éditeur Markdown, `italic` par
+   exemple — se font prendre pour des classes utilitaires et se retrouvent dans
+   la feuille de style sans que rien ne les utilise. */
+@source not "../../scripts/directus-setup.mjs";
+
 /* ============================================================
    BASE
    ============================================================ */

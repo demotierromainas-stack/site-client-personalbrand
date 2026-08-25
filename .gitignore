@@ -6,3 +6,10 @@ dist/
 .env
 .env.local
 shots/
+
+# Produits au build depuis Directus. La barre oblique initiale est importante :
+# sans elle, la règle vaut pour TOUT dossier nommé « articles », y compris un
+# éventuel content/articles — et la source serait exclue du dépôt sans bruit.
+/articles/
+/public/img/articles/
+.cache/
