@@ -68,22 +68,24 @@ jobs:
       # supprimant une ligne, et rien de réutilisable ailleurs ne circule.
       - name: Préparer la clé de déploiement
         env:
-          # La clé passe par l'environnement et non par une interpolation dans
-          # le script : insérée directement, une valeur multiligne est abîmée
-          # et OpenSSH la rejette avec « error in libcrypto ».
-          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          # La clé est stockée encodée en base64, sur une seule ligne. Une clé
+          # privée au format d'origine compte huit lignes, et le moindre saut
+          # de ligne perdu au collage la rend inutilisable — c'est arrivé.
+          # Encodée, elle traverse presse-papiers, formulaires et scripts sans
+          # pouvoir être abîmée.
+          SSH_PRIVATE_KEY_B64: ${{ secrets.SSH_PRIVATE_KEY_B64 }}
           SSH_HOST: ${{ secrets.SSH_HOST }}
           SSH_PORT: ${{ secrets.SSH_PORT }}
         run: |
           mkdir -p ~/.ssh && chmod 700 ~/.ssh
           install -m 600 /dev/null ~/.ssh/deploy_key
-          printf '%s\n' "$SSH_PRIVATE_KEY" >> ~/.ssh/deploy_key
+          printf '%s' "$SSH_PRIVATE_KEY_B64" | base64 -d >> ~/.ssh/deploy_key
 
           # Valider la clé ici plutôt que de découvrir le problème sous la
           # forme d'un « permission denied » qui ferait chercher du côté du
           # serveur.
           if ! ssh-keygen -y -f ~/.ssh/deploy_key > /dev/null 2>&1; then
-            echo "::error::Le secret SSH_PRIVATE_KEY n'est pas une clé privée exploitable. Recopier le fichier entier, de -----BEGIN à -----END inclus."
+            echo "::error::Le secret SSH_PRIVATE_KEY_B64 ne donne pas une clé exploitable. Le régénérer avec la commande indiquée dans CMS.md."
             exit 1
           fi
           echo "empreinte de la clé : $(ssh-keygen -lf ~/.ssh/deploy_key | awk '{print $2}')"
