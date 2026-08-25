@@ -102,6 +102,14 @@ les pleins pouvoirs sur le contenu.
 
 ### 5. Le déploiement automatique
 
+Le site est déposé par **rsync sur SSH**, pas par FTP : le FTP d'Infomaniak
+refusait l'authentification quel que soit le compte, et une clé vaut de toute
+façon mieux qu'un mot de passe dans des secrets.
+
+L'utilisateur SSH doit être de type **PHP**, pas Node : le compte Node est
+rattaché à l'application Directus et n'a pas accès au dossier du site. C'est ce
+détail qui a coûté le plus de temps à l'installation.
+
 Secrets à créer dans le dépôt GitHub (*Settings → Secrets and variables →
 Actions*) :
 
@@ -109,9 +117,31 @@ Actions*) :
 |---|---|
 | `DIRECTUS_URL` | `https://cms.jeanmaximehanny.fr` |
 | `DIRECTUS_TOKEN` | le jeton statique de l'utilisateur `build` |
-| `FTP_SERVER` | l'hôte FTP Infomaniak |
-| `FTP_USERNAME` / `FTP_PASSWORD` | les identifiants FTP |
-| `FTP_TARGET_DIR` | le dossier web, souvent `/web/` |
+| `SSH_HOST` | `034c76.ftp.infomaniak.com` |
+| `SSH_USER` | l'utilisateur SSH de type PHP |
+| `SSH_TARGET_DIR` | `sites/jeanmaximehanny.fr` |
+| `SSH_PRIVATE_KEY_B64` | la clé privée **encodée en base64** |
+
+La clé se génère et s'encode ainsi :
+
+```bash
+ssh-keygen -t ed25519 -N "" -C "github-actions-deploy" -f deploy_key
+cat deploy_key.pub          # à autoriser sur le serveur (section Clés SSH du manager)
+base64 -i deploy_key | tr -d '\n' | pbcopy   # à coller dans SSH_PRIVATE_KEY_B64
+```
+
+L'encodage en base64 n'est pas une coquetterie : une clé privée fait huit
+lignes, et un collage qui en perd les sauts de ligne produit un « error in
+libcrypto » qui ressemble à s'y méprendre à un problème de droits sur le
+serveur. Sur une ligne, elle traverse presse-papiers et formulaires sans
+pouvoir être abîmée.
+
+Deux garde-fous protègent le déploiement, parce que `rsync --delete` efface ce
+qui n'est plus produit et que l'hébergement porte cinq sites :
+
+- le workflow refuse de partir si `SSH_TARGET_DIR` ne désigne pas le dossier de
+  `jeanmaximehanny.fr` ;
+- il vérifie que le site répond en 200 après le dépôt.
 
 ### 6. Le webhook de publication
 
