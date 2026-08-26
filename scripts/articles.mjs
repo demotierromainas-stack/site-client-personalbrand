@@ -144,13 +144,23 @@ function renderCard(a, { hauteurImage }) {
             </a>`;
 }
 
-/** La grille de cards de la section « Articles » de l'accueil. */
+/**
+ * Les cards de la section « Articles » de l'accueil, en piste de carrousel.
+ *
+ * Tous les articles y figurent, et non plus les trois plus récents : le
+ * carrousel donne accès aux anciens sans allonger la page. Trois sont visibles
+ * à la fois sur grand écran, deux sur tablette, un sur mobile.
+ *
+ * La piste est une liste : c'est une énumération d'articles, et un lecteur
+ * d'écran annonce alors leur nombre et leur position.
+ */
 export function renderHomeCards(articles) {
-  /* L'accueil est une vitrine, pas une archive : au-delà de trois cards la
-     grille casse et la page s'allonge sans rien apporter. */
   return articles
-    .slice(0, 3)
-    .map((a) => renderCard(a, { hauteurImage: 263 }))
+    .map(
+      (a) => `<li class="carousel-item">
+              ${renderCard(a, { hauteurImage: 263 })}
+            </li>`,
+    )
     .join('\n\n            ');
 }
 

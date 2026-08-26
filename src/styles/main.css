@@ -231,6 +231,92 @@
     transform: translateX(4px);
   }
 
+  /* ============================================================
+     CARROUSEL D'ARTICLES
+
+     Un défilement horizontal natif, pas une mécanique en JavaScript : la piste
+     reste parcourable au doigt, à la molette et au clavier même si le script
+     ne charge pas. Le JS n'ajoute que les flèches et leur état.
+     ============================================================ */
+
+  .carousel-track {
+    display: flex;
+    gap: 1.5rem;
+    overflow-x: auto;
+    /* L'accroche aligne toujours une card sur le bord gauche : sans elle, le
+       défilement s'arrête n'importe où et coupe une card en deux. */
+    scroll-snap-type: x mandatory;
+    /* Le débord de l'élévation au survol (translateY -4px) serait rogné par
+       overflow-x sans cette marge. */
+    padding-block: 6px;
+    scrollbar-width: none;
+  }
+
+  .carousel-track::-webkit-scrollbar {
+    display: none;
+  }
+
+  .carousel-item {
+    scroll-snap-align: start;
+    /* Une card par écran sur mobile, en gardant un fragment de la suivante
+       visible : c'est ce qui indique qu'il y a autre chose à voir, mieux
+       qu'une flèche ou un point. */
+    flex: 0 0 calc(100% - 3rem);
+    list-style: none;
+  }
+
+  .carousel-item > a {
+    height: 100%;
+  }
+
+  @media (min-width: 768px) {
+    .carousel-item {
+      flex-basis: calc((100% - 1.5rem) / 2);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .carousel-item {
+      flex-basis: calc((100% - 3rem) / 3);
+    }
+  }
+
+  /* Défilement animé, sauf si le visiteur a demandé moins de mouvement. */
+  @media (prefers-reduced-motion: no-preference) {
+    .carousel-track {
+      scroll-behavior: smooth;
+    }
+  }
+
+  .carousel-arrow {
+    display: grid;
+    place-items: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    border: 1px solid var(--glass-border);
+    border-radius: 999px;
+    color: var(--color-bone-300);
+    background: var(--glass-bg);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    transition:
+      border-color var(--duration-hover) var(--ease-out-soft),
+      color var(--duration-hover) var(--ease-out-soft),
+      opacity var(--duration-hover) var(--ease-out-soft);
+  }
+
+  .carousel-arrow:hover:not(:disabled) {
+    border-color: var(--glass-border-hover);
+    color: var(--color-copper-400);
+  }
+
+  /* En bout de course : atténuée plutôt que masquée. Une flèche qui disparaît
+     décale l'autre, et le regard perd son repère. */
+  .carousel-arrow:disabled {
+    opacity: 0.3;
+    cursor: default;
+  }
+
   /* Liens du footer et icônes sociales. */
   .footer-link {
     color: var(--color-bone-500);

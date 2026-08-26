@@ -336,15 +336,30 @@
            ========================================================== -->
       <section id="articles" class="relative py-20 lg:py-28">
         <div class="mx-auto max-w-[1240px] px-6 lg:px-10">
-          <header class="mb-14">
+          <header class="mb-14 flex flex-wrap items-end justify-between gap-x-8 gap-y-6">
             <h2 class="section-title text-bone-100" data-reveal>
               Réflexions, insights et actualités
             </h2>
+
+            <!-- Les flèches sont ajoutées par le JS uniquement s'il y a de quoi
+                 défiler : sans script, ou avec peu d'articles, la piste reste
+                 parcourable au doigt et au clavier, et rien d'inutile ne
+                 s'affiche. -->
+            <div class="ml-auto flex shrink-0 gap-3" data-carousel-controls hidden>
+              <button type="button" class="carousel-arrow" data-carousel-prev aria-label="Articles précédents">
+                <span aria-hidden="true">&larr;</span>
+              </button>
+              <button type="button" class="carousel-arrow" data-carousel-next aria-label="Articles suivants">
+                <span aria-hidden="true">&rarr;</span>
+              </button>
+            </div>
           </header>
 
-          <div class="grid gap-6 md:grid-cols-3">
+          <!-- data-lenis-prevent : sans cet attribut, le smooth scroll capte la
+               molette au-dessus de la piste et empêche le défilement horizontal. -->
+          <ul class="carousel-track" data-carousel-track data-lenis-prevent data-stagger>
             <!--@articles-->
-          </div>
+          </ul>
         </div>
       </section>
 
