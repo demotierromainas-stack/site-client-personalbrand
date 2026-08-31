@@ -470,6 +470,73 @@
     }
   }
 
+  /* ============================================================
+     SÉQUENCE AU SCROLL — le personnage du hero
+
+     La boîte est volontairement plus haute que la source (800×459) : avec
+     `object-fit: cover`, les côtés du plan sont rognés et le personnage, qui
+     est au centre, occupe une plus grande part du cadre. Sans ce recadrage, le
+     plan large donnerait une silhouette minuscule perdue au milieu du décor.
+
+     Le prix est un agrandissement d'environ 1,3× — invisible sur une image
+     sombre et granuleuse, là où doubler la taille se verrait tout de suite.
+     ============================================================ */
+  .hero-sequence {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 800 / 620;
+    opacity: 0.92;
+  }
+
+  .hero-sequence > canvas,
+  .hero-sequence > img {
+    position: absolute;
+    inset: 0;
+    display: block;
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+  }
+
+  /* Le canvas reste transparent tant qu'il n'a rien dessiné : sinon on
+     verrait un rectangle noir opaque par-dessus le poster, le temps que la
+     première image arrive. `is-live` est posée au premier dessin. */
+  .hero-sequence > canvas {
+    opacity: 0;
+  }
+
+  .hero-sequence.is-live > canvas {
+    opacity: 1;
+  }
+
+  .hero-sequence.is-live > img {
+    opacity: 0;
+  }
+
+  @media (min-width: 1024px) {
+    .hero-sequence {
+      aspect-ratio: 800 / 580;
+    }
+  }
+
+  /* Lueur froide derrière le plan : la séquence vire au bleu à mesure qu'elle
+     se dissout, là où tout le reste du site est cuivré. Sans source lumineuse
+     assortie autour, ce bleu a l'air rapporté sur le décor. */
+  .hero-sequence::before {
+    content: '';
+    position: absolute;
+    inset: -14% -10%;
+    z-index: -1;
+    border-radius: 9999px;
+    filter: blur(80px);
+    background: radial-gradient(
+      ellipse 62% 58% at 50% 46%,
+      rgb(125 211 252 / 0.14),
+      rgb(38 62 102 / 0.12) 55%,
+      transparent 75%
+    );
+  }
+
   /* Rail d'étapes — la trame verticale à pastilles de la maquette.
      Elle y servait un format questions/réponses ; ici elle porte le
      déroulé d'une intervention, qui est la même idée visuelle : une suite
@@ -491,6 +558,28 @@
       transparent,
       rgb(255 255 255 / 0.13) 6%,
       rgb(255 255 255 / 0.13) 94%,
+      transparent
+    );
+  }
+
+  /* Doublure cuivre du rail, remplie au scroll (voir sections.js).
+     Calée exactement sur le trait gris, qu'elle recouvre à mesure qu'on
+     descend : c'est le même fil, qui s'allume. Les pastilles ont un fond
+     opaque et passent devant, donc le trait reste interrompu à leur hauteur,
+     rempli ou non. */
+  .step-rail-fill {
+    position: absolute;
+    left: 1.4375rem;
+    top: 1.5rem;
+    bottom: 1.5rem;
+    width: 1px;
+    transform: scaleY(0);
+    transform-origin: top;
+    background: linear-gradient(
+      to bottom,
+      transparent,
+      var(--color-copper-500) 6%,
+      var(--color-copper-500) 94%,
       transparent
     );
   }
@@ -837,6 +926,7 @@
   transform: scale(0.97);
 }
 
+
 /* ============================================================
    ACCESSIBILITÉ — mouvement réduit
    Le site doit rester entièrement lisible et navigable sans aucune animation.
@@ -852,6 +942,16 @@
   .js-enabled [data-reveal-scale] {
     opacity: 1 !important;
     transform: none !important;
+  }
+
+  /* Séquence du hero : initSequence() sort avant d'avoir rien téléchargé, donc
+     `is-live` n'est jamais posée et le canvas reste transparent. Le hero
+     montre le poster, c'est-à-dire le portrait fixe d'avant. Rien à forcer
+     ici — c'est écrit pour mémoire, parce que c'est le seul endroit du site où
+     l'état de repli n'est pas produit par une règle de ce bloc. */
+
+  .step-rail-fill {
+    transform: scaleY(1);
   }
 
   .glass-hover:hover {

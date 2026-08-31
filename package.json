@@ -8,6 +8,7 @@
     "build": "vite build",
     "preview": "vite preview",
     "shots": "node scripts/shots.mjs",
+    "sequence": "node scripts/sequence.mjs",
     "deploy": "vite build && netlify deploy --prod --dir=dist",
     "cms:setup": "node scripts/directus-setup.mjs",
     "cms:seed": "node scripts/directus-seed.mjs",

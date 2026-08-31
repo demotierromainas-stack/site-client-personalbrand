@@ -18,7 +18,9 @@
     />
     <meta property="og:image" content="/img/portrait.webp" />
 
-    <link rel="preload" as="image" href="/img/portrait.webp" />
+    <!-- Première image de la séquence du hero : c'est elle qu'on voit à
+         l'arrivée sur la page, avant tout scroll. -->
+    <link rel="preload" as="image" href="/img/sequence/800/f-000.webp" />
 
     <!--@include head.html-->
   </head>
@@ -63,60 +65,41 @@
         ></div>
 
         <!-- Plan 2 — portrait, vitesse intermédiaire.
-             À partir de lg : image posée à droite, le texte occupe la gauche. -->
+             À partir de lg : image posée à droite, le texte occupe la gauche.
+             En dessous : elle occupe la moitié haute, le texte passe dessous.
+
+             Un seul bloc pour les deux tailles, là où il y en avait deux avant
+             (une image de fond en mobile, une balise img en desktop) : la
+             séquence est un canvas, et un canvas ne peut pas être à deux
+             endroits à la fois. Le placement se fait donc en CSS. -->
         <div
-          class="pointer-events-none absolute inset-y-0 right-0 z-0 hidden lg:block lg:w-[58%]"
+          class="pointer-events-none absolute top-[28%] right-[-16%] bottom-auto z-0 w-[104%] lg:inset-y-0 lg:top-0 lg:right-0 lg:w-[58%]"
           data-layer="portrait"
           aria-hidden="true"
         >
-          <div class="flex h-full w-full items-end justify-center" data-layer-inner="portrait">
-            <!-- Image IA validée par le client. .portrait-mask fond les quatre
-                 bords dans le fond, en remplacement d'un détourage.
+          <div class="flex h-full w-full items-center justify-center" data-layer-inner="portrait">
+            <!-- La séquence remplace ici le portrait fixe : c'est ce personnage
+                 qui se dissout en particules à mesure qu'on quitte le hero.
 
-                 Dimensionnement par max-* et non par h-* : une hauteur fixe en
-                 pourcentage fait déborder la largeur intrinsèque sur les écrans
-                 étroits et hauts. Ici l'image se contraint à la plus petite des
-                 deux limites, donc elle ne déborde jamais — et comme la boîte
-                 reste collée à l'image, le masque en dégradé reste aligné. -->
-            <img
-              src="/img/portrait.webp"
-              alt=""
-              width="920"
-              height="876"
-              fetchpriority="high"
-              class="portrait-mask h-auto max-h-[88%] w-auto max-w-full opacity-90"
-            />
+                 Le poster est la première image de la suite. Il est chargé en
+                 priorité et reste visible sous le canvas : tant que les images
+                 n'ont pas fini d'arriver, le hero montre déjà le bon plan, et
+                 le canvas prend le relais sans transition visible puisqu'il
+                 commence par dessiner exactement cette image-là.
+
+                 .portrait-mask fond les quatre bords dans le décor, comme pour
+                 le portrait qu'elle remplace. -->
+            <div class="hero-sequence portrait-mask" data-sequence>
+              <img
+                src="/img/sequence/800/f-000.webp"
+                alt="Jean-Maxime Hanny, dans un décor de panneaux de verre."
+                width="800"
+                height="459"
+                fetchpriority="high"
+              />
+              <canvas data-sequence-canvas width="800" height="459" aria-hidden="true"></canvas>
+            </div>
           </div>
-        </div>
-
-        <!-- Portrait de fond, mobile et tablette.
-             En image de fond `cover` plutôt qu'en balise img : l'image remplit
-             exactement la boîte, sans bandes vides, donc .portrait-mask reste
-             calé sur ce qu'on voit. Une img en `contain` laisserait du vide en
-             haut et en bas de sa boîte, et le dégradé du masque tomberait à
-             côté de l'image.
-             La boîte porte le ratio exact de l'image (aspect-[920/876]) : sans
-             ça, une hauteur en pourcentage donne un format très large sur
-             tablette et `cover` recadre alors verticalement, ce qui coupe le
-             haut du crâne. Avec le bon ratio, il n'y a plus rien à recadrer.
-
-             Débordant légèrement à droite de l'écran, comme en desktop : le
-             visage se place dans le tiers droit, le texte garde la gauche. -->
-        <div
-          class="pointer-events-none absolute top-[34%] right-[-8%] z-0 w-[80%] max-w-[400px] lg:hidden"
-          aria-hidden="true"
-        >
-          <!-- Halo cuivre local. C'est lui qui intègre le portrait au décor :
-               sans source lumineuse autour, l'image a l'air collée sur le fond
-               au lieu d'y être posée. -->
-          <div
-            class="absolute inset-[-20%] -z-10 blur-[65px]"
-            style="background: radial-gradient(circle at 52% 42%, rgb(184 115 51 / 0.5), transparent 70%);"
-          ></div>
-          <div
-            class="portrait-mask aspect-[920/876] w-full bg-cover bg-center opacity-90"
-            style="background-image: url('/img/portrait.webp');"
-          ></div>
         </div>
 
         <!-- Voile de lisibilité, version mobile.
@@ -228,6 +211,156 @@
                 <dt class="eyebrow mt-3 text-bone-500">Domaines<br />d'expertise</dt>
               </div>
             </dl>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================================
+           À PROPOS
+
+           Section de texte ordinaire : le lien « À propos » du header pointait
+           jusqu'ici vers le hero, faute de destination. C'est aussi elle qui
+           donne à la page la longueur qui lui manquait.
+
+           Tout y est révélé par la mécanique commune du site
+           ([data-stagger] + [data-reveal], voir sections.js). L'animation au
+           scroll est dans le hero, et nulle part ailleurs : une seule
+           animation signature par page.
+           ========================================================== -->
+      <section id="a-propos" class="relative py-20 lg:py-28">
+        <div class="mx-auto max-w-[1240px] px-6 lg:px-10">
+          <!-- Section sans image : le titre tient la colonne de gauche, le texte
+               celle de droite.
+
+               C'est la mise en page qu'appelle une section de texte seul sur ce
+               gabarit large. Empiler titre puis paragraphes en pleine largeur
+               donnerait des lignes de cent caractères, illisibles ; les laisser
+               dans une demi-colonne laisserait l'autre moitié vide. Le partage
+               résout les deux. -->
+          <div
+            class="grid gap-10 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] lg:gap-20"
+            data-stagger
+          >
+            <div>
+              <p class="eyebrow text-copper-400" data-reveal>À propos</p>
+
+              <h2
+                class="mt-5 font-display text-[clamp(1.875rem,4vw,2.75rem)] leading-tight text-bone-100"
+                data-reveal
+              >
+                Ce qui se construit ne se voit
+                <span class="text-copper-400">qu'une fois assemblé</span>.
+              </h2>
+
+              <div class="rule-copper mt-9 w-20" data-reveal></div>
+            </div>
+
+            <!-- TODO client : remplacer par la vraie présentation. -->
+            <div class="space-y-6 text-base leading-relaxed font-light text-bone-300 lg:pt-2 lg:text-lg">
+              <p data-reveal>
+                Quinze ans à bâtir des entreprises, à investir dans des projets et à
+                accompagner ceux qui les portent. Une conviction : une idée ne vaut que
+                par l'exécution qu'on lui donne.
+              </p>
+              <p data-reveal>
+                De l'efficacité énergétique au média financier, de la formation à
+                l'intelligence artificielle — quatre terrains, une même méthode :
+                comprendre avant de structurer, structurer avant de déployer.
+              </p>
+              <p class="text-bone-500" data-reveal>
+                Le reste tient en une phrase : je préfère les projets qui existent
+                encore dans dix ans.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================================
+           PARCOURS
+
+           Les jalons sont un groupe [data-stagger] : sections.js les révèle en
+           cascade sans une ligne de code supplémentaire. Seul le remplissage
+           du rail est propre à cette section.
+           ========================================================== -->
+      <section id="parcours" class="relative py-20 lg:py-28">
+        <div class="mx-auto max-w-[1240px] px-6 lg:px-10">
+          <header class="mb-14">
+            <p class="eyebrow text-bone-500" data-reveal>Parcours</p>
+            <h2 class="section-title mt-3 text-bone-100" data-reveal>
+              Les étapes qui ont <span class="text-copper-400">tracé la route</span>
+            </h2>
+          </header>
+
+          <!-- TODO client : dates et intitulés réels.
+
+               Même ossature que le déroulé des pages activité : grille à deux
+               colonnes dont la première fait exactement la largeur des
+               pastilles, sur laquelle le trait du rail est calé.
+
+               .step-rail-fill double ce trait en cuivre et se remplit au
+               scroll — c'est le seul ajout par rapport aux pages activité. -->
+          <!-- Le rail et son remplissage sont portés par un div englobant, pas
+               par la liste : un <span> en enfant direct d'un <ol> est du HTML
+               invalide, et seuls des <li> ont leur place là. -->
+          <div class="step-rail max-w-3xl" data-stagger data-rail>
+            <span class="step-rail-fill" data-rail-fill aria-hidden="true"></span>
+
+            <ol>
+              <li class="grid grid-cols-[2.875rem_1fr] gap-6 pb-11 lg:gap-9" data-reveal>
+                <span class="step-num" aria-hidden="true">01</span>
+                <div class="pt-2">
+                  <p class="eyebrow text-copper-400">2010</p>
+                  <h3 class="mt-2 font-display text-xl text-bone-100 lg:text-2xl">
+                    Les premières armes
+                  </h3>
+                  <p class="mt-3 text-sm leading-relaxed font-light text-bone-300">
+                    Premiers projets entrepreneuriaux, et l'apprentissage le plus utile :
+                    celui qui vient de ce qui ne marche pas.
+                  </p>
+                </div>
+              </li>
+
+              <li class="grid grid-cols-[2.875rem_1fr] gap-6 pb-11 lg:gap-9" data-reveal>
+                <span class="step-num" aria-hidden="true">02</span>
+                <div class="pt-2">
+                  <p class="eyebrow text-copper-400">2015</p>
+                  <h3 class="mt-2 font-display text-xl text-bone-100 lg:text-2xl">
+                    Le passage à l'investissement
+                  </h3>
+                  <p class="mt-3 text-sm leading-relaxed font-light text-bone-300">
+                    Accompagner d'autres fondateurs plutôt que de tout porter seul.
+                    Le début d'un portefeuille et d'un réseau.
+                  </p>
+                </div>
+              </li>
+
+              <li class="grid grid-cols-[2.875rem_1fr] gap-6 pb-11 lg:gap-9" data-reveal>
+                <span class="step-num" aria-hidden="true">03</span>
+                <div class="pt-2">
+                  <p class="eyebrow text-copper-400">2020</p>
+                  <h3 class="mt-2 font-display text-xl text-bone-100 lg:text-2xl">
+                    L'énergie et le climat
+                  </h3>
+                  <p class="mt-3 text-sm leading-relaxed font-light text-bone-300">
+                    Lancement de Procuve. L'efficacité énergétique comme terrain
+                    d'application concret d'une conviction plus ancienne.
+                  </p>
+                </div>
+              </li>
+
+              <li class="grid grid-cols-[2.875rem_1fr] gap-6 lg:gap-9" data-reveal>
+                <span class="step-num" aria-hidden="true">04</span>
+                <div class="pt-2">
+                  <p class="eyebrow text-copper-400">Aujourd'hui</p>
+                  <h3 class="mt-2 font-display text-xl text-bone-100 lg:text-2xl">Transmettre</h3>
+                  <p class="mt-3 text-sm leading-relaxed font-light text-bone-300">
+                    BusinessBusiness et IA pour tous : rendre accessible ce qui reste
+                    trop souvent réservé à ceux qui savent déjà.
+                  </p>
+                </div>
+              </li>
+            </ol>
           </div>
         </div>
       </section>

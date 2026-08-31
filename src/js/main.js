@@ -3,6 +3,7 @@ import { initSmoothScroll, initAnchorLinks } from './lenis.js';
 import { initHeader } from './header.js';
 import { initHero } from './hero.js';
 import { initSections } from './sections.js';
+import { initSequence } from './sequence.js';
 import { initCarousel } from './carousel.js';
 
 const lenis = initSmoothScroll();
@@ -11,6 +12,7 @@ initAnchorLinks(lenis);
 initHeader();
 initHero();
 initSections();
+initSequence();
 initCarousel();
 initBackgroundDrift();
 

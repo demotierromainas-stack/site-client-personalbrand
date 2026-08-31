@@ -34,6 +34,33 @@ export function initSections() {
       });
     });
 
+  /* ---- Rails de parcours : le fil se remplit à mesure qu'on descend ----
+     En `scrub` et non en révélation : le remplissage doit suivre la position
+     du lecteur dans la liste, pas se déclencher une fois pour toutes à
+     l'entrée. La course va de l'arrivée du rail au tiers bas de l'écran
+     jusqu'à sa sortie par le tiers haut — soit très exactement le temps
+     pendant lequel il est lisible. */
+  document.querySelectorAll('[data-rail]').forEach((rail) => {
+    const fill = rail.querySelector('[data-rail-fill]');
+    if (!fill) return;
+
+    if (prefersReducedMotion()) {
+      gsap.set(fill, { scaleY: 1 });
+      return;
+    }
+
+    gsap.to(fill, {
+      scaleY: 1,
+      ease: 'none',
+      scrollTrigger: {
+        trigger: rail,
+        start: 'top 70%',
+        end: 'bottom 65%',
+        scrub: 0.4,
+      },
+    });
+  });
+
   /* ---- Bandeaux CTA : fondu avec un très léger zoom ---- */
   document.querySelectorAll('[data-reveal-scale]').forEach((cta) => {
     if (prefersReducedMotion()) {

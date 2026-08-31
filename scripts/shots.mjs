@@ -29,7 +29,20 @@ const PAGES = [
   {
     name: 'accueil',
     path: '/',
-    stops: ['hero', 'hero-parallax', 'entreprises', 'articles', 'cta-footer'],
+    /* L'accueil a ses propres fractions : c'est la seule page à avoir sept
+       sections, et les repères communs ci-dessous y tombaient entre deux.
+       Le deuxième arrêt est calé sur la dissolution du personnage du hero,
+       qui se joue dans le premier demi-écran de scroll. */
+    fractions: [0, 0.07, 0.22, 0.4, 0.58, 0.75, 1],
+    stops: [
+      'hero',
+      'hero-dissolution',
+      'a-propos',
+      'parcours',
+      'entreprises',
+      'articles',
+      'cta-footer',
+    ],
   },
   {
     name: 'procuve',
@@ -71,9 +84,9 @@ const VIEWPORTS = [
   { name: 'desktop', viewport: { width: 1440, height: 900 }, deviceScaleFactor: 2 },
 ];
 
-/* Positions de scroll, en fraction de la hauteur totale de page. Sur
-   l'accueil, le deuxième arrêt sert à vérifier que les trois plans du hero se
-   sont bien décalés les uns par rapport aux autres. */
+/* Positions de scroll, en fraction de la hauteur totale de page. Une page peut
+   définir les siennes (`fractions`) quand ses sections ne tombent pas sur ces
+   repères communs — voir l'accueil. */
 const FRACTIONS = [0, 0.12, 0.35, 0.62, 1];
 
 const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
@@ -101,7 +114,7 @@ async function capture(browser, page_, { name, ...contextOptions }, { reducedMot
   const suffix = reducedMotion === 'reduce' ? '-reduced' : '';
   const height = await page.evaluate(() => document.body.scrollHeight);
 
-  for (const [index, fraction] of FRACTIONS.entries()) {
+  for (const [index, fraction] of (page_.fractions ?? FRACTIONS).entries()) {
     const y = Math.round((height - contextOptions.viewport.height) * fraction);
 
     // Lenis fait défiler la fenêtre pour de vrai : un scrollTo natif déclenche

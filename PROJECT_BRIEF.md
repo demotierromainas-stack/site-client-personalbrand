@@ -15,9 +15,18 @@ vient du mouvement (parallax, fade/slide, glow réactif), pas de modélisation 3
 - Palette : noir/navy + cuivre/bronze en accent, texte blanc/gris clair
 
 ## Décisions actées
-- Pas de vidéo générée pour le hero (poids de page, rigidité, risque d'artefacts sur
-  un portrait réaliste). Photo statique détourée + animations code = meilleur rapport
-  qualité/performance/contrôle.
+- ~~Pas de vidéo générée pour le hero~~ — **revenu dessus le 26/08/2026**, à la demande
+  du client, qui a fourni une vidéo IA du personnage se dissolvant en particules.
+  Elle n'est pas *lue* mais **parcourue au scroll** : le hero la traverse image par
+  image à mesure qu'on descend, et la remonte si on remonte. Les réserves d'origine
+  (poids, rigidité) sont traitées par la production : la source est découpée en une
+  suite d'images WebP (`npm run sequence`), la fin inutile est coupée, un jeu allégé
+  sert sur téléphone, et le téléchargement n'a lieu qu'une fois la page chargée.
+  Voir `src/js/sequence.js` et `scripts/sequence.mjs`.
+- Une seule animation signature par page, et elle est dans le hero. La séquence
+  n'apparaît nulle part ailleurs, pas même arrêtée sur une image : la section
+  « À propos » est du texte seul (choix client du 26/08/2026). L'effet reste rare,
+  donc il porte.
 - Stack : **HTML/Tailwind custom**, pas de CMS.
 - Animations : **GSAP + ScrollTrigger** pour les animations au scroll (fade, slide,
   scale, stagger). **Lenis** pour le smooth scroll (sensation premium au défilement).
@@ -28,19 +37,27 @@ vient du mouvement (parallax, fade/slide, glow réactif), pas de modélisation 3
 ## Structure du site (sections identifiées sur la maquette)
 1. **Header** — logo, nav (À propos, Activités, Projets, Articles, Contact), CTA
    "Prendre rendez-vous"
-2. **Hero** — accroche + nom, sous-titre, 2 CTA, photo détourée du client, bloc stats
-   (15+ années, 20+ entreprises, 8 projets, 4 domaines)
-3. **Mes entreprises** — intro + grille de 3 cards (logo/icône, nom, tag, description,
+2. **Hero** — accroche + nom, sous-titre, 2 CTA, séquence du client parcourue au scroll,
+   bloc stats (15+ années, 20+ entreprises, 8 projets, 4 domaines)
+3. **À propos** — texte seul, titre à gauche et présentation à droite. Ajoutée le
+   26/08/2026 : le lien « À propos » du header pointait jusque-là vers le hero, faute
+   de destination.
+4. **Parcours** — frise verticale de jalons datés, dont le rail se remplit au scroll.
+   Ajoutée le 26/08/2026, même motif : la page était trop courte.
+5. **Mes entreprises** — intro + grille de 3 cards (logo/icône, nom, tag, description,
    lien "en savoir plus")
-4. **Réflexions/Articles** — intro + grille de 3 cards articles (image, catégorie,
+6. **Réflexions/Articles** — intro + carrousel de cards articles (image, catégorie,
    date, titre, lien)
-5. **Bandeau CTA final** — accroche courte + bouton "Prendre rendez-vous"
-6. **Footer** — logo, baseline, réseaux sociaux, nav, expertises, contact
+7. **Bandeau CTA final** — accroche courte + bouton "Prendre rendez-vous"
+8. **Footer** — logo, baseline, réseaux sociaux, nav, expertises, contact
 
 ## Script d'animation par section
-- **Hero** : texte qui fade/slide en entrée au chargement ; photo qui apparaît avec
-  léger scale ; stats en count-up animé ; parallax léger entre fond/photo au scroll
-  et/ou au mouvement de la souris ; glow qui réagit subtilement au curseur
+- **Hero** : texte qui fade/slide en entrée au chargement ; **le personnage se dissout
+  en particules au scroll**, image par image, sur le premier demi-écran ; stats en
+  count-up animé ; parallax léger entre fond/photo au scroll et/ou au mouvement de la
+  souris ; glow qui réagit subtilement au curseur
+- **À propos / Parcours** : révélations en cascade ; le rail de la frise se remplit
+  en cuivre au fil de la descente
 - **Mes entreprises** : cards en stagger (apparition décalée l'une après l'autre) au
   scroll, hover = légère élévation + glow
 - **Articles** : slide-in léger au scroll, hover = légère élévation
