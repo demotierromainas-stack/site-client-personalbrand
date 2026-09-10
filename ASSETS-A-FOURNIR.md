@@ -33,7 +33,7 @@ des contours sales, particulièrement visibles au niveau de la barbe et des épa
 
 ### Une seconde photo, pour les pages Activités
 
-Les trois pages Procuve, BusinessBusiness et IA pour tous s'ouvrent sur une seconde image :
+Les trois pages Procuve, BusinessBusiness et IA en famille s'ouvrent sur une seconde image :
 **vous assis dans un fauteuil**, en plan plus large, dans un décor sombre. Elle joue le même rôle
 que le portrait de la page d'accueil, mais en ambiance plutôt qu'en sujet principal.
 
@@ -65,7 +65,7 @@ appartiennent au même univers.
 > tout le site. La couleur d'accent de Procuve a été passée du vert au bleu du logo, sur la
 > page d'accueil comme sur sa page dédiée.
 
-Restent **BusinessBusiness** et **IA pour tous** :
+Restent **BusinessBusiness** et **IA en famille** :
 
 - Format **SVG** de préférence (fichier vectoriel fourni par le graphiste)
 - À défaut : **PNG à fond transparent, 1000 px de large minimum**
@@ -93,7 +93,7 @@ Aucun texte n'est définitif à ce stade — ceux de la maquette sont des exempl
 
 ## 4. Les trois pages Activités
 
-Procuve, BusinessBusiness et IA pour tous ont désormais **chacune leur page**, accessible depuis
+Procuve, BusinessBusiness et IA en famille ont désormais **chacune leur page**, accessible depuis
 la page d'accueil et depuis le menu. Chaque page est bâtie sur le même plan : accroche, mission,
 ce que fait l'entreprise, déroulé ou principes, lien vers son site.
 

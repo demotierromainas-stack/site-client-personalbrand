@@ -345,6 +345,71 @@
     color: var(--color-copper-400);
   }
 
+  /* ---- Contact flottant : WhatsApp et Instagram, bas de fenêtre ----
+     Même bouton que les flèches du carrousel — verre, rond, cuivre au
+     survol. Un composant flottant qui invente son propre style se voit
+     comme une pièce rapportée, or celui-ci est visible en permanence. */
+  .contact-flottant {
+    position: fixed;
+    /* env() pour ne pas passer sous la barre d'accueil iOS. */
+    right: max(1.25rem, env(safe-area-inset-right));
+    bottom: max(1.25rem, env(safe-area-inset-bottom));
+    /* Au-dessus du header (50), sous le grain (60) qui recouvre tout. */
+    z-index: 55;
+    display: flex;
+    flex-direction: column;
+    gap: 0.625rem;
+  }
+
+  .contact-flottant-lien {
+    display: grid;
+    place-items: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    border: 1px solid var(--glass-border);
+    border-radius: 999px;
+    color: var(--color-bone-300);
+    background: var(--glass-bg);
+    /* Flou plus marqué qu'ailleurs : ces boutons passent au-dessus du
+       contenu, pas au-dessus du seul décor de fond. Sans ça, du texte
+       défilant dessous les rend illisibles. */
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.05);
+    transition:
+      border-color var(--duration-hover) var(--ease-out-soft),
+      color var(--duration-hover) var(--ease-out-soft),
+      transform var(--duration-hover) var(--ease-out-soft);
+  }
+
+  .contact-flottant-lien:hover {
+    border-color: var(--glass-border-hover);
+    color: var(--color-copper-400);
+    transform: translateY(-2px);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .contact-flottant-lien:hover {
+      transform: none;
+    }
+  }
+
+  /* Sur petit écran la colonne de texte occupe toute la largeur : les deux
+     boutons passent forcément au-dessus d'elle. Plus petits et plus près du
+     bord, ils mordent sur une lettre plutôt que sur un mot. */
+  @media (width < 40rem) {
+    .contact-flottant {
+      right: max(0.875rem, env(safe-area-inset-right));
+      bottom: max(0.875rem, env(safe-area-inset-bottom));
+      gap: 0.5rem;
+    }
+
+    .contact-flottant-lien {
+      width: 2.5rem;
+      height: 2.5rem;
+    }
+  }
+
   /* Trait de séparation dégradé, comme sous le nom dans le hero. */
   .rule-copper {
     height: 1px;

@@ -24,7 +24,7 @@ Les animations se déclenchent au défilement — je vous invite à faire défil
 lentement pour les voir, et à passer la souris sur les cartes des entreprises.
 
 **Trois nouvelles pages, une par entreprise** : Procuve, BusinessBusiness et
-IA pour tous. On y accède en cliquant sur les cartes de la page d'accueil, ou
+IA en famille. On y accède en cliquant sur les cartes de la page d'accueil, ou
 par le menu « Activités » en haut. Chaque page reprend l'ambiance du site avec
 la couleur de la marque concernée, et renvoie vers les deux autres en bas de
 page.
@@ -74,7 +74,7 @@ Les éléments listés dans le document que je vous ai transmis, en priorité :
 1. **Votre photo** — c'est le point le plus important. Celle qui apparaît
    actuellement est l'image générée par intelligence artificielle de la maquette,
    elle ne vous représente pas et ne peut pas rester sur le site final.
-2. Les logos de Procuve, BusinessBusiness et IA pour tous
+2. Les logos de Procuve, BusinessBusiness et IA en famille
 3. Une seconde photo, vous assis dans un fauteuil — c'est elle qui ouvre les
    trois pages Activités
 4. Les textes des trois pages Activités

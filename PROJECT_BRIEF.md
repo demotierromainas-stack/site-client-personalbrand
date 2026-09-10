@@ -80,7 +80,7 @@ Le site fait sept pages, servies en URL propres :
 | `/` | `index.html` |
 | `/procuve/` | `procuve/index.html` |
 | `/businessbusiness/` | `businessbusiness/index.html` |
-| `/ia-pour-tous/` | `ia-pour-tous/index.html` |
+| `/ia-en-famille/` | `ia-en-famille/index.html` |
 | `/articles/entreprendre-en-2026/` | `articles/entreprendre-en-2026/index.html` |
 | `/articles/investir-avec-vision/` | `articles/investir-avec-vision/index.html` |
 | `/articles/ia-au-service-de-la-societe/` | `articles/ia-au-service-de-la-societe/index.html` |

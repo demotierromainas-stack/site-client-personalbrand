@@ -55,8 +55,8 @@ const PAGES = [
     stops: ['hero', 'mission', 'formats', 'ligne', 'cta-footer'],
   },
   {
-    name: 'ia-pour-tous',
-    path: '/ia-pour-tous/',
+    name: 'ia-en-famille',
+    path: '/ia-en-famille/',
     stops: ['hero', 'mission', 'programmes', 'parcours', 'cta-footer'],
   },
   {

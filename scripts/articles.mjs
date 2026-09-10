@@ -329,6 +329,8 @@ ${renderSuite(a, articles)}
       <!--@include cta.html-->
     </main>
 
+    <!--@include contact-flottant.html-->
+
     <!--@include footer.html-->
 
     <script type="module" src="/src/js/main.js"></script>

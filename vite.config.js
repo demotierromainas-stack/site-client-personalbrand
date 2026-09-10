@@ -82,7 +82,7 @@ export default defineConfig(async () => {
           index: resolve(root, 'index.html'),
           procuve: resolve(root, 'procuve/index.html'),
           businessbusiness: resolve(root, 'businessbusiness/index.html'),
-          iaPourTous: resolve(root, 'ia-pour-tous/index.html'),
+          iaEnFamille: resolve(root, 'ia-en-famille/index.html'),
           ...entreesArticles,
         },
       },
