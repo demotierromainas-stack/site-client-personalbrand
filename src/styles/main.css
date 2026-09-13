@@ -972,6 +972,103 @@
 }
 
 /* ============================================================
+   DÉCOR ALLÉGÉ — téléphones et tablettes
+   Mesuré sur iPhone simulé : grain, dérive et lueurs floues
+   triplent le travail graphique du scroll. Un ordinateur l'absorbe,
+   un téléphone saccade. Même media query que isTouchDevice()
+   (motion.js), qui coupe de son côté la dérive au scroll.
+   ============================================================ */
+
+@media (hover: none) and (pointer: coarse) {
+  /* Le mode de fusion obligeait à recomposer tout l'écran à chaque frame.
+     En fusion normale la texture casse toujours le banding ; l'opacité est
+     abaissée pour ne pas éclaircir les noirs. */
+  .grain {
+    mix-blend-mode: normal;
+    opacity: 0.022;
+  }
+
+  /* Décor immobile : sans animation, la couche n'est dessinée qu'une fois. */
+  .bg-arcs,
+  .bg-sweeps {
+    animation: none;
+  }
+
+  #site-bg-scroll {
+    will-change: auto;
+  }
+
+  /* Lueurs sans `filter: blur`. Un dégradé radial qui s'éteint en douceur
+     jusqu'au bord de sa boîte donne la même lumière diffuse pour un coût nul.
+     Les boîtes sont agrandies de ce que le flou étalait, et le dégradé suit la
+     boîte (`closest-side`) pour s'éteindre avant ses bords : sans flou ni coins
+     arrondis pour les masquer, un bord coupé se verrait. */
+  .bg-glow {
+    border-radius: 0;
+    filter: none;
+  }
+
+  .bg-glow--copper {
+    top: -24%;
+    right: -40%;
+    height: 100%;
+    width: 150%;
+    /* Crête nettement plus basse que l'original : le flou de 120 px étalait
+       la lumière sur plus que la largeur d'un écran de téléphone, ce qui en
+       diluait fortement le centre. Calé à l'œil sur les captures avant/après. */
+    background: radial-gradient(
+      ellipse closest-side,
+      rgb(184 115 51 / 0.15),
+      rgb(184 115 51 / 0.07) 45%,
+      rgb(184 115 51 / 0.02) 75%,
+      transparent
+    );
+  }
+
+  .bg-glow--navy {
+    bottom: -12%;
+    left: -60%;
+    height: 90%;
+    width: 150%;
+    background: radial-gradient(
+      ellipse closest-side,
+      rgb(38 62 102 / 0.26),
+      rgb(38 62 102 / 0.1) 50%,
+      transparent
+    );
+  }
+
+  /* La traînée perd son étirement net : sans flou, une ellipse aussi
+     aplatie se lit comme une tache posée sur le décor. Plus large, plus
+     haute, plus pâle, elle redevient une lumière d'ambiance. */
+  .bg-flare {
+    top: 36%;
+    left: -40%;
+    height: 40%;
+    width: 110%;
+    filter: none;
+    background: radial-gradient(
+      ellipse closest-side at 45% 50%,
+      rgb(224 169 109 / 0.1),
+      rgb(184 115 51 / 0.04) 50%,
+      transparent
+    );
+  }
+
+  .hero-sequence::before {
+    inset: -30% -25%;
+    border-radius: 0;
+    filter: none;
+    background: radial-gradient(
+      ellipse closest-side at 50% 46%,
+      rgb(125 211 252 / 0.12),
+      rgb(38 62 102 / 0.1) 55%,
+      transparent
+    );
+  }
+}
+
+/* ============================================================
    ÉTATS INITIAUX DES ANIMATIONS
    Gardés derrière .js-enabled : si le JS échoue ou ne charge pas,
    le contenu reste visible au lieu de disparaître définitivement.

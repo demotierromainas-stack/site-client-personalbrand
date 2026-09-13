@@ -13,6 +13,19 @@ const reducedMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)')
 
 export const prefersReducedMotion = () => reducedMotionQuery.matches;
 
+/* ============================================================
+   APPAREILS TACTILES
+   Téléphones et tablettes : écran tactile, pas de survol. Leur puce
+   graphique ne tient pas les flous géants et les calques animés en
+   continu du décor, qui y est donc allégé. La même media query porte
+   l'allègement côté CSS (main.css, « DÉCOR ALLÉGÉ ») : les deux
+   doivent rester identiques.
+   ============================================================ */
+
+const touchDeviceQuery = window.matchMedia('(hover: none) and (pointer: coarse)');
+
+export const isTouchDevice = () => touchDeviceQuery.matches;
+
 /** Pose l'état final (visible, non déplacé) sans animation. */
 const settle = (targets) => {
   gsap.set(targets, { opacity: 1, y: 0, x: 0, scale: 1, clearProps: 'transform' });

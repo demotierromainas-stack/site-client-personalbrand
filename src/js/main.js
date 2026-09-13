@@ -1,4 +1,4 @@
-import { gsap, ScrollTrigger, prefersReducedMotion } from './motion.js';
+import { gsap, ScrollTrigger, prefersReducedMotion, isTouchDevice } from './motion.js';
 import { initSmoothScroll, initAnchorLinks } from './lenis.js';
 import { initHeader } from './header.js';
 import { initHero } from './hero.js';
@@ -23,10 +23,15 @@ initBackgroundDrift();
  * décor plutôt que de faire défiler du contenu devant une image figée.
  *
  * Amplitude faible (-9 %) et calée sur toute la hauteur du document.
+ *
+ * Absente sur tactile : déplacer à chaque frame une couche plus haute que
+ * l'écran, qui porte les lueurs du décor, fait saccader le scroll des
+ * téléphones. Le décor y reste fixe, et le contenu qui défile devant suffit à
+ * donner la profondeur.
  */
 function initBackgroundDrift() {
   const layer = document.querySelector('#site-bg-scroll');
-  if (!layer || prefersReducedMotion()) return;
+  if (!layer || prefersReducedMotion() || isTouchDevice()) return;
 
   gsap.to(layer, {
     yPercent: -9,

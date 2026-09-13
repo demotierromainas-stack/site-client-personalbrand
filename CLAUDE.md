@@ -82,6 +82,13 @@ durées, easings, amplitudes, helpers de révélation, et la garde `prefers-redu
 (chaque helper pose alors l'état final sans animer). Toute nouvelle animation passe par ce
 vocabulaire, c'est ce qui rend le site cohérent d'une section à l'autre.
 
+**Sur tactile, le décor de fond est allégé** : `isTouchDevice()` dans motion.js et le bloc
+« DÉCOR ALLÉGÉ » de main.css partagent la media query `(hover: none) and (pointer: coarse)`.
+Pas de dérive au scroll, pas d'animation infinie, grain sans mode de fusion, lueurs en
+dégradés sans `filter: blur`. Mesuré : ces effets triplaient le travail graphique du scroll
+et faisaient saccader les téléphones. Tout nouvel effet de flou, de fusion ou de calque
+animé en continu doit y être neutralisé.
+
 L'animation signature est unique et vit dans le hero : le portrait se dissout en particules,
 image par image, piloté par le scroll ([src/js/sequence.js](src/js/sequence.js)). Canvas +
 suite de WebP plutôt qu'une `<video>` dont on pilote `currentTime`, qui est saccadé sur
