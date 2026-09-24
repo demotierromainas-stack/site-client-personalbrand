@@ -164,7 +164,11 @@ async function main() {
   await assertTool('ffmpeg', 'ffmpeg');
   await assertTool('magick', 'imagemagick');
 
-  const manifest = {};
+  /* Version des URLs, changée à chaque production. Les fichiers gardent leur
+     nom d'une séquence à l'autre : c'est elle, et elle seule, qui fait
+     retélécharger les images aux visiteurs déjà venus. */
+  const version = new Date().toISOString().slice(0, 16).replace(/[-:T]/g, '');
+  const manifest = { version };
 
   for (const set of SETS) {
     const { count, width, height } = await extract(set);
@@ -178,6 +182,11 @@ async function main() {
   await writeFile(MANIFEST, `${JSON.stringify(manifest, null, 2)}\n`);
 
   console.log(`\nÉcrit dans ${OUT_ROOT}/ et ${MANIFEST} — penser à committer.`);
+  console.log(
+    `\nÀ reporter dans index.html, sur le poster ET le préchargement :\n` +
+    `  /img/sequence/800/f-000.webp?v=${version}\n` +
+    `Sans ça, les visiteurs déjà venus garderont l'ancienne première image.`,
+  );
 }
 
 main().catch((error) => {

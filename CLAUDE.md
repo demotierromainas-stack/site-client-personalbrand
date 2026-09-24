@@ -111,6 +111,16 @@ suite de WebP plutôt qu'une `<video>` dont on pilote `currentTime`, qui est sac
 Safari/iOS. Les images sont versionnées, produites hors build par `npm run sequence`. Ne
 pas réutiliser cet effet ailleurs : il porte parce qu'il est rare.
 
+**Les URLs de la séquence portent un suffixe `?v=`**, pris dans le champ `version` de
+[src/data/sequence.json](src/data/sequence.json). Les fichiers gardent le même nom d'une
+production à l'autre : sans ce suffixe, un visiteur déjà venu reste sur l'ancien
+personnage, l'hébergeur n'envoyant pas de `Cache-Control` — la fraîcheur est laissée à
+l'heuristique du navigateur, qui retient une image plus d'une journée. Constaté en vrai le
+24/09/2026, image nouvelle sur le serveur et ancienne à l'écran. `npm run sequence` écrit
+la nouvelle version et rappelle de la reporter **à la main dans index.html**, sur le poster
+et sur le `<link rel="preload">` : les trois URLs doivent être identiques, sinon la
+première image est téléchargée deux fois.
+
 Lenis est câblé sur le ticker GSAP et notifie ScrollTrigger à chaque frame — les deux liens
 sont indispensables, sans eux la parallaxe tremble et les déclencheurs partent en décalé.
 `syncTouch: false` : le scroll tactile reste natif (iOS Safari).

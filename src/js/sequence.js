@@ -44,6 +44,17 @@ export function initSequence() {
 
   const set = window.matchMedia('(max-width: 767px)').matches ? '480' : '800';
   const { count } = manifest[set];
+
+  /* Les images gardent le même nom d'une séquence à l'autre : sans ce suffixe,
+     un visiteur déjà venu resterait sur l'ancien personnage jusqu'à ce que son
+     navigateur veuille bien revalider — l'hébergeur n'envoie pas de
+     `Cache-Control`, la fraîcheur est donc laissée à son heuristique, qui peut
+     retenir une image pendant plus d'une journée. Changer l'URL, c'est la
+     seule façon sûre de forcer le téléchargement. `index.html` porte la même
+     version sur le poster et le préchargement : les trois doivent désigner la
+     même URL, sinon la première image est téléchargée deux fois.
+     `scripts/sequence.mjs` la met à jour et rappelle de la reporter. */
+  const version = manifest.version ? `?v=${manifest.version}` : '';
   const frames = new Array(count).fill(null);
 
   const ctx = canvas.getContext('2d', { alpha: false });
@@ -124,7 +135,7 @@ export function initSequence() {
   const loadOne = (index) =>
     new Promise((resolve) => {
       const image = new Image();
-      image.src = `/img/sequence/${set}/f-${String(index).padStart(3, '0')}.webp`;
+      image.src = `/img/sequence/${set}/f-${String(index).padStart(3, '0')}.webp${version}`;
       image.decoding = 'async';
 
       const done = () => {
