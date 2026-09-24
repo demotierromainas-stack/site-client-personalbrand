@@ -901,30 +901,14 @@
   will-change: transform;
 }
 
+/* Canvas des arcs et des balayages. Le dessin, son ondulation et ses reflets
+   sont dans decor.js : ici, il n'y a que le cadre. */
 .bg-lines {
   position: absolute;
   inset: 0;
+  display: block;
   height: 100%;
   width: 100%;
-}
-
-/* Dérive très lente et de faible amplitude : le décor doit sembler vivant
-   sans qu'on puisse identifier ce qui bouge. */
-.bg-arcs {
-  animation: bg-drift 46s var(--ease-out-soft) infinite alternate;
-}
-
-.bg-sweeps {
-  animation: bg-drift 34s var(--ease-out-soft) infinite alternate-reverse;
-}
-
-@keyframes bg-drift {
-  from {
-    transform: translate3d(0, 0, 0);
-  }
-  to {
-    transform: translate3d(-18px, -26px, 0);
-  }
 }
 
 .bg-glow {
@@ -988,11 +972,10 @@
     opacity: 0.022;
   }
 
-  /* Décor immobile : sans animation, la couche n'est dessinée qu'une fois. */
-  .bg-arcs,
-  .bg-sweeps {
-    animation: none;
-  }
+  /* Le canvas du décor fait exception et continue de s'animer ici, à cadence
+     réduite (decor.js, TOUCH_STEP) : sans flou ni mode de fusion, son coût n'a
+     rien à voir avec celui des calques neutralisés ci-dessous. La composition
+     y reste par ailleurs recalculée pour l'écran étroit. */
 
   #site-bg-scroll {
     will-change: auto;

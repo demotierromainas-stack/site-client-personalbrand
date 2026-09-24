@@ -55,5 +55,16 @@
 
     /* Décalage vertical standard des animations d'entrée */
     --reveal-offset: 28px;
+
+    /* Couleurs des courbes du décor de fond, lues par decor.js au démarrage
+       pour peindre le canvas. Déclarées ici plutôt que dans `@theme` parce que
+       Tailwind n'émet de variable CSS que pour les tokens dont un utilitaire
+       se sert : celles-ci ne servent qu'au décor, elles seraient supprimées du
+       CSS produit et le canvas se retrouverait sans palette. */
+    --decor-warm: #e0a96d; /* cuivre 300 */
+    --decor-warm-deep: #b87333; /* cuivre 500 */
+    --decor-line: #b8bdc7; /* bone 300 */
+    --decor-line-dim: #8a909c; /* bone 500 */
+    --decor-line-faint: #545b68; /* bone 700 */
   }
 }

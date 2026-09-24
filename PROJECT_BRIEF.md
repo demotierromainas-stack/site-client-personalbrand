@@ -30,9 +30,36 @@ vient du mouvement (parallax, fade/slide, glow réactif), pas de modélisation 3
 - Stack : **HTML/Tailwind custom**, pas de CMS.
 - Animations : **GSAP + ScrollTrigger** pour les animations au scroll (fade, slide,
   scale, stagger). **Lenis** pour le smooth scroll (sensation premium au défilement).
-- Fond animé (glow/lignes lumineuses) : à faire en CSS/SVG animé en priorité
-  (gradients qui bougent lentement), éventuellement renforcé par un léger effet
-  WebGL/Three.js si besoin après le premier prototype.
+- Fond animé (glow/lignes lumineuses) : **lueurs en CSS, courbes en canvas 2D**
+  (`src/js/decor.js`), pas de WebGL. Les lueurs sont des dégradés que le navigateur
+  compose sans les redessiner, c'est ce qu'il fait de moins cher ; les courbes, elles,
+  ondulent en continu et reçoivent de temps à autre un reflet doré qui glisse le long
+  du tracé. Ni l'un ni l'autre n'est à la portée d'un SVG : l'ondulation déplace chaque
+  point de la courbe le long de sa normale, il faudrait animer les points un à un.
+  Mesuré sur 1440 × 900 en Retina : 4 à 5 % d'un cœur, 60 fps tenus, dessin arrêté dès
+  que l'onglet passe en arrière-plan. Le canvas a aussi réglé le cadrage : la composition est
+  décrite deux fois, pour écran large et pour écran étroit, là où le SVG ne pouvait
+  que rogner la version large sur un téléphone.
+- Mouvement du fond, réglé le 23/09/2026 : **une vague parcourt les lignes en
+  permanence** (une crête avance d'une longueur d'onde en 12 à 19 s, creux de 20 à
+  36 px), par-dessus une respiration lente de la composition (29 à 46 s) et un reflet
+  doré toutes les dix secondes environ. Deux réglages successifs le même jour : la
+  première version visait l'imperceptible et ne se voyait pas — le fond paraissait
+  figé, ce qui ne valait pas le canvas ; la deuxième, moitié moins ample et moitié
+  moins rapide que celle-ci, restait timide. L'ondulation est donc franche, et c'est
+  volontaire. Les périodes restent désaccordées entre elles : deux courbes qui
+  repasseraient ensemble par leur point de départ donneraient un battement, et un
+  battement se remarque.
+- Les trois curseurs sont groupés dans `wave` (`src/js/decor.js`, un bloc par
+  courbe) : `amp` l'ampleur, `period` la vitesse, `length` le nombre de vagues sur
+  la longueur du tracé. Rien d'autre à toucher pour re-régler le fond.
+- **Le fond s'anime aussi sur téléphone** (23/09/2026), à 30 images par seconde au
+  lieu de 60. C'est une exception à la règle « rien qui tourne en boucle sur tactile »,
+  qui visait les flous géants et les modes de fusion, pas sept traits fins sans l'un ni
+  l'autre : mesuré à 2,4 % d'un cœur sur un viewport de téléphone. La vague met une
+  quinzaine de secondes à avancer d'une longueur d'onde — à 30 images par seconde elle
+  n'avance pas d'un pixel entier entre deux images, la cadence moitié ne se voit pas et
+  rend le reste du temps graphique au scroll.
 
 ## Structure du site (sections identifiées sur la maquette)
 1. **Header** — logo, nav (À propos, Activités, Projets, Articles, Contact), CTA

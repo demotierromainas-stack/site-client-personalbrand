@@ -82,12 +82,28 @@ durées, easings, amplitudes, helpers de révélation, et la garde `prefers-redu
 (chaque helper pose alors l'état final sans animer). Toute nouvelle animation passe par ce
 vocabulaire, c'est ce qui rend le site cohérent d'une section à l'autre.
 
+[src/js/decor.js](src/js/decor.js) porte le **décor de fond** : les arcs et les balayages
+sont dessinés en canvas 2D, échantillonnés en polylignes pour qu'une vague puisse les
+parcourir en continu, et leur géométrie n'existe que là — le partial
+[src/partials/decor.html](src/partials/decor.html) ne contient plus qu'un `<canvas>` vide
+et les lueurs CSS. Deux compositions y sont décrites, une pour les écrans larges et une
+pour les étroits, choisies d'après la forme de l'écran : un téléphone reçoit un dessin
+pensé pour lui, pas le coin droit du dessin d'un ordinateur. Les couleurs des courbes sont
+lues dans les variables `--decor-*` de tokens.css, déclarées hors de `@theme` parce que
+Tailwind supprime du CSS produit tout token qu'aucun utilitaire n'emploie.
+
 **Sur tactile, le décor de fond est allégé** : `isTouchDevice()` dans motion.js et le bloc
 « DÉCOR ALLÉGÉ » de main.css partagent la media query `(hover: none) and (pointer: coarse)`.
-Pas de dérive au scroll, pas d'animation infinie, grain sans mode de fusion, lueurs en
-dégradés sans `filter: blur`. Mesuré : ces effets triplaient le travail graphique du scroll
-et faisaient saccader les téléphones. Tout nouvel effet de flou, de fusion ou de calque
-animé en continu doit y être neutralisé.
+Pas de dérive au scroll, grain sans mode de fusion, lueurs en dégradés sans `filter: blur`.
+Mesuré : ces effets triplaient le travail graphique du scroll et faisaient saccader les
+téléphones. Tout nouvel effet de flou, de fusion ou de calque composé en continu doit y
+être neutralisé.
+
+**Une exception, décidée le 23/09/2026** : les courbes du décor s'animent aussi sur
+téléphone, à 30 images par seconde au lieu de 60 (`TOUCH_STEP` dans decor.js). Son coût
+n'a rien à voir avec ce qui a motivé la règle — sept traits fins tracés au pinceau, sans
+flou ni mode de fusion. Mesuré à 2,4 % d'un cœur sur un viewport de téléphone, contre
+3,4 % sur un écran d'ordinateur en pleine cadence.
 
 L'animation signature est unique et vit dans le hero : le portrait se dissout en particules,
 image par image, piloté par le scroll ([src/js/sequence.js](src/js/sequence.js)). Canvas +
