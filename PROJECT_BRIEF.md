@@ -105,7 +105,7 @@ Le site fait sept pages, servies en URL propres :
 | URL | Fichier source |
 |---|---|
 | `/` | `index.html` |
-| `/procuve/` | `procuve/index.html` |
+| `/senior-ia/` | `senior-ia/index.html` |
 | `/businessbusiness/` | `businessbusiness/index.html` |
 | `/ia-en-famille/` | `ia-en-famille/index.html` |
 | `/articles/entreprendre-en-2026/` | `articles/entreprendre-en-2026/index.html` |

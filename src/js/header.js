@@ -47,7 +47,7 @@ function markCurrentPage() {
 
 }
 
-/** « /procuve/index.html », « /procuve » et « /procuve/ » désignent la même page. */
+/** « /senior-ia/index.html », « /senior-ia » et « /senior-ia/ » désignent la même page. */
 function normalizePath(pathname) {
   return pathname.replace(/index\.html$/, '').replace(/([^/])$/, '$1/');
 }

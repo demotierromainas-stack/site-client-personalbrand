@@ -33,7 +33,7 @@ des contours sales, particulièrement visibles au niveau de la barbe et des épa
 
 ### Une seconde photo, pour les pages Activités
 
-Les trois pages Procuve, BusinessBusiness et IA en famille s'ouvrent sur une seconde image :
+Les trois pages Senior IA, BusinessBusiness et IA en famille s'ouvrent sur une seconde image :
 **vous assis dans un fauteuil**, en plan plus large, dans un décor sombre. Elle joue le même rôle
 que le portrait de la page d'accueil, mais en ambiance plutôt qu'en sujet principal.
 
@@ -61,11 +61,11 @@ appartiennent au même univers.
 
 ## 2. Logos des trois entreprises
 
-> **Procuve : c'est bon.** Le fichier fourni (version fond sombre, détourée) est en ligne sur
-> tout le site. La couleur d'accent de Procuve a été passée du vert au bleu du logo, sur la
-> page d'accueil comme sur sa page dédiée.
+Aucun des trois logos n'est encore fourni : **BusinessBusiness**, **IA en famille** et
+**Senior IA** affichent pour l'instant une marque dessinée à la main, en attendant les vrais
+fichiers.
 
-Restent **BusinessBusiness** et **IA en famille** :
+Pour chacune des trois :
 
 - Format **SVG** de préférence (fichier vectoriel fourni par le graphiste)
 - À défaut : **PNG à fond transparent, 1000 px de large minimum**
@@ -93,12 +93,11 @@ Aucun texte n'est définitif à ce stade — ceux de la maquette sont des exempl
 
 ## 4. Les trois pages Activités
 
-Procuve, BusinessBusiness et IA en famille ont désormais **chacune leur page**, accessible depuis
+Senior IA, BusinessBusiness et IA en famille ont désormais **chacune leur page**, accessible depuis
 la page d'accueil et depuis le menu. Chaque page est bâtie sur le même plan : accroche, mission,
 ce que fait l'entreprise, déroulé ou principes, lien vers son site.
 
-Les textes actuellement en ligne sont **provisoires**, à l'exception de ceux de Procuve, tirés
-des questions/réponses de la maquette. Pour chaque entreprise, il me faut :
+Les textes actuellement en ligne sont **provisoires**. Pour chaque entreprise, il me faut :
 
 - **L'accroche** de la page (la grande phrase en haut, deux lignes)
 - **Le paragraphe d'introduction**, trois à quatre lignes
@@ -108,8 +107,11 @@ des questions/réponses de la maquette. Pour chaque entreprise, il me faut :
 - **Trois chiffres clés** — ou me dire de retirer le bloc si vous n'en avez pas de solides
 - **L'adresse du site** de l'entreprise, s'il existe
 
-> Pour Procuve, merci surtout de **relire et corriger** ce qui est en ligne : j'ai rédigé à partir
-> de la maquette, ce qui veut dire que des détails techniques peuvent être inexacts.
+> **Senior IA** est la page la plus incomplète des trois : le programme démarre, et rien de ce
+> qui est en ligne ne vient de vous. Le bloc de trois chiffres y a volontairement été remplacé
+> par trois repères de fonctionnement (taille des groupes, lieux, prérequis) — inventer des
+> personnes formées se verrait. Le bouton pointe déjà vers **senioria.fr**, qui n'existe pas
+> encore : il faudra que le site réponde avant la mise en ligne, ou retirer le lien.
 
 ---
 

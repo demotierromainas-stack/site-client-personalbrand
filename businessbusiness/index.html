@@ -36,7 +36,7 @@
 
     <main>
       <!-- ==========================================================
-           HERO DE PAGE — même composition que /procuve/ et /ia-en-famille/.
+           HERO DE PAGE — même composition que /senior-ia/ et /ia-en-famille/.
            ========================================================== -->
       <section id="hero" class="relative overflow-hidden pt-32 pb-16 lg:pt-40 lg:pb-24">
         <!-- Scène partagée par les trois pages activité.
@@ -205,7 +205,7 @@
 
       <!-- ==========================================================
            LIGNE ÉDITORIALE
-           Même rail que le déroulé d'intervention de /procuve/ : ici il porte
+           Même rail que le parcours de /senior-ia/ : ici il porte
            des principes plutôt que des étapes, mais c'est la même trame.
            ========================================================== -->
       <section id="ligne" class="relative py-20 lg:py-28">
@@ -329,20 +329,33 @@
           </header>
 
           <div class="grid gap-6 md:grid-cols-2" data-stagger>
-            <a href="/procuve/" class="glass glass-hover card-cobalt flex flex-col p-8" data-reveal>
-              <h3 class="flex h-28 items-center">
-                <img
-                  src="/img/logo-procuve.webp"
-                  alt="Procuve"
-                  class="h-14 w-auto"
-                  width="822"
-                  height="185"
+            <a href="/senior-ia/" class="glass glass-hover card-cobalt flex flex-col p-8" data-reveal>
+              <!-- TODO client : logo « Senior IA » à fournir. -->
+              <svg viewBox="0 0 72 72" fill="none" aria-hidden="true" class="h-14 w-14 shrink-0">
+                <defs>
+                  <linearGradient id="lg-senior-ia-cross" x1="0" y1="0" x2="1" y2="1">
+                    <stop offset="0%" stop-color="#f1f5f9" />
+                    <stop offset="50%" stop-color="#9bc9ec" />
+                    <stop offset="100%" stop-color="#2f76bd" />
+                  </linearGradient>
+                </defs>
+                <circle cx="36" cy="36" r="28" stroke="url(#lg-senior-ia-cross)" stroke-width="3" />
+                <rect x="22.5" y="19" width="5" height="24" rx="2.5" fill="url(#lg-senior-ia-cross)" />
+                <path
+                  d="M33 43 L41 19 L49 43"
+                  stroke="url(#lg-senior-ia-cross)"
+                  stroke-width="5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
                 />
-              </h3>
-              <p class="eyebrow mt-3 text-cobalt-400/80">Amélioration énergétique et climat</p>
+                <path d="M36 35 H46" stroke="url(#lg-senior-ia-cross)" stroke-width="4" stroke-linecap="round" />
+                <path d="M24 48.5 Q36 55.5 48 48.5" stroke="url(#lg-senior-ia-cross)" stroke-width="4" stroke-linecap="round" />
+              </svg>
+              <h3 class="mt-6 text-2xl font-light tracking-[0.12em] uppercase text-bone-100">Senior IA</h3>
+              <p class="eyebrow mt-3 text-cobalt-400/80">Formation à l'IA pour les seniors</p>
               <p class="mt-6 text-sm leading-relaxed font-light text-bone-300">
-                Démantèlement de cuves à fioul et accompagnement vers des solutions de chauffage
-                durables.
+                Ateliers en petit groupe, accompagnement à domicile et sessions en résidence, sans
+                jargon et sans prérequis.
               </p>
               <span class="eyebrow card-cta mt-auto flex items-center justify-between gap-4 pt-8">
                 En savoir plus
@@ -350,30 +363,31 @@
               </span>
             </a>
 
-            <a href="/ia-en-famille/" class="glass glass-hover card-azure flex flex-col p-8" data-reveal>
+            <a href="/ia-en-famille/" class="glass glass-hover card-violet flex flex-col p-8" data-reveal>
               <svg viewBox="0 0 72 72" fill="none" aria-hidden="true" class="h-14 w-14 shrink-0">
                 <defs>
                   <linearGradient id="lg-ia-cross" x1="0" y1="0" x2="1" y2="1">
-                    <stop offset="0%" stop-color="#f1f5f9" />
-                    <stop offset="55%" stop-color="#94a3b8" />
-                    <stop offset="100%" stop-color="#7dd3fc" />
+                    <stop offset="0%" stop-color="#38bdf8" />
+                    <stop offset="50%" stop-color="#818cf8" />
+                    <stop offset="100%" stop-color="#a855f7" />
                   </linearGradient>
                 </defs>
-                <circle cx="13" cy="15" r="5.5" fill="url(#lg-ia-cross)" />
-                <rect x="8.5" y="26" width="9" height="34" rx="4.5" fill="url(#lg-ia-cross)" />
+                <rect x="6" y="6" width="60" height="60" rx="18" fill="rgb(167 139 250 / 0.12)" stroke="url(#lg-ia-cross)" stroke-width="3" />
+                <rect x="20" y="22" width="5.5" height="28" rx="2.75" fill="url(#lg-ia-cross)" />
                 <path
-                  d="M30 60 L45 16 L60 60"
+                  d="M31 50 L40 22 L49 50"
                   stroke="url(#lg-ia-cross)"
-                  stroke-width="9"
+                  stroke-width="5.5"
                   stroke-linecap="round"
                   stroke-linejoin="round"
                 />
+                <path d="M34 41 H46" stroke="url(#lg-ia-cross)" stroke-width="4.5" stroke-linecap="round" />
               </svg>
               <h3 class="mt-6 text-2xl font-light tracking-[0.12em] uppercase text-bone-100">IA en famille</h3>
-              <p class="eyebrow mt-3 text-azure-400/90">Formation &amp; promotion de l'IA</p>
+              <p class="eyebrow mt-3 text-violet-400/90">Formation &amp; promotion de l'IA</p>
               <p class="mt-6 text-sm leading-relaxed font-light text-bone-300">
-                Rendre l'intelligence artificielle accessible à tous. Former, accompagner et
-                inspirer peu importe le milieu social.
+                Former les parents, les enfants et les grands-parents à l'intelligence
+                artificielle, sans jargon et sans prérequis.
               </p>
               <span class="eyebrow card-cta mt-auto flex items-center justify-between gap-4 pt-8">
                 En savoir plus

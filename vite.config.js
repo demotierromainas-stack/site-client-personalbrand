@@ -74,13 +74,13 @@ export default defineConfig(async () => {
     plugins: [htmlPartials(articles), tailwindcss()],
     server: { port: 5173, open: true },
     build: {
-      // Les pages sont servies en URL propres (/procuve/) plutôt qu'en
-      // /procuve.html : c'est la seule forme qui fonctionne à l'identique en
+      // Les pages sont servies en URL propres (/senior-ia/) plutôt qu'en
+      // /senior-ia.html : c'est la seule forme qui fonctionne à l'identique en
       // dev Vite et chez un hébergeur, sans règle de réécriture.
       rollupOptions: {
         input: {
           index: resolve(root, 'index.html'),
-          procuve: resolve(root, 'procuve/index.html'),
+          seniorIa: resolve(root, 'senior-ia/index.html'),
           businessbusiness: resolve(root, 'businessbusiness/index.html'),
           iaEnFamille: resolve(root, 'ia-en-famille/index.html'),
           ...entreesArticles,

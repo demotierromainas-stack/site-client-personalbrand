@@ -14,7 +14,7 @@ npm run preview    # sert dist/ pour vérifier le build
 
 npm run articles   # régénère articles/ sans lancer Vite
 npm run shots      # captures Playwright des 7 pages → shots/ (voir plus bas)
-npm run sequence -- <fichier.gif|mp4>   # ré-extrait la séquence du hero (ImageMagick requis)
+npm run sequence -- <fichier.mp4|gif>   # ré-extrait la séquence du hero (ffmpeg + ImageMagick requis)
 
 # CMS, avec un jeton d'admin Directus (voir CMS.md)
 DIRECTUS_ADMIN_TOKEN=xxx npm run cms:setup   # crée la collection articles (idempotent)
@@ -26,7 +26,7 @@ DIRECTUS_ADMIN_TOKEN=xxx npm run cms:flow    # crée le webhook de publication
 **Pas de tests automatisés.** La vérification passe par `npm run shots`, qui charge
 chaque page dans Chromium, capture plusieurs positions de scroll et remonte les
 erreurs console. `npm run shots -- <url> <page>` cible une seule page (`accueil`,
-`procuve`, …) ou une autre origine. Ce que le script ne juge pas : fluidité du smooth
+`senior-ia`, …) ou une autre origine. Ce que le script ne juge pas : fluidité du smooth
 scroll, sensation de la parallaxe, réaction au curseur — ça se teste en vrai.
 
 Prérequis : Node 24 (aligné sur la CI), `.env` copié depuis `env.example`.
@@ -51,7 +51,7 @@ Trois mécanismes structurent le build, tous dans [vite.config.js](vite.config.j
 3. **Entrées Rollup dynamiques** — la liste des pages article n'est pas connue d'avance,
    elle vient de Directus. D'où une config asynchrone.
 
-Les pages sont servies en URL propres (`/procuve/`), la seule forme identique en dev Vite
+Les pages sont servies en URL propres (`/senior-ia/`), la seule forme identique en dev Vite
 et chez l'hébergeur.
 
 ### Pipeline articles

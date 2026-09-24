@@ -22,17 +22,22 @@
   --color-bone-700: #545b68;
 
   /* ---- Accents secondaires des cards entreprises ----
-     Procuve était en vert dans la maquette, avant que le logo officiel soit
-     fourni : il est bleu. La gamme ci-dessous est prélevée dans le fichier du
-     logo — 600 est le bleu du fond de la cuve, 400 son reflet clair.
-     C'est 400 qui sert au texte : le bleu profond du logo ne fait que 2,1:1 de
-     contraste sur le fond du site, il y serait illisible. */
+     Le cobalt pour Senior IA, le violet pour IA en famille : les deux
+     programmes de formation à l'IA se distinguent par la couleur, puisque
+     rien d'autre ne les sépare visuellement.
+     C'est 400 qui sert au texte : les nuances profondes (600, 500) ne font que
+     2,1:1 de contraste sur le fond du site, elles y seraient illisibles. */
   --color-cobalt-600: #154685;
   --color-cobalt-500: #2f76bd;
   --color-cobalt-400: #69abde;
   --color-cobalt-300: #9bc9ec;
 
-  --color-azure-400: #7dd3fc;
+  /* Violet d'IA en famille, repris de la charte de son propre site : dégradé
+     cyan → violet sur les titres et les boutons, violet clair en accent.
+     400 sur le fond du site : 7,3:1, largement au-dessus du seuil AA. */
+  --color-violet-500: #8b5cf6;
+  --color-violet-400: #a78bfa;
+  --color-violet-300: #c4b5fd;
 
   /* ---- Typographie ---- */
   --font-display: 'Playfair Display', 'Times New Roman', serif;

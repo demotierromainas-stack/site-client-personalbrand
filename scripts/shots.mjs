@@ -12,7 +12,7 @@
  *
  *   npm run shots                    → localhost:5173 (serveur de dev)
  *   npm run shots -- <url>           → une autre origine (preview, prod)
- *   npm run shots -- <url> procuve   → une seule page, par son nom
+ *   npm run shots -- <url> senior-ia  → une seule page, par son nom
  */
 
 import { chromium } from 'playwright';
@@ -45,9 +45,9 @@ const PAGES = [
     ],
   },
   {
-    name: 'procuve',
-    path: '/procuve/',
-    stops: ['hero', 'mission', 'services', 'deroule', 'cta-footer'],
+    name: 'senior-ia',
+    path: '/senior-ia/',
+    stops: ['hero', 'mission', 'programmes', 'parcours', 'cta-footer'],
   },
   {
     name: 'businessbusiness',

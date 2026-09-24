@@ -2,19 +2,19 @@
 <html lang="fr">
   <head>
     <meta charset="UTF-8" />
-    <title>PROCUVE — Démantèlement de cuves à fioul et transition énergétique</title>
+    <title>Senior IA — Formation à l'intelligence artificielle pour les seniors</title>
     <meta
       name="description"
-      content="PROCUVE démantèle les cuves à fioul enterrées et aériennes et accompagne le passage à des solutions de chauffage durables. Neutralisation, extraction, évacuation tracée en centre agréé."
+      content="Senior IA forme les seniors à l'intelligence artificielle : ateliers en petit groupe, accompagnement individuel et sessions en résidence. Sans jargon, sans prérequis, au rythme de chacun."
     />
-    <link rel="canonical" href="https://jeanmaximehanny.com/procuve/" />
+    <link rel="canonical" href="https://jeanmaximehanny.com/senior-ia/" />
 
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://jeanmaximehanny.com/procuve/" />
-    <meta property="og:title" content="PROCUVE — Démantèlement de cuves à fioul et transition énergétique" />
+    <meta property="og:url" content="https://jeanmaximehanny.com/senior-ia/" />
+    <meta property="og:title" content="Senior IA — Formation à l'intelligence artificielle pour les seniors" />
     <meta
       property="og:description"
-      content="Sortir du fioul, proprement. De la neutralisation de la cuve à la nouvelle solution de chauffage."
+      content="L'intelligence artificielle à son rythme. Former et accompagner les seniors, sans jargon et sans prérequis."
     />
     <meta property="og:image" content="/img/scene-activite.webp" />
 
@@ -24,8 +24,11 @@
   </head>
 
   <!-- `data-brand` porte la couleur de l'activité pour toute la page : c'est la
-       seule chose qui distingue structurellement les trois pages activité. -->
-  <body data-brand="procuve">
+       seule chose qui distingue structurellement les trois pages activité.
+       Senior IA prend le cobalt, IA en famille le violet de sa propre charte :
+       deux programmes de formation à l'IA que rien d'autre ne sépare à l'œil,
+       la couleur fait donc tout le travail. -->
+  <body data-brand="senior-ia">
     <a
       href="#hero"
       class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:bg-ink-800 focus:px-4 focus:py-2 focus:text-bone-100"
@@ -38,12 +41,8 @@
 
     <main>
       <!-- ==========================================================
-           HERO DE PAGE
-
-           Reprend la composition de la maquette : scène d'ambiance ancrée en
-           haut à droite, texte à gauche sur le fond sombre. Même mécanique de
-           parallaxe que le hero de l'accueil (hero.js), en plus sobre — une
-           page intérieure ne doit pas rivaliser avec la page d'accueil.
+           HERO DE PAGE — même composition que /ia-en-famille/ et
+           /businessbusiness/.
            ========================================================== -->
       <section id="hero" class="relative overflow-hidden pt-32 pb-16 lg:pt-40 lg:pb-24">
         <!-- Scène partagée par les trois pages activité.
@@ -71,59 +70,64 @@
 
         <div class="relative mx-auto max-w-[1240px] px-6 lg:px-10" data-layer="content">
           <div class="max-w-2xl">
+            <!-- TODO client : accroche à valider. -->
             <h1
               class="font-display text-[clamp(2.5rem,5.6vw,4.25rem)] leading-[1.05] text-bone-100"
               data-reveal
             >
-              Sortir du fioul,<br />
-              <span class="text-brand">proprement.</span>
+              L'intelligence artificielle,<br />
+              <span class="text-brand">à votre rythme.</span>
             </h1>
 
             <div class="rule-brand mt-8 w-44" data-reveal></div>
 
             <p class="mt-8 max-w-xl text-base leading-relaxed font-light text-bone-300" data-reveal>
-              PROCUVE démantèle les cuves à fioul, enterrées comme aériennes, et accompagne le
-              passage à des solutions de chauffage durables. De la neutralisation de la cuve à la
-              mise en service d'une pompe à chaleur, une seule filière, tracée du chantier jusqu'au
-              centre de traitement.
+              Senior IA forme les seniors à l'intelligence artificielle, sans jargon et sans
+              prérequis. Écrire un courrier, comprendre une lettre administrative, préparer un
+              rendez-vous médical, retrouver une photo, reconnaître une arnaque : on part de ce
+              dont on se sert vraiment, avec le temps qu'il faut.
             </p>
 
+            <!-- Le bouton du hero envoie vers le site de la marque, comme le
+                 bandeau « Le site de Senior IA » plus bas ; il en reprend la
+                 couleur (.btn-brand, teinté par --brand). -->
             <div class="mt-10" data-reveal>
               <a
-                href="https://calendly.com/REMPLACER-PAR-LIEN-CLIENT"
+                href="https://senioria.fr"
                 target="_blank"
                 rel="noopener"
-                class="eyebrow glass glass-hover inline-flex items-center gap-3 px-7 py-4 text-bone-100"
+                class="eyebrow btn-brand"
               >
-                Parler d'un projet
-                <span aria-hidden="true">&rarr;</span>
+                Visiter le site
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" class="h-4 w-4" aria-hidden="true">
+                  <path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5" />
+                </svg>
               </a>
             </div>
 
-            <!-- Bloc chiffres en verre, comme sur l'accueil. -->
-            <dl class="glass mt-14 grid max-w-xl grid-cols-3 gap-6 p-7" data-reveal-fade>
-              <!-- TODO client : confirmer ou corriger ces trois chiffres.
-                   Le « 4× » vient de la maquette (impact carbone d'une pompe à
-                   chaleur comparé au fioul) ; les deux autres sont provisoires. -->
+            <!-- Le même bloc en verre que sur les autres pages activité, mais
+                 sans compteurs : Senior IA démarre, et trois chiffres inventés
+                 sur des personnes formées se verraient. Trois repères de
+                 fonctionnement à la place.
+                 TODO client : confirmer ces trois repères, ou les remplacer par
+                 de vrais chiffres dès qu'il y en a. -->
+            <dl class="glass mt-14 grid max-w-xl gap-6 p-7 sm:grid-cols-3" data-reveal-fade>
               <div>
-                <dt class="sr-only">Réduction de l'impact carbone</dt>
-                <dd>
-                  <span class="font-display text-3xl text-brand" data-count-to="4" data-count-suffix="×"></span>
-                  <p class="eyebrow mt-2 leading-relaxed text-bone-500">Moins de CO<sub>2</sub></p>
+                <dt class="eyebrow text-brand">Groupes</dt>
+                <dd class="mt-2 text-sm leading-relaxed font-light text-bone-300">
+                  Six participants au maximum
                 </dd>
               </div>
               <div>
-                <dt class="sr-only">Traçabilité des déchets</dt>
-                <dd>
-                  <span class="font-display text-3xl text-brand" data-count-to="100" data-count-suffix="%"></span>
-                  <p class="eyebrow mt-2 leading-relaxed text-bone-500">Cuves tracées</p>
+                <dt class="eyebrow text-brand">Lieux</dt>
+                <dd class="mt-2 text-sm leading-relaxed font-light text-bone-300">
+                  À domicile, en club ou en résidence
                 </dd>
               </div>
               <div>
-                <dt class="sr-only">Étapes prises en charge</dt>
-                <dd>
-                  <span class="font-display text-3xl text-brand" data-count-to="5" data-count-suffix=""></span>
-                  <p class="eyebrow mt-2 leading-relaxed text-bone-500">Étapes gérées</p>
+                <dt class="eyebrow text-brand">Prérequis</dt>
+                <dd class="mt-2 text-sm leading-relaxed font-light text-bone-300">
+                  Aucun, pas même un ordinateur
                 </dd>
               </div>
             </dl>
@@ -139,74 +143,74 @@
           <header class="mb-14">
             <p class="eyebrow text-bone-500" data-reveal>Notre mission</p>
             <h2 class="section-title mt-3 text-bone-100" data-reveal>
-              Accélérer la <span class="text-brand">transition énergétique</span>
+              Ne laisser <span class="text-brand">personne de côté</span>
             </h2>
           </header>
 
           <div class="grid gap-10 lg:grid-cols-2 lg:gap-16" data-stagger>
+            <!-- TODO client : ces deux paragraphes sont provisoires. -->
             <p class="text-base leading-relaxed font-light text-bone-300" data-reveal>
-              Le fioul est une énergie fossile fortement émettrice de CO<sub>2</sub> et de
-              particules fines. Une pompe à chaleur, elle, prélève les calories déjà présentes dans
-              l'air ou dans le sol : à confort égal, l'impact carbone est jusqu'à quatre fois
-              inférieur. Chaque cuve retirée est une installation de moins qui brûle du fioul, et un
-              risque de pollution des sols en moins.
+              Les démarches passent en ligne, les guichets ferment, et l'intelligence artificielle
+              s'installe dans les outils du quotidien sans prévenir personne. Pour qui n'a pas
+              grandi avec l'informatique, chaque nouvelle couche éloigne un peu plus des gestes
+              ordinaires : prendre un rendez-vous, contester une facture, écrire à sa mairie.
             </p>
             <p class="text-base leading-relaxed font-light text-bone-300" data-reveal>
-              Une cuve hors service ne se laisse pas simplement en place. C'est un déchet dangereux,
-              soumis à des obligations de neutralisation, de transport et de traçabilité. PROCUVE
-              prend en charge l'intégralité de ce processus, avec des techniciens formés et du
-              matériel adapté, puis passe le relais à des partenaires certifiés pour la nouvelle
-              solution de chauffage. Un seul interlocuteur, du diagnostic à la mise en service.
+              Senior IA part de l'hypothèse inverse : bien accompagnée, l'IA est l'outil qui
+              rapproche. Elle explique un courrier administratif en français simple, rédige une
+              réponse, agrandit un texte trop petit, aide à préparer une consultation. Nous partons
+              de ces usages-là, pas des outils, et jamais du vocabulaire technique.
             </p>
           </div>
         </div>
       </section>
 
       <!-- ==========================================================
-           CE QUE NOUS FAISONS
+           CE QUE NOUS PROPOSONS
            ========================================================== -->
-      <section id="services" class="relative py-20 lg:py-28">
+      <section id="programmes" class="relative py-20 lg:py-28">
         <div class="mx-auto max-w-[1240px] px-6 lg:px-10">
           <header class="mb-14">
-            <p class="eyebrow text-bone-500" data-reveal>Ce que nous faisons</p>
+            <p class="eyebrow text-bone-500" data-reveal>Ce que nous proposons</p>
             <h2 class="section-title mt-3 text-bone-100" data-reveal>
-              Trois métiers, <span class="text-brand">une seule filière</span>
+              Trois formats, <span class="text-brand">le temps qu'il faut</span>
             </h2>
           </header>
 
+          <!-- TODO client : confirmer les formats réellement proposés. -->
           <div class="grid gap-6 md:grid-cols-3" data-stagger>
             <article class="glass card-brand flex flex-col p-8" data-reveal>
               <span class="font-display text-2xl text-brand" aria-hidden="true">01</span>
               <h3 class="mt-6 text-xl font-light tracking-[0.1em] uppercase text-bone-100">
-                Démantèlement de cuves
+                Ateliers en petit groupe
               </h3>
               <p class="mt-5 text-sm leading-relaxed font-light text-bone-300">
-                Cuves enterrées ou aériennes, quelle que soit leur capacité. Neutralisation,
-                dégazage, vidange, découpe et extraction, dans le respect des normes de sécurité et
-                d'environnement.
+                Deux heures, six participants, un appareil par personne — le sien de préférence. On
+                manipule dès la première minute, sur des cas apportés par les participants : un
+                courrier à écrire, une photo à retrouver.
               </p>
             </article>
 
             <article class="glass card-brand flex flex-col p-8" data-reveal>
               <span class="font-display text-2xl text-brand" aria-hidden="true">02</span>
               <h3 class="mt-6 text-xl font-light tracking-[0.1em] uppercase text-bone-100">
-                Traitement et traçabilité
+                Accompagnement individuel
               </h3>
               <p class="mt-5 text-sm leading-relaxed font-light text-bone-300">
-                Les cuves retirées sont des déchets dangereux. Nous les transportons vers des
-                centres agréés pour un traitement et une valorisation conformes, et remettons
-                l'ensemble des documents réglementaires.
+                À domicile, sur le matériel de la personne. C'est le format qui débloque les
+                situations où le groupe intimide, et celui où les progrès sont les plus rapides.
               </p>
             </article>
 
             <article class="glass card-brand flex flex-col p-8" data-reveal>
               <span class="font-display text-2xl text-brand" aria-hidden="true">03</span>
               <h3 class="mt-6 text-xl font-light tracking-[0.1em] uppercase text-bone-100">
-                Passage à la pompe à chaleur
+                Sessions en résidence
               </h3>
               <p class="mt-5 text-sm leading-relaxed font-light text-bone-300">
-                Un réseau de partenaires certifiés prend le relais pour installer la nouvelle
-                solution de chauffage, dimensionnée pour le logement. L'accompagnement va de A à Z.
+                Interventions régulières en résidences seniors, clubs et centres communaux d'action
+                sociale. Les participants retrouvent les mêmes intervenants d'une séance à
+                l'autre : la régularité fait plus que la performance.
               </p>
             </article>
           </div>
@@ -214,30 +218,28 @@
       </section>
 
       <!-- ==========================================================
-           DÉROULÉ D'UNE INTERVENTION
-
-           Le rail vertical à pastilles reprend la trame de la maquette. Elle y
-           servait un format questions/réponses ; ici elle porte une suite
-           d'étapes, ce qui est le même objet visuel : des moments reliés par
-           un fil.
+           PARCOURS
+           Même rail que sur les deux autres pages activité.
            ========================================================== -->
-      <section id="deroule" class="relative py-20 lg:py-28">
+      <section id="parcours" class="relative py-20 lg:py-28">
         <div class="mx-auto max-w-[1240px] px-6 lg:px-10">
           <header class="mb-14">
-            <p class="eyebrow text-bone-500" data-reveal>Le déroulé</p>
+            <p class="eyebrow text-bone-500" data-reveal>Le parcours</p>
             <h2 class="section-title mt-3 text-bone-100" data-reveal>
-              Un protocole <span class="text-brand">strict</span>, du diagnostic à l'évacuation
+              De la première prise en main à <span class="text-brand">l'autonomie</span>
             </h2>
           </header>
 
+          <!-- TODO client : valider ou réécrire ces quatre étapes. -->
           <ol class="step-rail max-w-3xl" data-stagger>
             <li class="grid grid-cols-[2.875rem_1fr] gap-6 pb-11 lg:gap-9" data-reveal>
               <span class="step-num" aria-hidden="true">01</span>
               <div class="pt-2">
-                <h3 class="font-display text-xl text-bone-100 lg:text-2xl">Diagnostic sur site</h3>
+                <h3 class="font-display text-xl text-bone-100 lg:text-2xl">Rassurer</h3>
                 <p class="mt-3 text-sm leading-relaxed font-light text-bone-300">
-                  État de la cuve, accès, contraintes du terrain. La visite détermine le protocole
-                  applicable, le matériel nécessaire et le devis.
+                  Rien ne se casse, rien ne se perd, aucune question n'est de trop. La première
+                  séance sert surtout à retirer la peur de mal faire, qui arrête bien plus de monde
+                  que la difficulté technique.
                 </p>
               </div>
             </li>
@@ -245,10 +247,11 @@
             <li class="grid grid-cols-[2.875rem_1fr] gap-6 pb-11 lg:gap-9" data-reveal>
               <span class="step-num" aria-hidden="true">02</span>
               <div class="pt-2">
-                <h3 class="font-display text-xl text-bone-100 lg:text-2xl">Neutralisation et dégazage</h3>
+                <h3 class="font-display text-xl text-bone-100 lg:text-2xl">Comprendre</h3>
                 <p class="mt-3 text-sm leading-relaxed font-light text-bone-300">
-                  La cuve est mise en sécurité avant toute intervention mécanique. Le dégazage
-                  élimine les vapeurs inflammables : c'est l'étape qui rend la suite possible.
+                  Ce qu'est un assistant d'intelligence artificielle, ce qu'il sait faire et ce
+                  qu'il invente. Savoir qu'il peut se tromper avec aplomb, c'est déjà savoir s'en
+                  servir.
                 </p>
               </div>
             </li>
@@ -256,33 +259,23 @@
             <li class="grid grid-cols-[2.875rem_1fr] gap-6 pb-11 lg:gap-9" data-reveal>
               <span class="step-num" aria-hidden="true">03</span>
               <div class="pt-2">
-                <h3 class="font-display text-xl text-bone-100 lg:text-2xl">Vidange et nettoyage</h3>
+                <h3 class="font-display text-xl text-bone-100 lg:text-2xl">Pratiquer</h3>
                 <p class="mt-3 text-sm leading-relaxed font-light text-bone-300">
-                  Les résidus de fioul sont pompés, puis les parois nettoyées jusqu'à ce qu'il ne
-                  reste plus de matière susceptible de polluer.
-                </p>
-              </div>
-            </li>
-
-            <li class="grid grid-cols-[2.875rem_1fr] gap-6 pb-11 lg:gap-9" data-reveal>
-              <span class="step-num" aria-hidden="true">04</span>
-              <div class="pt-2">
-                <h3 class="font-display text-xl text-bone-100 lg:text-2xl">Découpe et extraction</h3>
-                <p class="mt-3 text-sm leading-relaxed font-light text-bone-300">
-                  La cuve est découpée puis sortie de son emplacement, en préservant le terrain et
-                  les ouvrages environnants. Le site est rendu propre.
+                  Sur ses propres courriers, ses propres photos, ses propres démarches. Un exercice
+                  abstrait ne se retrouve jamais une fois rentré chez soi ; un courrier qu'on
+                  devait écrire, si.
                 </p>
               </div>
             </li>
 
             <li class="grid grid-cols-[2.875rem_1fr] gap-6 lg:gap-9" data-reveal>
-              <span class="step-num" aria-hidden="true">05</span>
+              <span class="step-num" aria-hidden="true">04</span>
               <div class="pt-2">
-                <h3 class="font-display text-xl text-bone-100 lg:text-2xl">Évacuation et traçabilité</h3>
+                <h3 class="font-display text-xl text-bone-100 lg:text-2xl">Se protéger</h3>
                 <p class="mt-3 text-sm leading-relaxed font-light text-bone-300">
-                  Transport vers un centre agréé et bordereau de suivi des déchets dangereux (BSDD)
-                  remis au client. La cuve est traçable du chantier jusqu'à son traitement : rien
-                  n'est laissé au hasard.
+                  Faux messages de la banque, appels truqués, voix et visages imités : les mêmes
+                  outils servent aussi à tromper, et les seniors sont visés en premier. Reconnaître
+                  ces tentatives fait partie de la formation, pas d'une séance en option.
                 </p>
               </div>
             </li>
@@ -299,36 +292,52 @@
             class="glass card-brand flex flex-col items-start gap-9 p-9 lg:flex-row lg:items-center lg:gap-14 lg:p-12"
             data-reveal-scale
           >
-            <!-- Logo officiel fourni par le client, dans sa déclinaison pour
-                 fond sombre (le « PRO » est en lettres blanches cerclées).
-                 Posé directement sur la card : le mettre sur une plaque claire
-                 rendrait justement ce « PRO » invisible. -->
-            <img
-              src="/img/logo-procuve.webp"
-              alt="Logo PROCUVE"
-              class="brand-logo shrink-0"
-              width="822"
-              height="185"
-            />
+            <!-- TODO client : logo « Senior IA » à fournir (SVG, ou PNG détouré
+                 1000 px minimum). En attendant, une marque dessinée : médaillon
+                 rond, lettres « IA » et courbe d'appui. Le rond plutôt que le
+                 carré du badge d'IA en famille — les deux marques sœurs se
+                 reconnaissent à la forme autant qu'à la couleur. -->
+            <svg viewBox="0 0 72 72" fill="none" aria-hidden="true" class="h-20 w-20 shrink-0">
+              <defs>
+                <linearGradient id="lg-senior-ia-brand" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0%" stop-color="#f1f5f9" />
+                  <stop offset="50%" stop-color="#9bc9ec" />
+                  <stop offset="100%" stop-color="#2f76bd" />
+                </linearGradient>
+              </defs>
+              <circle cx="36" cy="36" r="28" stroke="url(#lg-senior-ia-brand)" stroke-width="3" />
+              <rect x="22.5" y="19" width="5" height="24" rx="2.5" fill="url(#lg-senior-ia-brand)" />
+              <path
+                d="M33 43 L41 19 L49 43"
+                stroke="url(#lg-senior-ia-brand)"
+                stroke-width="5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+              <path d="M36 35 H46" stroke="url(#lg-senior-ia-brand)" stroke-width="4" stroke-linecap="round" />
+              <path d="M24 48.5 Q36 55.5 48 48.5" stroke="url(#lg-senior-ia-brand)" stroke-width="4" stroke-linecap="round" />
+            </svg>
 
             <div class="flex-1">
               <h2 class="font-display text-[clamp(1.375rem,2.6vw,1.875rem)] text-bone-100">
-                Le site de PROCUVE
+                Le site de Senior IA
               </h2>
               <p class="mt-3 max-w-xl text-sm leading-relaxed font-light text-bone-500">
-                Zones d'intervention, tarifs, prise de contact et demandes de devis se trouvent sur
-                le site dédié de l'entreprise.
+                Calendrier des ateliers, lieux d'intervention et inscriptions se trouvent sur le
+                site du programme.
               </p>
             </div>
 
-            <!-- TODO client : confirmer l'adresse du site PROCUVE. -->
+            <!-- TODO client : senioria.fr n'est pas encore en ligne. Le lien
+                 pointe déjà dessus — à vérifier avant la mise en production du
+                 site, un lien mort vaut moins qu'un bouton retiré. -->
             <a
-              href="https://procuve.com"
+              href="https://senioria.fr"
               target="_blank"
               rel="noopener"
               class="eyebrow link-external shrink-0"
             >
-              Visiter procuve.com
+              Visiter le site
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" class="h-4 w-4" aria-hidden="true">
                 <path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5" />
               </svg>
@@ -376,30 +385,31 @@
               </span>
             </a>
 
-            <a href="/ia-en-famille/" class="glass glass-hover card-azure flex flex-col p-8" data-reveal>
+            <a href="/ia-en-famille/" class="glass glass-hover card-violet flex flex-col p-8" data-reveal>
               <svg viewBox="0 0 72 72" fill="none" aria-hidden="true" class="h-14 w-14 shrink-0">
                 <defs>
                   <linearGradient id="lg-ia-cross" x1="0" y1="0" x2="1" y2="1">
-                    <stop offset="0%" stop-color="#f1f5f9" />
-                    <stop offset="55%" stop-color="#94a3b8" />
-                    <stop offset="100%" stop-color="#7dd3fc" />
+                    <stop offset="0%" stop-color="#38bdf8" />
+                    <stop offset="50%" stop-color="#818cf8" />
+                    <stop offset="100%" stop-color="#a855f7" />
                   </linearGradient>
                 </defs>
-                <circle cx="13" cy="15" r="5.5" fill="url(#lg-ia-cross)" />
-                <rect x="8.5" y="26" width="9" height="34" rx="4.5" fill="url(#lg-ia-cross)" />
+                <rect x="6" y="6" width="60" height="60" rx="18" fill="rgb(167 139 250 / 0.12)" stroke="url(#lg-ia-cross)" stroke-width="3" />
+                <rect x="20" y="22" width="5.5" height="28" rx="2.75" fill="url(#lg-ia-cross)" />
                 <path
-                  d="M30 60 L45 16 L60 60"
+                  d="M31 50 L40 22 L49 50"
                   stroke="url(#lg-ia-cross)"
-                  stroke-width="9"
+                  stroke-width="5.5"
                   stroke-linecap="round"
                   stroke-linejoin="round"
                 />
+                <path d="M34 41 H46" stroke="url(#lg-ia-cross)" stroke-width="4.5" stroke-linecap="round" />
               </svg>
               <h3 class="mt-6 text-2xl font-light tracking-[0.12em] uppercase text-bone-100">IA en famille</h3>
-              <p class="eyebrow mt-3 text-azure-400/90">Formation &amp; promotion de l'IA</p>
+              <p class="eyebrow mt-3 text-violet-400/90">Formation &amp; promotion de l'IA</p>
               <p class="mt-6 text-sm leading-relaxed font-light text-bone-300">
-                Rendre l'intelligence artificielle accessible à tous. Former, accompagner et
-                inspirer peu importe le milieu social.
+                Former les parents, les enfants et les grands-parents à l'intelligence
+                artificielle, sans jargon et sans prérequis.
               </p>
               <span class="eyebrow card-cta mt-auto flex items-center justify-between gap-4 pt-8">
                 En savoir plus

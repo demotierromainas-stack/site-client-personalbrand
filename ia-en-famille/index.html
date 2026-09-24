@@ -5,7 +5,7 @@
     <title>IA en famille — Formation et accompagnement à l'intelligence artificielle</title>
     <meta
       name="description"
-      content="IA en famille rend l'intelligence artificielle accessible à tous : ateliers d'initiation, formation en entreprise et programmes solidaires, quel que soit le milieu social ou le niveau de départ."
+      content="IA en famille forme parents, enfants et grands-parents à l'intelligence artificielle : ateliers d'initiation, formation en entreprise et programmes solidaires, sans jargon et sans prérequis."
     />
     <link rel="canonical" href="https://jeanmaximehanny.com/ia-en-famille/" />
 
@@ -14,7 +14,7 @@
     <meta property="og:title" content="IA en famille — Formation et accompagnement à l'intelligence artificielle" />
     <meta
       property="og:description"
-      content="L'intelligence artificielle n'appartient à personne. Former, accompagner et inspirer, quel que soit le point de départ."
+      content="L'intelligence artificielle s'apprend en famille. Des ateliers où parents, enfants et grands-parents avancent ensemble, sans prérequis."
     />
     <meta property="og:image" content="/img/scene-activite.webp" />
 
@@ -36,7 +36,7 @@
 
     <main>
       <!-- ==========================================================
-           HERO DE PAGE — même composition que /procuve/ et /businessbusiness/.
+           HERO DE PAGE — même composition que /senior-ia/ et /businessbusiness/.
            ========================================================== -->
       <section id="hero" class="relative overflow-hidden pt-32 pb-16 lg:pt-40 lg:pb-24">
         <!-- Scène partagée par les trois pages activité.
@@ -70,26 +70,33 @@
               data-reveal
             >
               L'intelligence artificielle<br />
-              <span class="text-brand">n'appartient à personne.</span>
+              <span class="text-brand">s'apprend en famille.</span>
             </h1>
 
             <div class="rule-brand mt-8 w-44" data-reveal></div>
 
             <p class="mt-8 max-w-xl text-base leading-relaxed font-light text-bone-300" data-reveal>
-              IA en famille forme, accompagne et inspire — quel que soit le métier, le niveau de
-              départ ou le milieu social. L'outil le plus structurant de la décennie ne doit pas
-              rester réservé à ceux qui savaient déjà s'en servir.
+              IA en famille forme les parents, les enfants et les grands-parents à l'intelligence
+              artificielle : les devoirs, les démarches, l'organisation de la maison, les photos et
+              les projets de chacun. Des ateliers sans jargon, où l'on repart avec des usages
+              concrets et les repères pour encadrer ceux des plus jeunes.
             </p>
 
+            <!-- Le bouton du hero envoie vers le site de la marque, comme le
+                 bandeau « Le site d'IA en famille » plus bas ; il en reprend la
+                 couleur (.btn-brand, teinté par --brand). Le rendez-vous reste
+                 proposé par le header et par le bandeau CTA de fin de page. -->
             <div class="mt-10" data-reveal>
               <a
-                href="https://calendly.com/REMPLACER-PAR-LIEN-CLIENT"
+                href="https://iaenfamille.fr"
                 target="_blank"
                 rel="noopener"
-                class="eyebrow glass glass-hover inline-flex items-center gap-3 px-7 py-4 text-bone-100"
+                class="eyebrow btn-brand"
               >
-                Organiser une session
-                <span aria-hidden="true">&rarr;</span>
+                Visiter le site
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" class="h-4 w-4" aria-hidden="true">
+                  <path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5" />
+                </svg>
               </a>
             </div>
 
@@ -278,25 +285,27 @@
             data-reveal-scale
           >
             <!-- TODO client : logo « IA en famille » à fournir (SVG, ou PNG
-                 détouré 1000 px minimum). En attendant, la marque dessinée
-                 pour les cards de l'accueil. -->
+                 détouré 1000 px minimum). En attendant, le badge repris du site
+                 de la marque : carré arrondi, lettres « IA », dégradé cyan vers
+                 violet. -->
             <svg viewBox="0 0 72 72" fill="none" aria-hidden="true" class="h-20 w-20 shrink-0">
               <defs>
                 <linearGradient id="lg-ia-brand" x1="0" y1="0" x2="1" y2="1">
-                  <stop offset="0%" stop-color="#f1f5f9" />
-                  <stop offset="55%" stop-color="#94a3b8" />
-                  <stop offset="100%" stop-color="#7dd3fc" />
+                  <stop offset="0%" stop-color="#38bdf8" />
+                  <stop offset="50%" stop-color="#818cf8" />
+                  <stop offset="100%" stop-color="#a855f7" />
                 </linearGradient>
               </defs>
-              <circle cx="13" cy="15" r="5.5" fill="url(#lg-ia-brand)" />
-              <rect x="8.5" y="26" width="9" height="34" rx="4.5" fill="url(#lg-ia-brand)" />
+              <rect x="6" y="6" width="60" height="60" rx="18" fill="rgb(167 139 250 / 0.12)" stroke="url(#lg-ia-brand)" stroke-width="3" />
+              <rect x="20" y="22" width="5.5" height="28" rx="2.75" fill="url(#lg-ia-brand)" />
               <path
-                d="M30 60 L45 16 L60 60"
+                d="M31 50 L40 22 L49 50"
                 stroke="url(#lg-ia-brand)"
-                stroke-width="9"
+                stroke-width="5.5"
                 stroke-linecap="round"
                 stroke-linejoin="round"
               />
+              <path d="M34 41 H46" stroke="url(#lg-ia-brand)" stroke-width="4.5" stroke-linecap="round" />
             </svg>
 
             <div class="flex-1">
@@ -337,20 +346,33 @@
           </header>
 
           <div class="grid gap-6 md:grid-cols-2" data-stagger>
-            <a href="/procuve/" class="glass glass-hover card-cobalt flex flex-col p-8" data-reveal>
-              <h3 class="flex h-28 items-center">
-                <img
-                  src="/img/logo-procuve.webp"
-                  alt="Procuve"
-                  class="h-14 w-auto"
-                  width="822"
-                  height="185"
+            <a href="/senior-ia/" class="glass glass-hover card-cobalt flex flex-col p-8" data-reveal>
+              <!-- TODO client : logo « Senior IA » à fournir. -->
+              <svg viewBox="0 0 72 72" fill="none" aria-hidden="true" class="h-14 w-14 shrink-0">
+                <defs>
+                  <linearGradient id="lg-senior-ia-cross" x1="0" y1="0" x2="1" y2="1">
+                    <stop offset="0%" stop-color="#f1f5f9" />
+                    <stop offset="50%" stop-color="#9bc9ec" />
+                    <stop offset="100%" stop-color="#2f76bd" />
+                  </linearGradient>
+                </defs>
+                <circle cx="36" cy="36" r="28" stroke="url(#lg-senior-ia-cross)" stroke-width="3" />
+                <rect x="22.5" y="19" width="5" height="24" rx="2.5" fill="url(#lg-senior-ia-cross)" />
+                <path
+                  d="M33 43 L41 19 L49 43"
+                  stroke="url(#lg-senior-ia-cross)"
+                  stroke-width="5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
                 />
-              </h3>
-              <p class="eyebrow mt-3 text-cobalt-400/80">Amélioration énergétique et climat</p>
+                <path d="M36 35 H46" stroke="url(#lg-senior-ia-cross)" stroke-width="4" stroke-linecap="round" />
+                <path d="M24 48.5 Q36 55.5 48 48.5" stroke="url(#lg-senior-ia-cross)" stroke-width="4" stroke-linecap="round" />
+              </svg>
+              <h3 class="mt-6 text-2xl font-light tracking-[0.12em] uppercase text-bone-100">Senior IA</h3>
+              <p class="eyebrow mt-3 text-cobalt-400/80">Formation à l'IA pour les seniors</p>
               <p class="mt-6 text-sm leading-relaxed font-light text-bone-300">
-                Démantèlement de cuves à fioul et accompagnement vers des solutions de chauffage
-                durables.
+                Ateliers en petit groupe, accompagnement à domicile et sessions en résidence, sans
+                jargon et sans prérequis.
               </p>
               <span class="eyebrow card-cta mt-auto flex items-center justify-between gap-4 pt-8">
                 En savoir plus
