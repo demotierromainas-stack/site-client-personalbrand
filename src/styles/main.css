@@ -538,13 +538,16 @@
   /* ============================================================
      SÉQUENCE AU SCROLL — le personnage du hero
 
-     La boîte est volontairement plus haute que la source (800×459) : avec
-     `object-fit: cover`, les côtés du plan sont rognés et le personnage, qui
-     est au centre, occupe une plus grande part du cadre. Sans ce recadrage, le
-     plan large donnerait une silhouette minuscule perdue au milieu du décor.
+     Les images font 800×580, soit exactement le ratio de la boîte en desktop :
+     le plan s'affiche entier, sans rognage ni agrandissement. Ce n'est pas une
+     coïncidence — c'est `scripts/sequence.mjs` qui recadre la source carrée à
+     ce format-là, pour ne pas faire télécharger des pixels que `cover`
+     jetterait.
 
-     Le prix est un agrandissement d'environ 1,3× — invisible sur une image
-     sombre et granuleuse, là où doubler la taille se verrait tout de suite.
+     En dessous de 1024 px la boîte est un peu plus haute que les images, et
+     `object-fit: cover` rogne alors les côtés, où il n'y a que le décor. Le
+     sens du dépassement est voulu : dans l'autre, c'est le haut du crâne qui
+     serait coupé.
      ============================================================ */
   .hero-sequence {
     position: relative;

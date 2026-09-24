@@ -1,11 +1,11 @@
 /**
- * Extraction de la séquence d'images animée au scroll (section « À propos »).
+ * Extraction de la séquence d'images animée au scroll (personnage du hero).
  *
  * Outil ponctuel, lancé à la main. Il n'est PAS branché sur le build : les
  * images produites sont versionnées dans `public/img/sequence/`, et la CI les
  * recopie telles quelles. C'est volontaire — la source ne change qu'à chaque
- * nouvelle vidéo du client, et faire dépendre le déploiement d'ImageMagick
- * pour un asset figé serait un mauvais échange.
+ * nouvelle vidéo du client, et faire dépendre le déploiement de ffmpeg et
+ * d'ImageMagick pour un asset figé serait un mauvais échange.
  *
  * Pourquoi une séquence d'images et pas une balise <video> :
  * piloter `currentTime` au scroll donne un rendu saccadé sur Safari et iOS,
@@ -13,12 +13,21 @@
  * dans un canvas est fluide partout, au prix d'un poids plus élevé — qu'on
  * compense par le chargement paresseux (voir src/js/sequence.js).
  *
- *   npm run sequence -- ~/Desktop/videojeanmaxime.gif
+ *   npm run sequence -- ~/Desktop/nouveau-portait.mp4
+ *
+ * Deux outils, et chacun fait ce qu'il fait le mieux : ffmpeg décode, recadre,
+ * échantillonne ; ImageMagick encode en WebP. Le décodage ne passe plus par
+ * ImageMagick seul — son délégué vidéo échoue avec les ffmpeg récents (il lui
+ * demande un fichier de sortie sans extension, d'où un « Encoder not found »
+ * incompréhensible). Passer par ffmpeg en direct règle du même coup le cas du
+ * GIF, dont les images n'encodent que les pixels qui changent : ffmpeg sort
+ * toujours des images complètes, là où ImageMagick réclamait `-coalesce`.
  */
 
 import { execFile } from 'node:child_process';
-import { mkdir, rm, readdir, writeFile, unlink, rename } from 'node:fs/promises';
+import { mkdir, mkdtemp, rm, readdir, writeFile } from 'node:fs/promises';
 import { promisify } from 'node:util';
+import { tmpdir } from 'node:os';
 import path from 'node:path';
 
 const run = promisify(execFile);
@@ -32,98 +41,128 @@ const OUT_ROOT = 'public/img/sequence';
    pas de requête réseau supplémentaire au chargement. */
 const MANIFEST = 'src/data/sequence.json';
 
+/* La source est carrée (960×960, sujet centré), le cadre du hero est paysage.
+   On recadre donc à la production plutôt qu'à l'exécution : les pixels jetés
+   ne sont pas téléchargés, et la décision de cadrage se voit dans les images
+   au lieu de dépendre d'un `object-fit` qu'on relit de travers six mois plus
+   tard.
+
+   960×696 au format `crop=l:h:x:y`, soit le ratio du conteneur desktop
+   (800/580), pris au centre vertical de la source — d'où le décalage de
+   132 px. Le centre marche parce que le cadreur a laissé de l'air au-dessus
+   du crâne, et tout juste : descendre la fenêtre de recadrage entamerait la
+   tête. À vérifier sur la première image à chaque nouvelle source.
+
+   Pourquoi le ratio desktop et pas celui du mobile (800/620, plus haut) : le
+   conteneur mobile est alors plus étroit que l'image, donc `object-fit: cover`
+   rogne les côtés. Dans l'autre sens il rognerait le haut, c'est-à-dire le
+   crâne. On se laisse toujours rogner là où il n'y a rien. */
+const CROP = '960:696:0:132';
+
 /* Deux jeux d'images.
-   — 800 : la largeur native de la source. On n'agrandit jamais, une image
-     agrandie au-delà de sa définition se voit immédiatement sur un visage.
-   — 480 : le jeu mobile, une image sur deux. Sur un écran de téléphone la
-     moitié des images suffit pour que le mouvement reste continu, et ça
-     divise le poids par quatre. */
+   — 800 : la largeur d'affichage. La source recadrée fait 960 de large, on
+     réduit donc légèrement ; on n'agrandit jamais, un agrandissement se voit
+     immédiatement sur un visage.
+   — 480 : le jeu mobile, une image sur deux par rapport au jeu 800. Sur un
+     écran de téléphone la moitié des images suffit pour que le mouvement
+     reste continu, et ça divise le poids par quatre.
+
+   `step` échantillonne la source, qui est en 24 images/seconde — une finesse
+   faite pour une lecture en temps réel, pas pour une course au scroll qui
+   s'étale sur un demi-écran. Une image sur deux suffit à ce que le mouvement
+   reste continu, et divise le poids par deux. */
 const SETS = [
-  { name: '800', width: 800, quality: 76, step: 1 },
-  { name: '480', width: 480, quality: 74, step: 2 },
+  { name: '800', width: 800, quality: 76, step: 2 },
+  { name: '480', width: 480, quality: 74, step: 4 },
 ];
 
 /* La fin de la source ne sert à rien.
-   La dissolution est terminée avant la dernière image : au-delà de la 78e il
-   ne reste qu'un plateau vide, quasi noir. Comme on lit la séquence à l'envers,
-   ces images-là seraient les premières vues — le visiteur entrerait dans la
-   section sur un écran vide. On les coupe donc à la production plutôt que de
-   les ignorer à l'exécution : ça épargne aussi un cinquième du poids.
+   Passé la 136e image il ne reste que le décor vide : les particules sont
+   retombées, le plan n'est plus qu'un couloir désert. On coupe tant qu'une
+   trace subsiste — c'est sur cette image-là que la course au scroll s'arrête,
+   et une poignée de particules encore en suspension y vaut mieux qu'un décor
+   nu. Ça épargne aussi la fin du fichier, celle où il ne se passe plus rien.
 
    À réajuster si la vidéo source change. */
-const KEEP_UNTIL = 78;
+const KEEP_UNTIL = 136;
 
-async function assertMagick() {
+async function assertTool(command, brew) {
   try {
-    await run('magick', ['-version']);
+    await run(command, ['-version']);
   } catch {
     console.error(
-      "ImageMagick est introuvable. Installer avec `brew install imagemagick`,\n" +
-        'puis relancer. Aucune image n\'a été écrite.',
+      `${command} est introuvable. Installer avec \`brew install ${brew}\`,\n` +
+        "puis relancer. Aucune image n'a été écrite.",
     );
     process.exit(1);
   }
 }
 
 /**
- * `-coalesce` est indispensable : un GIF n'encode que les pixels qui changent
- * d'une image à l'autre. Sans cette étape on extrait des fragments sur fond
- * transparent au lieu d'images complètes.
+ * ffmpeg décode, recadre et échantillonne en une passe, vers un dossier
+ * temporaire ; ImageMagick encode ensuite le lot en WebP.
+ *
+ * `select` porte les deux décisions d'échantillonnage — la coupe de fin et le
+ * pas — et `-start_number 0` fait numéroter la sortie en continu à partir de
+ * zéro. Le JS calcule un index à partir d'une progression : il lui faut une
+ * suite sans trou, et c'est ffmpeg qui la lui donne, sans renumérotation
+ * après coup.
  */
 async function extract({ name, width, quality, step }) {
   const dir = path.join(OUT_ROOT, name);
   await rm(dir, { recursive: true, force: true });
   await mkdir(dir, { recursive: true });
 
-  await run('magick', [
-    SOURCE,
-    '-coalesce',
-    '-resize',
-    `${width}x`,
-    '-quality',
-    String(quality),
-    '-define',
-    'webp:method=6',
-    path.join(dir, 'f-%03d.webp'),
-  ]);
+  const stage = await mkdtemp(path.join(tmpdir(), 'sequence-'));
 
-  /* ImageMagick numérote toutes les images de la source ; l'échantillonnage se
-     fait après coup, puis on renumérote en continu — le JS calcule un index à
-     partir d'une progression, il lui faut une suite sans trou. */
-  const all = (await readdir(dir)).filter((f) => f.endsWith('.webp')).sort();
-  const kept = all.filter((_, i) => i <= KEEP_UNTIL && i % step === 0);
-  const keptSet = new Set(kept);
+  try {
+    await run('ffmpeg', [
+      '-v', 'error',
+      '-i', SOURCE,
+      '-vf',
+      `crop=${CROP},select='lte(n\\,${KEEP_UNTIL})*not(mod(n\\,${step}))',scale=${width}:-1`,
+      '-fps_mode', 'passthrough',
+      '-start_number', '0',
+      path.join(stage, 'f-%03d.png'),
+    ]);
 
-  await Promise.all(
-    all.filter((f) => !keptSet.has(f)).map((f) => unlink(path.join(dir, f))),
-  );
+    const pngs = (await readdir(stage)).filter((f) => f.endsWith('.png')).sort();
+    if (!pngs.length) throw new Error(`Aucune image extraite de ${SOURCE}.`);
 
-  /* Renommage en série, jamais en parallèle : chaque cible porte un index
-     inférieur ou égal à celui de sa source, donc la place n'est libre que si
-     le renommage précédent est terminé. */
-  for (const [i, file] of kept.entries()) {
-    const target = `f-${String(i).padStart(3, '0')}.webp`;
-    if (file !== target) await rename(path.join(dir, file), path.join(dir, target));
+    /* `mogrify` en un seul appel plutôt qu'un `magick` par image : sur une
+       centaine d'images, le coût de démarrage du binaire dépasse celui de
+       l'encodage. */
+    await run('magick', [
+      'mogrify',
+      '-format', 'webp',
+      '-quality', String(quality),
+      '-define', 'webp:method=6',
+      '-path', dir,
+      ...pngs.map((f) => path.join(stage, f)),
+    ]);
+
+    const { stdout } = await run('magick', [
+      'identify',
+      '-format',
+      '%w %h',
+      path.join(dir, 'f-000.webp'),
+    ]);
+    const [w, h] = stdout.trim().split(' ').map(Number);
+
+    return { count: pngs.length, width: w, height: h };
+  } finally {
+    await rm(stage, { recursive: true, force: true });
   }
-
-  const { stdout } = await run('magick', [
-    'identify',
-    '-format',
-    '%w %h',
-    path.join(dir, 'f-000.webp'),
-  ]);
-  const [w, h] = stdout.trim().split(' ').map(Number);
-
-  return { count: kept.length, width: w, height: h };
 }
 
 async function main() {
   if (!SOURCE) {
-    console.error('Usage : npm run sequence -- <chemin/vers/source.gif|mp4>');
+    console.error('Usage : npm run sequence -- <chemin/vers/source.mp4|gif>');
     process.exit(1);
   }
 
-  await assertMagick();
+  await assertTool('ffmpeg', 'ffmpeg');
+  await assertTool('magick', 'imagemagick');
 
   const manifest = {};
 

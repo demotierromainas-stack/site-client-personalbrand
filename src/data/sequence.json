@@ -1,12 +1,12 @@
 {
   "480": {
-    "count": 40,
+    "count": 35,
     "width": 480,
-    "height": 275
+    "height": 348
   },
   "800": {
-    "count": 79,
+    "count": 69,
     "width": 800,
-    "height": 459
+    "height": 580
   }
 }
