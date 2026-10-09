@@ -306,9 +306,14 @@ async function lireRedirections(racine) {
   const fichier = path.join(racine, ".htaccess");
   if (!existsSync(fichier)) return [];
   const texte = await readFile(fichier, "utf8");
+  /* La cible est écrite en absolu dans le fichier — c'est ce qui évite un
+     second aller-retour quand la demande arrive sur www. On la ramène à son
+     chemin pour la comparer aux pages construites. */
+  const chemin = (url) => (url.startsWith(SITE) ? url.slice(SITE.length) : url);
+
   return [...texte.matchAll(/^\s*RedirectMatch\s+301\s+\^(\S+?)\/\?\$\s+(\S+)/gim)].map((m) => ({
     source: `${m[1]}/`,
-    cible: m[2],
+    cible: chemin(m[2]),
   }));
 }
 
