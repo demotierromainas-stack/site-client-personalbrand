@@ -295,6 +295,23 @@ function controlerPage({ html, route, racine, baseUrl, opts }) {
 
 /* ----------------------------------------------------------------- sitemap */
 
+/**
+ * Les redirections déclarées dans le `.htaccess` produit.
+ *
+ * Deux dérives qu'on ne voit pas autrement : rediriger une adresse que le
+ * build produit encore (la redirection masque alors une page vivante), et
+ * rediriger vers une page qui n'existe pas (une erreur devient deux).
+ */
+async function lireRedirections(racine) {
+  const fichier = path.join(racine, ".htaccess");
+  if (!existsSync(fichier)) return [];
+  const texte = await readFile(fichier, "utf8");
+  return [...texte.matchAll(/^\s*RedirectMatch\s+301\s+\^(\S+?)\/\?\$\s+(\S+)/gim)].map((m) => ({
+    source: `${m[1]}/`,
+    cible: m[2],
+  }));
+}
+
 async function lireSitemap(racine) {
   const fichier = path.join(racine, "sitemap.xml");
   if (!existsSync(fichier)) return null;
@@ -340,14 +357,24 @@ async function main() {
   /* Doublons : deux pages au même titre se concurrencent sur la même requête,
      et Google en choisit une. C'est une perte nette, invisible page par page —
      elle n'apparaît qu'en comparant l'ensemble. */
+  /* La comparaison ignore les espaces en trop et la casse. Deux titres qui ne
+     diffèrent que par une double espace sont le même titre pour un lecteur
+     comme pour Google — mais pas pour `===`, et c'est exactement par là que
+     deux articles homonymes sont passés en ligne. On compare donc une forme
+     normalisée, tout en affichant la valeur telle qu'elle est écrite. */
+  const normaliser = (v) => v.replace(/\s+/g, " ").trim().toLowerCase();
+
   const doublons = (champ) => {
     const index = new Map();
     for (const p of pages) {
       const v = p[champ];
       if (!v) continue;
-      index.set(v, [...(index.get(v) ?? []), p.route]);
+      const clef = normaliser(v);
+      const vu = index.get(clef) ?? { valeur: v, routes: [] };
+      vu.routes.push(p.route);
+      index.set(clef, vu);
     }
-    return [...index.entries()].filter(([, routes]) => routes.length > 1);
+    return [...index.values()].filter(({ routes }) => routes.length > 1).map(({ valeur, routes }) => [valeur, routes]);
   };
 
   const globaux = [];
@@ -374,6 +401,12 @@ async function main() {
     const routes = new Set(pages.map((p) => p.route));
     for (const r of routes) if (!cheminsSitemap.has(r)) globaux.push(`page construite absente du sitemap : ${r}`);
     for (const r of cheminsSitemap) if (!routes.has(r)) globaux.push(`URL au sitemap sans page construite : ${r}`);
+  }
+
+  for (const { source, cible } of await lireRedirections(racine)) {
+    const routes = new Set(pages.map((p) => p.route));
+    if (routes.has(source)) globaux.push(`redirection depuis ${source}, que le build produit pourtant encore`);
+    if (!routes.has(cible)) globaux.push(`redirection vers ${cible}, qui n'est pas une page construite`);
   }
 
   /* ------------------------------------------------------------- rapport */

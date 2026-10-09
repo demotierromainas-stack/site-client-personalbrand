@@ -7,6 +7,7 @@ import { renderHomeCards } from './scripts/articles.mjs';
 import { SITE, NOM } from './scripts/site.mjs';
 import { rendreGrapheNomme } from './scripts/donnees-structurees.mjs';
 import { dateDuDernierCommit, renderRobots, renderSitemap } from './scripts/sitemap.mjs';
+import { renderHtaccess } from './scripts/redirections.mjs';
 
 const root = import.meta.dirname;
 const partialsDir = resolve(root, 'src/partials');
@@ -77,9 +78,10 @@ function htmlPartials(articles) {
  * 2. Les URLs d'images Open Graph sont rendues absolues. La spécification
  *    l'exige et plusieurs aperçus (LinkedIn en particulier) refusent un chemin
  *    relatif : les pages écrivent `/img/og/accueil.jpg`, le build complète.
- * 3. sitemap.xml et robots.txt sont émis dans dist/. `rsync --delete` efface
- *    du serveur ce que le build ne produit pas : un robots.txt déposé à la
- *    main chez l'hébergeur disparaîtrait au déploiement suivant.
+ * 3. sitemap.xml, robots.txt et .htaccess sont émis dans dist/. `rsync
+ *    --delete` efface du serveur ce que le build ne produit pas : un robots.txt
+ *    ou un .htaccess déposé à la main chez l'hébergeur disparaîtrait au
+ *    déploiement suivant, emportant les redirections avec lui.
  *
  * S'y ajoute `<!--@jsonld accueil-->`, qui pose les données structurées de la
  * page depuis scripts/donnees-structurees.mjs — même raison que le canonical :
@@ -122,6 +124,7 @@ function metadonneesSeo(pages) {
     generateBundle() {
       this.emitFile({ type: 'asset', fileName: 'sitemap.xml', source: renderSitemap(pages) });
       this.emitFile({ type: 'asset', fileName: 'robots.txt', source: renderRobots() });
+      this.emitFile({ type: 'asset', fileName: '.htaccess', source: renderHtaccess() });
     },
   };
 }

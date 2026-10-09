@@ -98,6 +98,19 @@ function renderMarkdown(corps) {
  * ce module ne va jamais la chercher lui-même.
  */
 export function prepare(enregistrement, image) {
+  /* Les champs texte sont débarrassés de leurs espaces de bord avant tout le
+     reste. Ce n'est pas de la coquetterie : un titre saisi « Investir avec
+     vision :  principes et discipline » — double espace, espace finale — est
+     le même titre que sans, pour un lecteur comme pour Google, mais pas pour
+     une comparaison de chaînes. C'est ce qui a permis à deux articles
+     homonymes de passer le contrôle des doublons. Un champ de saisie récolte
+     toujours des espaces ; c'est au code de les absorber. */
+  for (const champ of ['titre', 'titre_accent', 'categorie', 'chapo', 'description', 'og_description', 'image_alt']) {
+    if (typeof enregistrement[champ] === 'string') {
+      enregistrement = { ...enregistrement, [champ]: enregistrement[champ].trim().replace(/\s+/g, ' ') };
+    }
+  }
+
   for (const champ of ['slug', 'titre', 'categorie', 'date_publication', 'chapo']) {
     if (!enregistrement[champ]) {
       throw new Error(
