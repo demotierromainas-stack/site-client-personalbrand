@@ -13,8 +13,10 @@ npm run build      # produit dist/ — interroge Directus au passage
 npm run preview    # sert dist/ pour vérifier le build
 
 npm run articles   # régénère articles/ sans lancer Vite
+npm run seo        # contrôle SEO de dist/ — échoue s'il manque quelque chose (voir plus bas)
 npm run shots      # captures Playwright des 7 pages → shots/ (voir plus bas)
 npm run sequence -- <fichier.mp4|gif>   # ré-extrait la séquence du hero (ffmpeg + ImageMagick requis)
+npm run og         # régénère les 4 cartes de partage 1200×630 (ImageMagick requis)
 
 # CMS, avec un jeton d'admin Directus (voir CMS.md)
 DIRECTUS_ADMIN_TOKEN=xxx npm run cms:setup   # crée la collection articles (idempotent)
@@ -23,7 +25,10 @@ DIRECTUS_ADMIN_TOKEN=xxx npm run cms:roles   # crée les rôles rédacteur / bui
 DIRECTUS_ADMIN_TOKEN=xxx npm run cms:flow    # crée le webhook de publication
 ```
 
-**Pas de tests automatisés.** La vérification passe par `npm run shots`, qui charge
+**Pas de tests automatisés, mais deux barrières.** `npm run seo` contrôle le HTML produit
+(canonical, titres uniques, Open Graph, JSON-LD, cohérence avec le sitemap) et refuse de
+passer s'il manque quelque chose — il tourne en CI avant l'envoi. Pour le reste, la
+vérification passe par `npm run shots`, qui charge
 chaque page dans Chromium, capture plusieurs positions de scroll et remonte les
 erreurs console. `npm run shots -- <url> <page>` cible une seule page (`accueil`,
 `senior-ia`, …) ou une autre origine. Ce que le script ne juge pas : fluidité du smooth
@@ -40,7 +45,7 @@ n'atteint jamais le CMS ; s'il tombe, le site en ligne continue de fonctionner. 
 le client publie dans Directus → webhook → GitHub Actions → `npm run build` → rsync SSH
 chez Infomaniak.
 
-Trois mécanismes structurent le build, tous dans [vite.config.js](vite.config.js) :
+Quatre mécanismes structurent le build, tous dans [vite.config.js](vite.config.js) :
 
 1. **Partials HTML** — `<!--@include header.html-->` résolu par un plugin maison de vingt
    lignes (pas de moteur de templates). Décor, `<head>`, header, bandeau CTA et footer
@@ -48,7 +53,8 @@ Trois mécanismes structurent le build, tous dans [vite.config.js](vite.config.j
    dans le partial, **jamais** dans les pages : elles sont sept à le partager.
 2. **Cards d'articles de l'accueil** — `<!--@articles-->` remplacé par le rendu de
    [scripts/articles.mjs](scripts/articles.mjs).
-3. **Entrées Rollup dynamiques** — la liste des pages article n'est pas connue d'avance,
+3. **Métadonnées déduites** — `<!--@seo-->` et `<!--@jsonld <nom>-->`, voir « Référencement ».
+4. **Entrées Rollup dynamiques** — la liste des pages article n'est pas connue d'avance,
    elle vient de Directus. D'où une config asynchrone.
 
 Les pages sont servies en URL propres (`/senior-ia/`), la seule forme identique en dev Vite
@@ -125,6 +131,46 @@ Lenis est câblé sur le ticker GSAP et notifie ScrollTrigger à chaque frame �
 sont indispensables, sans eux la parallaxe tremble et les déclencheurs partent en décalé.
 `syncTouch: false` : le scroll tactile reste natif (iOS Safari).
 
+### Référencement
+
+**Le domaine n'est écrit qu'à un seul endroit : [scripts/site.mjs](scripts/site.mjs).** Il
+alimente les canonical, les URLs Open Graph, le sitemap, le robots.txt et les données
+structurées. La raison est un incident : les quatre pages écrites à la main ont annoncé
+pendant des mois un canonical vers `jeanmaximehanny.com`, qui ne résout sur aucun serveur
+web — autrement dit elles demandaient à Google d'indexer une adresse inexistante à la place
+de la vraie. Changer de domaine se fait maintenant en changeant cette ligne.
+
+Trois choses en découlent, toutes dans le plugin `metadonnees-seo` :
+
+- `<!--@seo-->`, posé une fois dans [src/partials/head.html](src/partials/head.html), écrit
+  le `canonical`, `og:url`, `og:site_name` et `twitter:card` **à partir du chemin de la
+  page**. Ne pas les réécrire dans une page : une URL canonique recopiée finit par désigner
+  la mauvaise page.
+- `<!--@jsonld <nom>-->` pose le JSON-LD décrit dans
+  [scripts/donnees-structurees.mjs](scripts/donnees-structurees.mjs) — `Person` + `WebSite`
+  sur l'accueil, `Organization` + fil d'Ariane sur les pages activité, `BlogPosting` + fil
+  d'Ariane sur les articles. **Règle non négociable : ne baliser que ce qui est visible sur
+  la page.** Un tarif, une note ou une date balisés sans être affichés valent au site la
+  perte de son éligibilité aux résultats enrichis, sur tout le domaine. C'est pourquoi il
+  n'y a pas de `Course` : sans tarif ni calendrier publié, il ne rendrait éligible à rien.
+- `sitemap.xml` et `robots.txt` sont **émis par le build**, pas posés dans `public/` :
+  `rsync --delete` efface du serveur tout ce que le build ne produit pas. Le `lastmod` des
+  pages écrites à la main vient du dernier commit qui les a touchées (d'où `fetch-depth: 0`
+  dans le workflow) ; sur un dépôt superficiel, la date est omise plutôt qu'inventée — un
+  `lastmod` qui change à chaque build est un signal que Google finit par ignorer.
+
+**Les cartes de partage** (`public/img/og/`) sont produites hors build par `npm run og`,
+comme la séquence du hero. 1200 × 630 en JPEG : le portrait est presque carré et sortait du
+cadre, la scène des pages activité ne fait que 606 px de large, et le WebP n'est pas lu par
+tous les aperçus. Les pages déclarent un chemin relatif, le build le rend absolu.
+
+**Le contrôle est une barrière, pas une relecture** :
+[scripts/controler-seo.mjs](scripts/controler-seo.mjs) lit le HTML produit — le seul état
+qui compte — et le workflow de déploiement l'exécute avant le rsync. Ne jamais le neutraliser
+pour faire passer une mise en ligne : un contrôle désactivé est pire qu'absent, il donne
+l'illusion d'être couvert. Les avertissements (titre ou description trop longs) n'arrêtent
+rien, ce sont des seuils d'affichage.
+
 ### Styles
 
 [src/styles/tokens.css](src/styles/tokens.css) contient tous les tokens dans `@theme` —
@@ -143,10 +189,10 @@ volontairement non animée au scroll.
 `main`, par `repository_dispatch: directus-publish` (le client publie), ou à la main.
 Build puis `rsync --delete` en SSH vers Infomaniak.
 
-Trois garde-fous, à ne pas retirer : le build échoue si aucune page article n'a été
-produite ; le workflow refuse de partir si `SSH_TARGET_DIR` ne désigne pas le dossier de
-`jeanmaximehanny.fr` (l'hébergement porte cinq sites et `--delete` efface) ; le site doit
-répondre 200 après dépôt.
+Quatre garde-fous, à ne pas retirer : le build échoue si aucune page article n'a été
+produite ; le contrôle SEO (`npm run seo -- --production`) doit passer ; le workflow refuse de
+partir si `SSH_TARGET_DIR` ne désigne pas le dossier de `jeanmaximehanny.fr` (l'hébergement
+porte cinq sites et `--delete` efface) ; le site doit répondre 200 après dépôt.
 
 L'utilisateur SSH doit être de type **PHP**, pas Node. La clé privée est stockée en base64
 sur une ligne (`SSH_PRIVATE_KEY_B64`) — un saut de ligne perdu au collage produit un

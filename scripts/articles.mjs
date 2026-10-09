@@ -13,12 +13,36 @@
 
 import { marked } from 'marked';
 
-const SITE = 'https://jeanmaximehanny.fr';
-const AUTEUR = 'Jean-Maxime Hanny';
+import { grapheArticle, rendreGraphe } from './donnees-structurees.mjs';
+import { NOM as AUTEUR } from './site.mjs';
 
 /* Vitesse de lecture retenue quand le champ est laissé vide. 200 mots/minute
    est la valeur courante pour de la prose en français lue sur écran. */
 const MOTS_PAR_MINUTE = 200;
+
+/* Longueur maximale d'une meta description. Google tronque au-delà de ~160
+   caractères : on s'arrête un peu avant, pour que la coupure soit la nôtre. */
+const LONGUEUR_DESCRIPTION = 155;
+
+/**
+ * Un chapô ramené à la longueur d'une description de résultat de recherche.
+ *
+ * Le chapô fait deux à quatre phrases — c'est son rôle sur la page, et c'est
+ * trop long pour une description. Laissé tel quel, il est coupé par Google au
+ * caractère près, souvent au milieu d'un mot. On coupe donc au dernier espace
+ * utile, ce qui donne au moins une fin lisible.
+ *
+ * Le champ « description » de Directus reste prioritaire : quand le client
+ * l'a rempli, son texte part intact, même long. C'est son texte, pas un repli.
+ */
+function resumer(texte) {
+  const propre = String(texte ?? '').trim().replace(/\s+/g, ' ');
+  if (propre.length <= LONGUEUR_DESCRIPTION) return propre;
+
+  const coupe = propre.slice(0, LONGUEUR_DESCRIPTION);
+  const dernierEspace = coupe.lastIndexOf(' ');
+  return `${coupe.slice(0, dernierEspace > 0 ? dernierEspace : coupe.length).replace(/[\s,;:.!?…–—-]+$/u, '')}…`;
+}
 
 /** Échappe ce qui part dans un attribut HTML (title, content, alt…). */
 const attr = (s) =>
@@ -105,8 +129,9 @@ export function prepare(enregistrement, image) {
     image,
     imageAlt: enregistrement.image_alt ?? '',
     chapo: enregistrement.chapo,
-    description: enregistrement.description || enregistrement.chapo,
-    ogDescription: enregistrement.og_description || enregistrement.description || enregistrement.chapo,
+    description: enregistrement.description || resumer(enregistrement.chapo),
+    ogDescription:
+      enregistrement.og_description || enregistrement.description || resumer(enregistrement.chapo),
     corps: renderMarkdown(enregistrement.corps),
   };
 }
@@ -201,22 +226,7 @@ function renderSuite(courant, articles) {
  * reconnaître un article — auteur, date, sujet — plutôt qu'une page quelconque.
  */
 export function renderArticlePage(a, articles) {
-  const jsonLd = JSON.stringify(
-    {
-      '@context': 'https://schema.org',
-      '@type': 'BlogPosting',
-      headline: a.titreComplet,
-      datePublished: a.dateIso,
-      author: { '@type': 'Person', name: AUTEUR },
-      image: `${SITE}${a.image}`,
-      articleSection: a.categorie,
-      mainEntityOfPage: `${SITE}${a.url}`,
-    },
-    null,
-    2,
-  )
-    .split('\n')
-    .join('\n      ');
+  const jsonLd = rendreGraphe(grapheArticle(a), '    ');
 
   /* Le titre est coupé en deux lignes, la seconde en cuivre. Quand l'article
      n'a pas de partie accentuée, on ne laisse pas un <br> orphelin. */
@@ -233,24 +243,29 @@ export function renderArticlePage(a, articles) {
 <html lang="fr">
   <head>
     <meta charset="UTF-8" />
-    <title>${text(a.titreComplet)} — ${AUTEUR}</title>
+    <!-- Le titre ne porte pas le nom du site : ajouté ici, il poussait les
+         titres d'articles au-delà de la limite d'affichage de Google, qui les
+         tronquait en plein milieu. C'est le balisage WebSite (voir
+         donnees-structurees.mjs) qui le renseigne désormais. -->
+    <title>${text(a.titreComplet)}</title>
     <meta name="description" content="${attr(a.description)}" />
-    <link rel="canonical" href="${SITE}${a.url}" />
 
     <meta property="og:type" content="article" />
-    <meta property="og:url" content="${SITE}${a.url}" />
     <meta property="og:title" content="${attr(a.titreComplet)}" />
     <meta property="og:description" content="${attr(a.ogDescription)}" />
+    <!-- Le chemin est relatif ici : le build le rend absolu, comme l'exige
+         Open Graph (voir le plugin « metadonnees-seo »). L'image de couverture
+         doit faire au moins 1200 px de large pour qu'un aperçu la montre en
+         grand — c'est ce que demande la fiche du champ dans Directus. -->
     <meta property="og:image" content="${attr(a.image)}" />
+    <meta property="og:image:alt" content="${attr(a.imageAlt)}" />
     <meta property="article:published_time" content="${a.dateIso}" />
     <meta property="article:author" content="${AUTEUR}" />
     <meta property="article:section" content="${attr(a.categorie)}" />
 
     <link rel="preload" as="image" href="${attr(a.image)}" />
 
-    <script type="application/ld+json">
-      ${jsonLd}
-    </script>
+    ${jsonLd}
 
     <!--@include head.html-->
   </head>

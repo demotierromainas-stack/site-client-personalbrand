@@ -2,25 +2,33 @@
 <html lang="fr">
   <head>
     <meta charset="UTF-8" />
-    <title>Jean-Maxime Hanny — Entrepreneur, investisseur, développeur de projets</title>
+    <title>Jean-Maxime Hanny — Entrepreneur et investisseur</title>
     <meta
       name="description"
-      content="Bâtir aujourd'hui les entreprises et les solutions de demain. Jean-Maxime Hanny accompagne entrepreneurs et projets en stratégie, investissement, technologie et développement durable."
+      content="Entrepreneur et investisseur, Jean-Maxime Hanny développe trois activités : la formation à l'IA, un média économique et l'investissement."
     />
-    <link rel="canonical" href="https://jeanmaximehanny.com/" />
 
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://jeanmaximehanny.com/" />
-    <meta property="og:title" content="Jean-Maxime Hanny — Entrepreneur, investisseur, développeur de projets" />
+    <meta property="og:title" content="Jean-Maxime Hanny — Entrepreneur et investisseur" />
     <meta
       property="og:description"
       content="Bâtir aujourd'hui les entreprises et les solutions de demain."
     />
-    <meta property="og:image" content="/img/portrait.webp" />
+    <!-- Carte de partage dédiée : 1200 × 630 en JPEG, produite par
+         `npm run og`. Le portrait seul ne convenait pas — presque carré, il
+         était rogné de travers par tous les aperçus. Les dimensions déclarées
+         évitent au premier partage d'attendre l'image pour la disposer. -->
+    <meta property="og:image" content="/img/og/accueil.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Jean-Maxime Hanny, entrepreneur et investisseur" />
 
     <!-- Première image de la séquence du hero : c'est elle qu'on voit à
          l'arrivée sur la page, avant tout scroll. -->
     <link rel="preload" as="image" href="/img/sequence/800/f-000.webp?v=20260924" />
+
+    <!-- Données structurées : voir scripts/donnees-structurees.mjs. -->
+    <!--@jsonld accueil-->
 
     <!--@include head.html-->
   </head>

@@ -29,7 +29,13 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      # Tout l'historique, et pas seulement le dernier commit : le sitemap
+      # date chaque page d'après le dernier commit qui l'a touchée. Sur un
+      # dépôt superficiel, git ne connaît qu'une date — celle du build — et le
+      # sitemap préfère alors ne pas dater du tout (voir scripts/sitemap.mjs).
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - uses: actions/setup-node@v4
         with:
@@ -61,6 +67,18 @@ jobs:
             echo "::error::Aucune page article produite. Déploiement interrompu."
             exit 1
           fi
+
+      # Contrôle SEO du HTML produit, avant de l'envoyer. Il vérifie ce qui se
+      # perd en silence : canonical absent ou sur le mauvais domaine, titre
+      # dupliqué, image de partage introuvable, JSON-LD illisible, page
+      # construite mais absente du sitemap. `--production` exige en plus
+      # qu'aucun noindex ne subsiste.
+      #
+      # Un contrôle en échec interrompt le déploiement : c'est le seul moment
+      # où ces erreurs coûtent dix secondes plutôt que six mois de trafic.
+      # Ne pas le neutraliser pour faire passer une mise en ligne.
+      - name: Contrôler le référencement
+        run: node scripts/controler-seo.mjs --production
 
       # Déploiement par SSH plutôt que par FTP. Le FTP d'Infomaniak refusait
       # obstinément l'authentification, là où SSH fonctionnait déjà — et une

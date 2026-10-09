@@ -1,4 +1,4 @@
-# Éléments à fournir — Site jeanmaximehanny.com
+# Éléments à fournir — Site jeanmaximehanny.fr
 
 Bonjour,
 
@@ -129,7 +129,8 @@ Pour chacun des trois, il me faut donc :
 - **Votre validation, votre correction ou votre propre texte**
 - **Une image d'illustration en 1600 px de large minimum.** Les images actuelles viennent de la
   maquette et ne font que 740 px : elles sont affichées à plus du double en haut de l'article, et
-  c'est visible.
+  c'est visible. C'est aussi cette image qui s'affiche quand le lien de l'article est partagé sur
+  LinkedIn ou WhatsApp — en dessous de 1200 px, l'aperçu se réduit à une vignette.
 - Si l'article est déjà publié ailleurs (LinkedIn, Medium), le lien — on renverra dessus plutôt
   que de dupliquer le texte
 
@@ -151,7 +152,9 @@ Sujets et titres actuels :
 
 - Adresse e-mail à afficher
 - Numéro de téléphone à afficher (ou m'indiquer si vous préférez ne pas l'afficher)
-- Liens vers vos réseaux : LinkedIn, Instagram, YouTube, autres
+- Liens vers vos réseaux : LinkedIn, Instagram, YouTube, autres. Ils ne servent pas qu'aux
+  icônes du pied de page : ce sont eux qui permettent à Google de relier le site à vos comptes
+  et de les rattacher à la même personne. Seule l'adresse Instagram est connue à ce jour.
 - **Prise de rendez-vous** : c'est le bouton principal du site, présent en haut et en bas de
   page. Vers quoi doit-il mener ? Un agenda en ligne type Calendly, un formulaire de contact,
   ou une simple ouverture de mail ?
