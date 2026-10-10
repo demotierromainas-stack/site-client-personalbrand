@@ -17,6 +17,7 @@ npm run seo        # contrôle SEO de dist/ — échoue s'il manque quelque chos
 npm run shots      # captures Playwright des 7 pages → shots/ (voir plus bas)
 npm run sequence -- <fichier.mp4|gif>   # ré-extrait la séquence du hero (ffmpeg + ImageMagick requis)
 npm run og         # régénère les 4 cartes de partage 1200×630 (ImageMagick requis)
+npm run favicon    # régénère les icônes « JMH » (favicon, iOS, Android — ImageMagick requis)
 
 # CMS, avec un jeton d'admin Directus (voir CMS.md)
 DIRECTUS_ADMIN_TOKEN=xxx npm run cms:setup   # crée la collection articles (idempotent)
@@ -163,6 +164,21 @@ Trois choses en découlent, toutes dans le plugin `metadonnees-seo` :
 comme la séquence du hero. 1200 × 630 en JPEG : le portrait est presque carré et sortait du
 cadre, la scène des pages activité ne fait que 606 px de large, et le WebP n'est pas lu par
 tous les aperçus. Les pages déclarent un chemin relatif, le build le rend absolu.
+
+**Les icônes** (`public/favicon.ico`, `icone-192.png`, `icone-512.png`,
+`apple-touch-icon.png`) viennent du même atelier : `npm run favicon` redessine en
+fichiers le monogramme « JMH » que le header écrit en texte. Elles sont à la racine de
+`public/` parce que les navigateurs et les robots demandent `/favicon.ico` et
+`/apple-touch-icon.png` sans lire la page. Le `.ico` empile 16, 32 et 48 px : **48 est
+le minimum sous lequel Google n'affiche pas d'icône** à côté du résultat de recherche, mais
+un globe gris. Le contrôle SEO refuse une page qui n'en déclare aucune, et une icône
+déclarée dont le fichier manque — `rsync --delete` l'effacerait du serveur sans qu'aucune
+page ne change.
+
+C'est le favicon, et lui seul, qui donne au site son logo dans Google. Il n'y a pas de
+`logo` dans les données structurées : cette propriété appartient à `Organization`, or
+l'entité du site est une `Person` — il n'y a pas d'entreprise chapeau, c'est justement
+ce que dit le graphe.
 
 **Le contrôle est une barrière, pas une relecture** :
 [scripts/controler-seo.mjs](scripts/controler-seo.mjs) lit le HTML produit — le seul état

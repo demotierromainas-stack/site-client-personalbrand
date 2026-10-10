@@ -244,6 +244,27 @@ function controlerPage({ html, route, racine, baseUrl, opts }) {
     }
   }
 
+  /* Icônes — l'image que Chrome met dans l'onglet et que Google affiche à
+     côté du résultat de recherche. Elles sont déclarées une fois dans le
+     partial du <head> : absentes d'une page, c'est que la page a été écrite
+     sans lui. Introuvables sur le disque, c'est plus sournois — la déclaration
+     reste juste, et `rsync --delete` efface du serveur tout fichier que le
+     build ne produit pas, donc l'icône disparaît du site sans qu'aucune page
+     ne change. Google retombe alors sur un globe gris, et met des semaines à
+     revenir dessus. */
+  const icones = balises(html, "link")
+    .map(attributs)
+    .filter((a) => /\b(icon|apple-touch-icon)\b/i.test(a.rel ?? ""));
+  if (icones.length === 0) erreur("aucune icône déclarée (link rel=icon)");
+  for (const icone of icones) {
+    const href = icone.href ?? "";
+    /* Une icône hébergée ailleurs ne se contrôle pas sur le disque. Le site
+       n'en sert aucune ; le cas est écarté, pas oublié. */
+    if (!href.startsWith("/")) continue;
+    const surDisque = path.join(racine, decodeURIComponent(href.split("?")[0]));
+    if (!existsSync(surDisque)) erreur(`icône introuvable sur le disque (${href})`);
+  }
+
   /* JSON-LD : du JSON invalide est purement et simplement ignoré, sans le
      moindre signal. Autant le détecter au build. */
   const blocs = [...html.matchAll(/<script[^>]+application\/ld\+json[^>]*>([\s\S]*?)<\/script>/gi)];

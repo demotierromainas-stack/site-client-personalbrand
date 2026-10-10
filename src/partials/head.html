@@ -7,6 +7,20 @@
 
     <meta property="og:locale" content="fr_FR" />
 
+    <!-- Icônes — le monogramme « JMH » du header, que ce header écrit en texte :
+         un onglet de navigateur et un résultat Google ne lisent pas le HTML, il
+         leur faut des fichiers. Produits hors build par `npm run favicon`.
+
+         Déclarés ici, donc sur les sept pages : un moteur retient une icône
+         pour le site entier, mais il la cherche sur la page qu'il indexe, quelle
+         qu'elle soit. favicon.ico empile 16, 32 et 48 px ; c'est le 48 que
+         Google exige pour afficher autre chose qu'un globe gris à côté du
+         résultat de recherche. -->
+    <link rel="icon" href="/favicon.ico" sizes="16x16 32x32 48x48" />
+    <link rel="icon" type="image/png" sizes="192x192" href="/icone-192.png" />
+    <link rel="icon" type="image/png" sizes="512x512" href="/icone-512.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+
     <!-- Canonical, og:url, og:site_name et twitter:card, déduits de l'adresse
          de la page par le plugin « metadonnees-seo » (voir vite.config.js).
          Ne pas les réécrire dans les pages : une URL canonique copiée à la

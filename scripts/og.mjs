@@ -24,29 +24,16 @@
  */
 
 import { execFile } from 'node:child_process';
-import { mkdir, writeFile, access } from 'node:fs/promises';
+import { mkdir } from 'node:fs/promises';
 import { promisify } from 'node:util';
 import path from 'node:path';
+
+import { police } from './polices.mjs';
 
 const run = promisify(execFile);
 
 const SORTIE = 'public/img/og';
 const PORTRAIT = 'public/img/portrait.webp';
-
-/* Les polices du site. Elles ne sont pas versionnées : le site les charge
-   depuis Google Fonts, et elles ne servent ici qu'à dessiner quatre images.
-   Elles sont donc téléchargées à la demande dans .cache/, déjà ignoré par git. */
-const CACHE_POLICES = '.cache/fonts';
-const POLICES = {
-  display: {
-    fichier: 'PlayfairDisplay.ttf',
-    url: 'https://github.com/google/fonts/raw/main/ofl/playfairdisplay/PlayfairDisplay%5Bwght%5D.ttf',
-  },
-  texte: {
-    fichier: 'Inter.ttf',
-    url: 'https://github.com/google/fonts/raw/main/ofl/inter/Inter%5Bopsz,wght%5D.ttf',
-  },
-};
 
 /* Les couleurs sont celles de tokens.css. Elles y sont déclarées pour le CSS,
    qu'ImageMagick ne sait pas lire : les reporter ici est la seule duplication
@@ -111,35 +98,6 @@ const CARTES = [
 /** `#69abde` → `105,171,222`, la forme qu'attend `rgba()` dans un -draw. */
 const canaux = (hex) =>
   [1, 3, 5].map((i) => parseInt(hex.slice(i, i + 2), 16)).join(',');
-
-async function existe(fichier) {
-  try {
-    await access(fichier);
-    return true;
-  } catch {
-    return false;
-  }
-}
-
-/** Le chemin d'une police, téléchargée au premier passage. */
-async function police(nom) {
-  const { fichier, url } = POLICES[nom];
-  const chemin = path.join(CACHE_POLICES, fichier);
-  if (await existe(chemin)) return chemin;
-
-  console.log(`  téléchargement de ${fichier}…`);
-  const reponse = await fetch(url);
-  if (!reponse.ok) {
-    throw new Error(
-      `Téléchargement de ${fichier} : HTTP ${reponse.status}.\n` +
-        `La police est libre (SIL OFL) et se récupère à la main depuis ${url}, ` +
-        `à déposer dans ${CACHE_POLICES}/.`,
-    );
-  }
-  await mkdir(CACHE_POLICES, { recursive: true });
-  await writeFile(chemin, Buffer.from(await reponse.arrayBuffer()));
-  return chemin;
-}
 
 /**
  * Le fond : l'encre du site, un halo dans la couleur de marque, et — pour les
